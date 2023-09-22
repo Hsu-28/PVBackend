@@ -1,0 +1,37 @@
+$h1-l: 62px;
+$h2-l: 36px; //title second 副標
+$p1-l: 20px;//  content1 p one large
+$p2-l: 16px;//  content2 p two large
+
+//RWD的尺寸
+$h1-m: 32px;//
+$h2-m: 28px;//
+$p1-m: 18px;//
+$p2-m: 16px;//
+
+$h1-s: 28px;//
+$h2-s: 22px;//
+$p1-s: 16px;//
+$p2-s: 14px;//
+
+
+$rc1: 16px;
+$rc2: 14px;//  
+
+$normal: 400;
+$bold: 600;
+
+
+
+ @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600;700;900&family=Noto+Serif+TC:wght@300;400;500;600;700;900&family=Oswald:wght@300;400;500;600;700&family=Roboto+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap');
+
+
+
+
+ .body {
+    font-family: 'Oswald', 'Roboto Mono','Noto Serif JP', 'Noto Serif TC',  serif;
+    font-weight: 600;
+  }
+  a{
+    font-weight: 900;
+  }
