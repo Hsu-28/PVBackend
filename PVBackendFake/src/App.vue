@@ -2,6 +2,7 @@
   <nav>
     <router-link to="/">Home測試測試</router-link> |
     <router-link to="/about">About</router-link>
+    sdfjoaisdjfiosadjfio
   </nav>
   <router-view/>
 </template>
