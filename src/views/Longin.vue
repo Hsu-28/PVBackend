@@ -1,10 +1,11 @@
 <template>
     <div id="backGround"> 
         <div class="imgSvg">
-            <img src="../assets/image/backend/icon.png" alt="icon" />
+            <img src="../assets/image/icon.svg" alt="icon" />
         </div>
         <div id="allIn">
-          
+            <!-- <router-view/>  -->
+
             <p>{{ textP }}</p>
             <form id="backstageIN" action="">
                     <!-- <label for="accountIn">帳號</label> -->
@@ -33,7 +34,7 @@
     margin: 0 auto ;
     width: 90%;
     height: 150vh;
-    background-image:url(../assets/image/backend/backGsvg.svg) ;
+    background-image:url(../assets/image/backGsvg.svg) ;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -110,11 +111,9 @@
 </style>
    
 <script>
-import ButtonFlashBox from '@/components/ButtonFlash.vue'
 
 export default {
     components: {
-        ButtonFlashBox: ButtonFlashBox
     },
     data () {
         return {
