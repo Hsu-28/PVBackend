@@ -5,8 +5,6 @@
     <button  class="out" style="width: 42px;height:32px;line-height: 35px; ">
      登出
     </button>
-
-    
       <Layout v-width="900" :style="{marginLeft: '300px'} ">
         <h1>會員資料</h1>
         <div class="buttonAll">

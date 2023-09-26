@@ -12,13 +12,15 @@
                     <input id="accountIn" type="text" placeholder="輸入帳號" v-model="name"/><br>
                     <!-- <label for="accountPass">帳號</label> -->
                     <input id="accountPass" type="password"  placeholder="輸入密碼"  v-model="password"/>
-                    <button type="submit" >
-                        <svg width="290" height="40"   >
+                    <button >
+                        <router-link :to="'/Administrator'">
+                        <svg width="250" height="40"   >
                             <!-- <polygon points="1,1 98%,1 98%,98% 95%,98% 94%,90% 85%,90% 85%,98% 8%,98% 1,70%" fill="#5B13EC" /> -->
-                            <polygon points="0,0 290,0 290,40 266.85,40 266.85,28 247.55,28 247.55,40 19.44,40 0,26.5" fill="#5B13EC" />
+                            <polygon points="0,0 250,0 250,40 230,40 230,28 213.52,28 213.52,40 19.44,40 0,26.5" fill="#5B13EC" />
                             <text  x="49%"  y="60%" class="textGo">登入</text>
                             <text x="85.5%"  y="99%" class="smallText">-pv-</text> 
-                        </svg>
+                       </svg>
+                        </router-link> 
                     </button>   
 
             </form>
@@ -44,7 +46,7 @@
 
         width: 40%;
         margin: 0 auto;
-        padding-top:120px;
+        padding-top:80px;
         img{
                 width: 100%;
         }
@@ -76,11 +78,13 @@
                 border-radius: 10px;
             }
             button{
+                display: block;  // 讓button成為區塊級元素
+                width: 250px;   // 確保其寬度小於其容器寬度
                 margin: 50px auto;
-                display: block;
                 background: transparent;
                 border: none;
                 outline: transparent;
+                // width: 150px;
                 svg{
                 font-size: 16px;
                 overflow: visible;
@@ -89,6 +93,7 @@
                     font-size: 16px;
                     font-weight: 700;
                     letter-spacing: 10px;
+                    text-align: center;
 
 
                 }

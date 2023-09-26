@@ -68,7 +68,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "Group" */ '../views/Group.vue')
   },
   {
-    path: '/Longin',
+    path: '/',
     name: 'Longin',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route

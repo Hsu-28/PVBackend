@@ -25,20 +25,22 @@
         <h1>行程</h1>
         <Form id="FormAll" v-width="700" ref="moreDetail" :model="moreDetail" :rules="ruleValidate" :label-width="80">
         <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{ moreDetail.number }}</p>
-        <FormItem label="名稱:" prop="precautions">
+        <FormItem label="名稱:" prop="precautions" :label-width="45">
             <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
         </FormItem>
-          <FormItem   v-width="150"  label="人數上限:" prop="max">
+        <Space size="large" wrap >
+          <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">日期:</div>
+             <DatePicker  type="daterange" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
+        </Space>
+          <FormItem   v-width="150"  label="人數上限:" prop="max" :label-width="72">
               <Input v-model="moreDetail.max" placeholder="aa" ></Input>
           </FormItem>
-          <FormItem   v-width="150"  label="已報名人數:" prop="max">
+          <FormItem   v-width="150"  label="已報名人數:" prop="max" :label-width="86">
               <Input v-model="moreDetail.max" placeholder="aa" ></Input>
           </FormItem>
-          <FormItem   v-width="150"  label="候補人數:" prop="max">
+          <FormItem   v-width="150"  label="候補人數:" prop="max" :label-width="72">
               <Input v-model="moreDetail.max" placeholder="aa" ></Input>
-          </FormItem>
-      
-      
+          </FormItem> 
         <FormItem v-width="700">
             <Button  size="small" style="margin-right: 5px; float: right;" @click="reTable()">返回</Button>
             <Button  size="small" style="margin-right: 5px;  float: right;" @click="reTable()">確定</Button>
@@ -79,24 +81,26 @@ export default {
             {
               title: '報名人數',
               key: 'applicants',
-              width: 80
+              width: 100
 
             },      
             {
               title: '審核通過人數',
               key: 'pass',
-              width: 80
+              width: 100
 
             },      
             {
               title: '候補人數',
               key: 'wait',
-              width: 80
+              width: 100
 
             },      
             {
               title: '狀態',
-              key: 'state'
+              key: 'state',
+              width: 80
+
             },      
             {
               title: '編輯',

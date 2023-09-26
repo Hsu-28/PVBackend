@@ -8,43 +8,25 @@
       <div v-if="showMore==1" >
       <h1>捐款</h1>
       <!-- <Button @click="modal1 =true" class="add">新增 +</Button>  -->
-      <template>
-            <Input v-model="value" placeholder="捐款日期" style="width: 150px" />
-            <span> -</span>
-            <Input v-model="value" placeholder="回程日期" style="width: 150px" />
-      </template> 
+      <Space  style="margin-bottom: 10px;" >
+        會員編號:
+            <Input v-model="value" placeholder="會員編號" style="width: 150px" />           
+      </Space> 
+      <br>
+      <Space size="large" style="gap :10px"  >
+        <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">日期:</div>
+
+        <DatePicker type="daterange" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
+      </Space>
           <Table class="Table" border :columns="columns" :data="data">
-              <template #action="{ row, index }">
+              <!-- <template #action="{ row, index }">
                 <Button  size="small" style="margin-right: 5px" @click="More()">編輯</Button>
                 <Button  size="small" @click="remove(index ,'News')">刪除</Button>
-              </template>
+              </template> -->
           </Table>  
-          <Page  class="nextPage" :total="40" size="" />
+          <Page  class="nextPage" :total="40" size="20" />
       </div>
-      <div v-if="showMore==2">
-        <h1>行程</h1>
-        <Form id="FormAll" v-width="700" ref="moreDetail" :model="moreDetail" :rules="ruleValidate" :label-width="80">
-        <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{ moreDetail.number }}</p>
-        <FormItem label="名稱:" prop="precautions">
-            <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
-        </FormItem>
-          <FormItem   v-width="150"  label="人數上限:" prop="max">
-              <Input v-model="moreDetail.max" placeholder="aa" ></Input>
-          </FormItem>
-          <FormItem   v-width="150"  label="已報名人數:" prop="max">
-              <Input v-model="moreDetail.max" placeholder="aa" ></Input>
-          </FormItem>
-          <FormItem   v-width="150"  label="候補人數:" prop="max">
-              <Input v-model="moreDetail.max" placeholder="aa" ></Input>
-          </FormItem>
-      
-      
-        <FormItem v-width="700">
-            <Button  size="small" style="margin-right: 5px; float: right;" @click="reTable()">返回</Button>
-            <Button  size="small" style="margin-right: 5px;  float: right;" @click="reTable()">確定</Button>
-        </FormItem>
-        </Form>
-      </div>
+   
 
     </Layout>
   </div>
@@ -63,45 +45,38 @@ export default {
       showMore:1,
       columns:[
             {
-              title: '旅程編號',
+              title: '捐獻編號',
               key: 'number',
-              width:80
             },      
           
+           
             {
-              title: '名稱',
-              key: 'title'
-            },      
-            {
-              title: '出發日期',
+              title: '捐獻日期',
               key: 'date'
             },      
             {
-              title: '報名人數',
-              key: 'applicants',
-              width: 80
+              title: '捐獻金額',
+              key: 'money',
+
+            },    
+            {
+              title: '會員編號',
+              key: 'numberMem'
+            },        
+            {
+              title: '電子郵件',
+              key: 'email',
 
             },      
+         
             {
-              title: '審核通過人數',
-              key: 'pass',
-              width: 80
-
-            },      
-            {
-              title: '候補人數',
-              key: 'wait',
-              width: 80
-
-            },      
-            {
-              title: '狀態',
+              title: '捐款狀態',
               key: 'state'
             },      
-            {
-              title: '編輯',
-              slot: 'action',
-            },           
+            // {
+            //   title: '編輯',
+            //   slot: 'action',
+            // },           
         ],
         data:[
             {
@@ -109,10 +84,10 @@ export default {
               
               title: '月球背面探索之旅1',
               date: '2022/01/21',
-              applicants: '8/8',
-              pass: '7/8',
-              wait: '5',
-              state : '成團',             
+              money: '8888',
+              numberMem: '711',
+              email: '5444@gmail.com',
+              state : '????',             
             },
          
         ],
@@ -132,17 +107,17 @@ export default {
     Side
     },
     methods:{
-    More(){
-        this.showMore=2;
+    // More(){
+    //     this.showMore=2;
       
-    },
-    reTable(){
-        this.showMore=1;
+    // },
+    // reTable(){
+    //     this.showMore=1;
         
-    }, 
-     removeN (index) {
-                this.dataNews.splice(index, 1);
-            },
+    // }, 
+    //  removeN (index) {
+    //             this.dataNews.splice(index, 1);
+    //         },
 
 }
 

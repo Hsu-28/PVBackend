@@ -109,7 +109,9 @@
 </template>
 <style scoped lang="scss">
 @import "~@/assets/sass/page/_Process.scss";
-
+// :deep(tr.ivu-table-row-hover td){
+//   background-color: red;
+// }
 </style>
 <script>
 import Side from '@/components/SideNav.vue';

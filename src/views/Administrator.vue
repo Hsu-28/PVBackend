@@ -3,13 +3,13 @@
 <template>
   <div class=" layout" >
     <Side  :activePage='1' /> 
-    <h1>管理員管理</h1>
+  
     <button  class="out" style="width: 42px;height:32px;line-height: 35px; ">
      登出
     </button>
 
       <Layout v-width="700" :style="{marginLeft: '300px'} ">
-          
+        <h1>管理員管理</h1>
               <Table class="Table" border :columns="columns" :data="data">
                   <template #action="{ row, index }">
                         <Button  v-if="show(index)" size="small" style="margin-right: 5px" @click="stop(row,index)">{{row.state}}</Button>
