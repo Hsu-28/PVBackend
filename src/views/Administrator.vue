@@ -4,6 +4,10 @@
   <div class=" layout" >
     <Side  :activePage='1' /> 
     <h1>管理員管理</h1>
+    <button  class="out" style="width: 42px;height:32px;line-height: 35px; ">
+     登出
+    </button>
+
       <Layout v-width="700" :style="{marginLeft: '300px'} ">
           
               <Table class="Table" border :columns="columns" :data="data">
@@ -19,7 +23,7 @@
 @import "~@/assets/sass/style.scss";
 
 .layout{
-       background: $white;
+    background: #F5F7F9;
   width: 100vw;
   min-height: 100vh;
  
@@ -28,7 +32,17 @@
       h1{
         color: $black;
         font-size: 24px;
-        padding: 10px 0 20px 0;
+        padding: 20px 0 20px 0;
+      }
+      .out{
+        float: right;
+        margin-top: 15px;
+        margin-right:20px ;
+        font-size: 16px;
+        border-radius: 10px;
+        border: 1px solid $black;
+        cursor: pointer;
+
       }
     
 

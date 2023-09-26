@@ -1,7 +1,11 @@
 
 <template>
   <div class=" layout" >
-    <Side  :activePage='2' /> 
+    <Side  :activePage='2'/> 
+    <button  class="out" style="width: 42px;height:32px;line-height: 35px; ">
+     登出
+    </button>
+
     
       <Layout v-width="700" :style="{marginLeft: '300px'} ">
         <h1>會員資料</h1>
@@ -12,7 +16,9 @@
             </Space>    
                 <Table  class="Table" border :columns="columns" :data="data">
                     <template  #action="{ row, index }">
-                            <Button  :style="{padding:'0 5px 0 8px'}" shape="circle" icon="ios-add" @click="More()">
+                            <Button  :style="{padding:'0 5px 0 8px'}" shape="circle" 
+                            icon="ios-add" 
+                            @click="More()">
                                 <!-- <Icon type="ios-add" />:style="{padding:' 0 5px 0 8px'}" -->
                             </Button>
                                 
@@ -48,7 +54,7 @@
 @import "~@/assets/sass/style.scss";
 
 .layout{
-       background: $white;
+  background: #F5F7F9;
   width: 100vw;
   min-height: 100vh;
   color: $black;
@@ -57,7 +63,17 @@
       h1{
         color: $black;
         font-size: 24px;
-        padding: 10px 0 20px 0;
+        padding: 20px 0 20px 0;
+      }
+      .out{
+        float: right;
+        margin-top: 15px;
+        margin-right:20px ;
+        font-size: 16px;
+        border-radius: 10px;
+        border: 1px solid $black;
+        cursor: pointer;
+
       }
       div{
         .showAll{
@@ -175,7 +191,7 @@ import Side from '@/components/SideNav.vue';
                   },
               ],
               moreDetail:{
-                number:'',  
+                number:'1',  
                 level:2,
                 name:'謝順',
                 gender :'男',

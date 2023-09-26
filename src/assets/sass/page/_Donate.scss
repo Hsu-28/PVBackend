@@ -1,0 +1,43 @@
+.layout{
+    background: #F5F7F9;
+width: 100vw;
+min-height: 100vh;
+color: $black;
+position: relative;
+   border-radius: 4px;
+   h1{
+     color: $black;
+     font-size: 24px;
+     padding: 20px 0 20px 0;
+   }
+   .out{
+    float: right;
+    margin-top: 15px;
+    margin-right:20px ;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid $black;
+    cursor: pointer;
+  }
+  .nextPage{
+    margin-top: 10px;
+     // display: flex;
+     // justify-content: center;
+     float: right;
+ }
+ 
+ }
+ 
+   
+
+ .Table{
+   width:900px ;
+ }
+ #FormAll{
+  &>*{
+    margin-bottom: 15px;
+
+
+  }
+ }
+
