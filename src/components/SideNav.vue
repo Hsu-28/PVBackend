@@ -46,7 +46,9 @@ export default {
     
   .SideNavigator{
     width: 240px;
-    background: $black ;
+    // background: #111111 ;
+    background: #4e4d4d ;
+    // background : rgba(0, 0, 0, .9); 
   
 
  
@@ -66,7 +68,8 @@ export default {
          color: $black;
      }
      &>.Page:hover{
-         background : rgba(0, 0, 0, .8); 
+        //  background : rgba(0, 0, 0, .1); 
+         background :#4e4d4d; 
          color: $white;
      }
  }
@@ -77,7 +80,8 @@ export default {
 
 .thisPage{
 // background-color :rbga(0, 0, 0, 0.4);   
-background : rgba(0, 0, 0, .8);   
+// background : rgba(0, 0, 0, .2);   
+background : #4e4d4d;   
 color: $white;
 
 }

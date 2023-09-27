@@ -11,8 +11,10 @@
         <h1>會員資料</h1>
         <div v-if="showMore==1" >
             <Space class="search" direction=""   type="flex">
-                    <Input  v-width="120" search placeholder="會員編號" />
-                    <Input  v-width="120" search placeholder="email" />
+                    <Input  v-width="120" search v-model="searchConNumber"
+                            @on-change="handleSearch1"  placeholder="會員編號" />
+                    <Input  v-width="120" search   v-model="searchEmail" 
+                             @on-change="handleSearch1"   placeholder="email" />
             </Space>    
                 <Table  class="Table" border :columns="columns" :data="data" >
                     <template  #action="{ row, index }">
@@ -21,7 +23,6 @@
                             @click="More()">
                                 <!-- <Icon type="ios-add" />:style="{padding:' 0 5px 0 8px'}" -->
                             </Button>
-                                
                     </template>
                 </Table>
             <!-- <div class="nextPage"> -->
@@ -118,12 +119,15 @@ import Side from '@/components/SideNav.vue';
   export default {
       data () {
           return {
-
+            datac: [],
+            searchEmail:'',
+        searchConNumber: '',
              showMore:1,
               columns: [
                   {
                       title: '會員編號',
-                      key: 'number'
+                      key: 'number',
+                     
                   },
                   {
                       title: '姓名',
@@ -144,19 +148,19 @@ import Side from '@/components/SideNav.vue';
                   {
                       number: 1,
                       name: '李曉如',
-                      email: '111@gmail.com',
+                      email: '11122@gmail.com',
                       
                   },
                   {
                       number: 2,
                       name: '邱琬庭',
-                      email: '222@gmail.com',
+                      email: '222111@gmail.com',
                       
                   },
                   {
                       number: 3,
                       name: '許時諭',
-                      email: '333@gmail.com',
+                      email: '33311@gmail.com',
                       
                   },
                   {
@@ -177,18 +181,7 @@ import Side from '@/components/SideNav.vue';
                       email: '666@gmail.com',
                       state: ''
                   },
-                  {
-                      number: '',
-                      name: '',
-                      email: '',
-                      state: ''
-                  },
-                  {
-                      number: '',
-                      name: '',
-                      email: '',
-                      state: ''
-                  },
+                 
               ],
               moreDetail:{
                 number:'1',  
@@ -210,6 +203,9 @@ import Side from '@/components/SideNav.vue';
       components: {
         Side
     },
+    created() {
+    this.datac = [...this.data];
+    },
     methods:{
         More(){
             this.showMore=2;
@@ -218,7 +214,46 @@ import Side from '@/components/SideNav.vue';
         reTable(){
             this.showMore=1;
             
+        },
+
+        search (data1, argumentObj) {
+            // let res = data1;
+            // let dataClone = data1;
+            // for (let argu in argumentObj) {
+            //     if (argumentObj[argu].length > 0 || typeof argumentObj[argu] === 'number') {
+            //         res = dataClone.filter(d => {
+            //             // If the data and argument are strings, use indexOf
+            //             if (typeof d[argu] === 'string' && typeof argumentObj[argu] === 'string') {
+            //                 return d[argu].indexOf(argumentObj[argu]) > -1;
+            //             }
+            //             // If the data and argument are numbers, directly compare
+            //             else if (typeof d[argu] === 'number' && typeof argumentObj[argu] === 'number') {
+            //                 return d[argu] === argumentObj[argu];
+            //             }
+            //             return false;
+            //         });
+            //         dataClone = res;
+            //     }
+            // }
+            // return res;
+            return data1.filter(d => {
+        for (let argu in argumentObj) {
+            if (argumentObj[argu]) {
+                if (typeof d[argu] === 'string' && typeof argumentObj[argu] === 'string') {
+                    if (d[argu].indexOf(argumentObj[argu]) === -1) return false;
+                } else if (typeof d[argu] === 'number' && typeof argumentObj[argu] === 'number') {
+                    if (d[argu] !== argumentObj[argu]) return false;
+                }
+            }
         }
+        return true;
+    });
+        },
+        handleSearch1 () {
+            this.data = this.search(this.datac, {number: Number(this.searchConNumber), email: this.searchEmail});
+        },
+    
+
 
     }
   }
