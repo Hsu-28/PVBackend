@@ -10,7 +10,7 @@
       <!-- <Button @click="modal1 =true" class="add">新增 +</Button>  -->
       <Space  style="margin-bottom: 10px;" >
         會員編號:
-            <Input v-model="value" placeholder="會員編號" style="width: 150px" />           
+            <Input v-model="donateValue"   @on-change="handleSearch1" placeholder="會員編號" style="width: 150px" />           
       </Space> 
       <br>
       <Space size="large" style="gap :10px"  >
@@ -42,6 +42,9 @@ export default {
 
   data() {
     return {
+
+      datac: [],
+      donateValue:'',
       showMore:1,
       columns:[
             {
@@ -89,6 +92,26 @@ export default {
               email: '5444@gmail.com',
               state : '????',             
             },
+            {
+              number: 1,
+              
+              title: '火星背面探索之旅1',
+              date: '2022/02/21',
+              money: '8888',
+              numberMem: '232',
+              email: '334@gmail.com',
+              state : '????',             
+            },
+            {
+              number: 1,
+              
+              title: '火星背面探索之旅1',
+              date: '2022/02/21',
+              money: '8888',
+              numberMem: '151',
+              email: '774@gmail.com',
+              state : '????',             
+            },
          
         ],
         moreDetail:{
@@ -106,20 +129,52 @@ export default {
   components: {
     Side
     },
+    created() {
+    this.datac = [...this.data];
+    },
     methods:{
-    // More(){
-    //     this.showMore=2;
-      
-    // },
-    // reTable(){
-    //     this.showMore=1;
-        
-    // }, 
-    //  removeN (index) {
-    //             this.dataNews.splice(index, 1);
-    //         },
+      search (data1, argumentObj) {
+            // let res = data1;
+            // let dataClone = data1;
+            // for (let argu in argumentObj) {
+            //     if (argumentObj[argu].length > 0 || typeof argumentObj[argu] === 'number') {
+            //         res = dataClone.filter(d => {
+            //             // If the data and argument are strings, use indexOf
+            //             if (typeof d[argu] === 'string' && typeof argumentObj[argu] === 'string') {
+            //                 return d[argu].indexOf(argumentObj[argu]) > -1;
+            //             }
+            //             // If the data and argument are numbers, directly compare
+            //             else if (typeof d[argu] === 'number' && typeof argumentObj[argu] === 'number') {
+            //                 return d[argu] === argumentObj[argu];
+            //             }
+            //             return false;
+            //         });
+            //         dataClone = res;
+            //     }
+            // }
+            // return res;
+            return data1.filter(d => {
+        for (let argu in argumentObj) {
+            if (argumentObj[argu]) {
+                if (typeof d[argu] === 'string' && typeof argumentObj[argu] === 'string') {
+                    if (d[argu].indexOf(argumentObj[argu]) === -1) return false;
+                } else if (typeof d[argu] === 'number' && typeof argumentObj[argu] === 'number') {
+                    if (d[argu] !== argumentObj[argu]) return false;
+                }
+            }
+        }
+        return true;
+         });
+        },
+        handleSearch1 () {
+            this.data = this.search(this.datac, {numberMem: this.donateValue});
+        },
+    
+
+
+    }
 
 }
 
-}
+
 </script>
