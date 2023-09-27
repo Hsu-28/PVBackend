@@ -24,7 +24,7 @@
           </Table>  
           <Page  class="nextPage" :total="40" size="" />
       </div>
-      <div v-if="showMore==2">
+      <!-- <div v-if="showMore==2">
         <h1>行程</h1>
         <Form id="FormAll" v-width="700" ref="moreDetail" :model="moreDetail" :rules="ruleValidate" :label-width="80">
         <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{ moreDetail.number }}</p>
@@ -49,7 +49,7 @@
             <Button  size="small" style="margin-right: 5px;  float: right;" @click="reTable()">確定</Button>
         </FormItem>
         </Form>
-      </div>
+      </div> -->
 
     </Layout>
   </div>
@@ -108,16 +108,7 @@ export default {
             },
          
         ],
-        moreDetail:{
-            number:'1',  
-            numberProcess: '67',
-            date: '1113/65/26',
-            max :'11',
-            applicants:'8/8',
-            wait:'6',
-            daytrain:'1117/12/06',
-
-          },
+      
   }
 },
   components: {

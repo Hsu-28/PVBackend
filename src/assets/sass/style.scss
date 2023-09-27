@@ -5,7 +5,8 @@
 
 // minix
 @import "mixin/mixin";
-// :deep(tr.ivu-table-row-hover td){
-//     background-color: red;
-// }
+
+:deep(tr.ivu-table-row-hover td){
+    background-color: rgba(17, 17, 17, .2);
+}
 

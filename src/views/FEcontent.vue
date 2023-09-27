@@ -1,6 +1,6 @@
 
 <template>
-  <div class=" layout" >
+  <div id="layoutFE" >
     <Side  :activePage='3' /> 
     <button  class="out" style="width: 42px;height:32px;line-height: 35px; ">
      登出
@@ -52,7 +52,7 @@
        </div>
        <div v-if="changePage==1">
         <Button @click="modal1 = true" class="add">新增 +</Button> 
-          <Table class="Table" border :columns="columnsMem" :data="dataMem">
+          <Table id="TableFE" border :columns="columnsMem" :data="dataMem">
             <template #action="{ row, index }">
                    <Button  size="small" style="margin-right: 5px" @click="clickEditBtnT">編輯</Button>
                    <!-- @click="clickEditBtn(index, row)" -->
@@ -124,7 +124,7 @@
       
   </div>
 </template>
-<style scoped lang="scss">
+<style  lang="scss">
 @import "~@/assets/sass/page/_FEcontent.scss";
 
 </style>

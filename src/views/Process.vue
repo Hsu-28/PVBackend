@@ -124,7 +124,9 @@ export default {
           columns:[
                 {
                   title: '編號',
-                  key: 'number'
+                  key: 'number',
+                  width:80
+
                 },      
                 {
                   title: '地點',
@@ -169,6 +171,7 @@ export default {
                 {
                   title: '編輯',
                   slot: 'action',
+                  width:130
                 },           
             ],
             data:[

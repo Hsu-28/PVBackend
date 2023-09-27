@@ -14,7 +14,7 @@
                     <Input  v-width="120" search placeholder="會員編號" />
                     <Input  v-width="120" search placeholder="email" />
             </Space>    
-                <Table  class="Table" border :columns="columns" :data="data">
+                <Table  class="Table" border :columns="columns" :data="data" >
                     <template  #action="{ row, index }">
                             <Button  :style="{padding:'0 5px 0 8px'}" shape="circle" 
                             icon="ios-add" 
