@@ -1,6 +1,6 @@
      <template>
   <div class=" layout" >
-    <Side :activePage='7'/> 
+    <Side :activePage='8'/> 
     <button  class="out" style="width: 42px;height:32px;line-height: 35px;">
      登出
     </button>
