@@ -7,7 +7,42 @@
     <Layout v-width="900" :style="{marginLeft: '300px'} ">
       <div v-if="showMore==1" >
       <h1>旅行團</h1>
-      <Button @click="modal1 =true" class="add">新增 +</Button> 
+      <Button @click="modal1 =true" class="add ivu-mb">新增 +</Button> 
+      <!-- 彈窗 -->
+      <Modal
+            title="新增旅行團"
+            v-model="modal1"
+            width="700px"
+            :closable="true"
+            @on-ok="ok"
+            @on-cancel="cancel">
+            <Form
+              :width="500"
+              id="addForm"
+              :model="addItem"
+              :label-width="80"
+              enctype="multipart/form-data"
+              method="post"  >
+              <FormItem label="名稱:" prop="precautions" :label-width="45" class="ivu-mb">
+                <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
+              </FormItem>
+              <Space size="large" wrap class="ivu-mb">
+                  <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">日期:</div>
+                  <DatePicker v-model="addItem.date" type="date" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
+              </Space>
+              <FormItem   v-width="150"  label="人數上限:" prop="max" :label-width="72" class="ivu-mb">
+                  <Input v-model="addItem.max" placeholder="aa" ></Input>
+              </FormItem>
+              <FormItem   v-width="150"  label="已報名人數:" prop="max" :label-width="86" class="ivu-mb">
+                  <Input v-model="addItem.applicants" placeholder="aa" ></Input>
+              </FormItem>
+              <FormItem   v-width="150"  label="候補人數:" prop="max" :label-width="72" class="ivu-mb">
+                  <Input v-model="addItem.wait" placeholder="aa" ></Input>
+              </FormItem> 
+            </Form>
+        </Modal>
+
+
       <template>
             <Input v-model="value" placeholder="出發日期" style="width: 150px" />
             <!-- <span> -</span>
@@ -24,27 +59,27 @@
       <div v-if="showMore==2">
         <h1>行程</h1>
         <Form id="FormAll" v-width="700" ref="moreDetail" :model="moreDetail" :rules="ruleValidate" :label-width="80">
-        <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{ moreDetail.number }}</p>
-        <FormItem label="名稱:" prop="precautions" :label-width="45">
-            <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
-        </FormItem>
-        <Space size="large" wrap >
-          <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">日期:</div>
-             <DatePicker  type="daterange" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
-        </Space>
-          <FormItem   v-width="150"  label="人數上限:" prop="max" :label-width="72">
-              <Input v-model="moreDetail.max" placeholder="aa" ></Input>
-          </FormItem>
-          <FormItem   v-width="150"  label="已報名人數:" prop="max" :label-width="86">
-              <Input v-model="moreDetail.max" placeholder="aa" ></Input>
-          </FormItem>
-          <FormItem   v-width="150"  label="候補人數:" prop="max" :label-width="72">
-              <Input v-model="moreDetail.max" placeholder="aa" ></Input>
-          </FormItem> 
-        <FormItem v-width="700">
-            <Button  size="small" style="margin-right: 5px; float: right;" @click="reTable()">返回</Button>
-            <Button  size="small" style="margin-right: 5px;  float: right;" @click="reTable()">確定</Button>
-        </FormItem>
+            <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{ moreDetail.number }}</p>
+            <FormItem label="名稱:" prop="precautions" :label-width="45">
+                <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
+            </FormItem>
+            <Space size="large" wrap >
+              <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">日期:</div>
+                <DatePicker  type="date" v-model="moreDetail.date"  placement="bottom-end" placeholder="Select date" style="width: 200px" />
+            </Space>
+              <FormItem   v-width="150"  label="人數上限:" prop="max" :label-width="72">
+                  <Input v-model="moreDetail.max" placeholder="aa" ></Input>
+              </FormItem>
+              <FormItem   v-width="150"  label="已報名人數:" prop="applicants" :label-width="86">
+                  <Input v-model="moreDetail.applicants" placeholder="aa" ></Input>
+              </FormItem>
+              <FormItem   v-width="150"  label="候補人數:" prop="wait" :label-width="72">
+                  <Input v-model="moreDetail.wait" placeholder="aa" ></Input>
+              </FormItem> 
+            <FormItem v-width="700">
+                <Button  size="small" style="margin-right: 5px; float: right;" @click="reTable()">返回</Button>
+                <Button  size="small" style="margin-right: 5px;  float: right;" @click="reTable()">確定</Button>
+            </FormItem>
         </Form>
       </div>
 
@@ -55,6 +90,7 @@
 <style scoped lang="scss">
 @import "~@/assets/sass/page/_Process.scss";
 </style>
+
 <script>
 import Side from '@/components/SideNav.vue';
 
@@ -63,6 +99,7 @@ export default {
   data() {
     return {
       showMore:1,
+      modal1: false,//新增彈窗預設關閉
       columns:[
             {
               title: '旅程編號',
@@ -130,6 +167,16 @@ export default {
             daytrain:'1117/12/06',
 
           },
+          addItem:{
+            number:'',  
+            numberProcess: '',
+            date: '',
+            max :'',
+            applicants:'',
+            wait:'',
+            daytrain:'',
+
+          },
   }
 },
   components: {
@@ -146,7 +193,10 @@ export default {
     }, 
      removeN (index) {
                 this.dataNews.splice(index, 1);
-            },
+    },
+    ok () {
+                this.$Message.info('新增成功');
+    },
 
 }
 

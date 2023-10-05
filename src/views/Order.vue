@@ -5,51 +5,64 @@
       登出
     </button>
     <Layout v-width="900" :style="{ marginLeft: '300px' }">
+      <h1>訂單</h1>
       <div v-if="showMore == 1">
-        <h1>訂單</h1>
+      
 
         <Space style="margin-bottom: 10px; margin-right: 20px;">
           訂單編號:
-          <Input v-model="searchOrder" @on-change="handleSearch1" placeholder="訂單編號" style="width: 150px" />
+          <Input v-model="searchOrder" @on-change="handleSearch1"
+                 placeholder="訂單編號" style="width: 150px" />
         </Space>
         <Space style="margin-bottom: 10px;">
           會員編號:
-          <Input v-model="searchNumberMem" @on-change="handleSearch1" placeholder="會員編號" style="width: 150px" />
+          <Input v-model="searchNumberMem" @on-change="handleSearch1" 
+                placeholder="會員編號" style="width: 150px" />
         </Space>
         <Table class="Table" border :columns="columns" :data="data">
           <template #action="{ row, index }">
             <Button size="small" style="margin-right: 5px" @click="More()">編輯</Button>
-            <Button size="small" @click="remove(index, 'News')">刪除</Button>
+            <Button size="small" @click="remove(index)">刪除</Button>
           </template>
         </Table>
         <Page class="nextPage" :total="40" size="" />
       </div>
-      <!-- <div v-if="showMore==2">
-        <h1>行程</h1>
-        <Form id="FormAll" v-width="700" ref="moreDetail" :model="moreDetail" :rules="ruleValidate" :label-width="80">
-        <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{ moreDetail.number }}</p>
-        <FormItem label="名稱:" prop="precautions" :label-width="45">
-            <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
-        </FormItem>
-        <Space size="large" wrap >
-          <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">日期:</div>
-             <DatePicker  type="daterange" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
-        </Space>
-          <FormItem   v-width="150"  label="人數上限:" prop="max" :label-width="72">
-              <Input v-model="moreDetail.max" placeholder="aa" ></Input>
-          </FormItem>
-          <FormItem   v-width="150"  label="已報名人數:" prop="max" :label-width="86">
-              <Input v-model="moreDetail.max" placeholder="aa" ></Input>
-          </FormItem>
-          <FormItem   v-width="150"  label="候補人數:" prop="max" :label-width="72">
-              <Input v-model="moreDetail.max" placeholder="aa" ></Input>
-          </FormItem> 
-        <FormItem v-width="700">
-            <Button  size="small" style="margin-right: 5px; float: right;" @click="reTable()">返回</Button>
-            <Button  size="small" style="margin-right: 5px;  float: right;" @click="reTable()">確定</Button>
-        </FormItem>
-        </Form>
-      </div> -->
+      <div class="showAll" v-if="showMore==2">
+       
+        <p>訂單編號： <span>{{moreDetail.orderNumber}}</span></p>
+            <p>會員編號: <span>{{moreDetail.memNumber}}</span></p>
+            <p>出團編號： <span>{{moreDetail.groupNumber}}</span></p>
+            <p>報名人數： <span>{{moreDetail.AppNumber}}</span></p>
+            <p>訂購日期：<span>{{moreDetail.orderDate}}</span></p>
+            <p>總金額： <span>{{moreDetail.moneyAll}}</span></p>
+            <p>付款狀態： <span>{{moreDetail.payState}}</span></p>
+            <p>訂單狀態： <span>{{moreDetail.orderState}}</span></p>
+           
+            <div>
+                <Button  size="small" style="margin-right: 5px" @click="passenger()">乘客總覽</Button>
+                <Button  size="small" style="margin-right: 5px" @click="reTable()">返回</Button>
+
+            </div>
+      </div>
+      <div v-if="showMore==3">
+        <p>乘客1</p>
+        <p>旅客編號：  <span>{{passengerDetail.Number}}</span></p>
+            <p>姓名： <span>{{passengerDetail.name}}</span></p>
+            <p>性別： <span>{{passengerDetail.groupNumber}}</span></p>
+            <p>國籍： <span>{{passengerDetail.AppNumber}}</span></p>
+            <p>護照號碼：<span>{{passengerDetail.orderDate}}</span></p>
+            <p>報名狀態： <span>{{passengerDetail.moneyAll}}</span></p>
+            <p>候補順位： <span>{{passengerDetail.payState}}</span></p>
+            <p>座位編號： <span>{{passengerDetail.orderState}}</span></p>
+            <p>訓練服尺寸： <span>{{passengerDetail.orderState}}</span></p>
+            <p>飲食備註： <span>{{passengerDetail.orderState}}</span></p>
+           
+            <div>
+                <Button  size="small" style="margin-right: 5px" @click="">乘客總覽</Button>
+                <Button  size="small" style="margin-right: 5px" @click="More()">返回</Button>
+
+            </div>
+      </div>
 
     </Layout>
   </div>
@@ -109,7 +122,7 @@ export default {
           state: '成團',
         },
         {
-          number: 2,
+          number: 21,
 
           date: '2022/01/21',
           check: '8/8',
@@ -126,14 +139,27 @@ export default {
         },
 
       ],
+      moreDetail:{
+                orderNumber:1,  
+                memNumber:1,
+                groupNumber:1,
+                AppNumber:7,
+                orderDate:"1993/04/21",
+
+                moneyAll:'123422',
+                payState:'已付款',
+                orderState:'???'
+
+              }
 
     }
   },
-  created() {
-    this.datac = [...this.data];
-  },
+  
   components: {
     Side
+  },
+  created() {
+    this.datac = [...this.data];
   },
   methods: {
     More() {
@@ -145,7 +171,10 @@ export default {
 
     },
     remove(index) {
-      this.dataNews.splice(index, 1);
+      this.data.splice(index, 1);
+    },
+    passenger(){
+      this.showMore = 3;
     },
 
     search(data1, argumentObj) {
@@ -172,11 +201,7 @@ export default {
         console.log("Searching with:", argumentObj);
         for (let argu in argumentObj) {
           if (argumentObj[argu]) {
-            if (typeof d[argu] === 'string' && typeof argumentObj[argu] === 'string') {
-              if (d[argu].indexOf(argumentObj[argu]) === -1) return false;
-            } else if (typeof d[argu] === 'number' && typeof argumentObj[argu] === 'number') {
-              if (d[argu] !== argumentObj[argu]) return false;
-            }
+            return `${d[argu]}`.includes(`${argumentObj[argu]}`)
           }
         }
         return true;
@@ -184,11 +209,12 @@ export default {
     },
     handleSearch1() {
       // this.datac = [...this.data];
-      // this.data = this.search(this.datac, { number: Number(this.searchOrder) , numberMem: Number(this.searchNumberMem) });
-      const searchResult = this.search(this.datac, { number: Number(this.searchOrder), numberMem: Number(this.searchNumberMem) });
-      console.log(searchResult);
-      this.data = searchResult;
+      this.data = this.search(this.datac, { number: Number(this.searchOrder),numberMem: Number(this.searchNumberMem)  });
+      // const searchResult = this.search(this.datac, { number: Number(this.searchOrder), numberMem: Number(this.searchNumberMem) });
+      // console.log(searchResult);
+      // this.data = searchResult;
     },
+   
 
 
   }

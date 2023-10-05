@@ -32,14 +32,25 @@
 @import "~@/assets/sass/style.scss";
 
 #backGround{
-
+    position: relative;
     margin: 0 auto ;
     width: 90%;
     height: 150vh;
-    background-image:url(../assets/image/backGsvg.svg) ;
+    background-image:url(../assets/image/backGsvg.jpg) ;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    &::before{
+        position: absolute;
+        content: '';
+        // width: 100vw;
+        z-index: -1;
+        top: 0;
+        left: -5%; ;
+        width: 110%; 
+        height: 100%;
+        background: $black;
+    }
     // z-index: 0;
  
     .imgSvg{

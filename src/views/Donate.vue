@@ -16,7 +16,7 @@
       <Space size="large" style="gap :10px"  >
         <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">日期:</div>
 
-        <DatePicker type="daterange" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
+        <DatePicker type="date" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
       </Space>
           <Table class="Table" border :columns="columns" :data="data">
               <!-- <template #action="{ row, index }">

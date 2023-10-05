@@ -35,4 +35,12 @@ position: relative;
 
   }
  }
+ 
+ .showAll{
 
+  &>*{
+  margin-bottom: 30px;
+  color:$black;
+
+  }
+}

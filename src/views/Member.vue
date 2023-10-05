@@ -11,9 +11,9 @@
         <h1>會員資料</h1>
         <div v-if="showMore==1" >
             <Space class="search" direction=""   type="flex">
-                    <Input  v-width="120" search v-model="searchConNumber"
+                    <Input  v-width="120"  v-model="searchConNumber"
                             @on-change="handleSearch1"  placeholder="會員編號" />
-                    <Input  v-width="120" search   v-model="searchEmail" 
+                    <Input  v-width="120"    v-model="searchEmail" 
                              @on-change="handleSearch1"   placeholder="email" />
             </Space>    
                 <Table  class="Table" border :columns="columns" :data="data" >
@@ -250,7 +250,7 @@ import Side from '@/components/SideNav.vue';
     });
         },
         handleSearch1 () {
-            this.data = this.search(this.datac, {number: Number(this.searchConNumber), email: this.searchEmail});
+            this.data = this.search(this.datac,{number: Number(this.searchConNumber), email: this.searchEmail});
         },
     
 

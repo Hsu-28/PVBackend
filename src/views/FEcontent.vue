@@ -50,70 +50,206 @@
               </Button>
               <ImagePreview class="wwww" v-model="visible" :preview-list="['https://file.iviewui.com/images/' + imgName]" />
        </div>
+       <!-- 團隊介紹 -->
        <div v-if="changePage==1">
-        <Button @click="modal1 = true" class="add">新增 +</Button> 
+        <Button @click="modalTeam = true" class="add ivu-mb">新增 +</Button> 
+           <!-- 彈窗 -->
+            <Modal
+                  title="新增團隊"
+                  v-model="modalTeam"
+                  width="700px"
+                  :closable="true">
+                  <Form
+                    :model="addTeamItem"
+                    :label-width="80"
+                    enctype="multipart/form-data"
+                    method="post"  >
+                    <FormItem label="姓名:" prop="precautions" :label-width="45" class="ivu-mb"  v-width="200">
+                      <Input v-model="addTeamItem.name" placeholder="aa" ></Input>
+                    </FormItem>
+                  
+                    <FormItem label="照片" prop="mem_img" :label-width="40">
+                        <input  type="file" multiple />
+                    </FormItem>
+                    <FormItem   v-width="200"  label="職稱:" prop="job" :label-width="45" class="ivu-mb">
+                        <Input v-model="addTeamItem.job" placeholder="職稱" ></Input>
+                    </FormItem>
+                    <FormItem    label="經歷:" prop="exp" :label-width="45" class="ivu-mb">
+                      <Input v-model="addTeamItem.exp" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="經歷"></Input>
+                    </FormItem> 
+                  </Form>
+              </Modal>
           <Table id="TableFE" border :columns="columnsMem" :data="dataMem">
             <template #action="{ row, index }">
-                   <Button  size="small" style="margin-right: 5px" @click="clickEditBtnT">編輯</Button>
+                   <Button  size="small" style="margin-right: 5px" @click="clickTeamEdit(index)">編輯</Button>
+                    <Modal
+                      title="編輯團隊資訊"
+                      ok-text="確認修改"
+                      cancel-text="取消"
+                      v-model="TeamEdit[index]"
+                      width="700px"
+                      :closable="true"
+                      @on-ok="ok"
+                      @on-cancel="cancel">
+                      <Form
+                        :model="addTeamItem"
+                        :label-width="80"
+                        enctype="multipart/form-data"
+                        method="post"  >
+                        <FormItem label="團隊編號" :label-width="68">
+                              <text>{{ addTeamItem.number }}</text>
+                        </FormItem>
+                        <FormItem label="姓名:" prop="precautions" :label-width="45" class="ivu-mb"  v-width="200">
+                          <Input v-model="addTeamItem.name" placeholder="aa" ></Input>
+                        </FormItem>
+                      
+                        <FormItem label="照片" prop="mem_img" :label-width="40">
+                            <input  type="file" multiple />
+                        </FormItem>
+                        <FormItem   v-width="200"  label="職稱:" prop="job" :label-width="45" class="ivu-mb">
+                            <Input v-model="addTeamItem.job" placeholder="職稱" ></Input>
+                        </FormItem>
+                        <FormItem    label="經歷:" prop="exp" :label-width="45" class="ivu-mb">
+                          <Input v-model="addTeamItem.exp" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="經歷"></Input>
+                        </FormItem> 
+                      </Form>
+                   </Modal>
                    <!-- @click="clickEditBtn(index, row)" -->
                    <Button  size="small" @click="remove(index ,'Mem')">刪除</Button>
-                   <!-- <Modal
-                        v-model="clickEditBtnT"
-                        :id="row.name"
-                        title="編輯歷史故事"
-                        ok-text="確認修改"
-                        cancel-text="取消"
-                        width="700px"
-                        class="editnews-popup"
-                        :styles="{ top: '30px' }"
-                        @on-ok="replaceItem(row.name)"
-                        @on-cancel="cancelEdit"
-                    >
-                        <Form
-                          :model="addItem"
-                          :label-width="80"
-                          :rules="ruleValidate1"
-                          ref="updateForm1"
-                        >
-                          <FormItem label="故事編號" prop="number">
-                              <text>{{ addItem.number }}</text>
-                          </FormItem>
-                          <FormItem label="故事名稱" prop="story_name">
-                          <Input
-                            v-model="addItem.name"
-                            placeholder="請輸入故事標題"
-                          ></Input>
-                           </FormItem>
-                        
-                        </Form>
-                    </Modal> -->
+              
              </template>
 
             </Table>
          
 
         </div>
+        <!-- 最新消息 -->
         <div v-if="changePage==2">
-          <Button @click="modal1 = true" class="add">新增 +</Button> 
+          <Button @click="modalNews = true" class="add ivu-mb">新增 +</Button>
+            <!-- 彈窗 -->
+            <Modal
+                  title="新增最新消息"
+                  v-model="modalNews"
+                  width="700px"
+                  :closable="true">
+                  <Form
+                    :model="addNews"
+                    :label-width="80"
+                    enctype="multipart/form-data"
+                    method="post"  >
+                    <FormItem label="最新消息標題:" prop="precautions" :label-width="120" class="ivu-mb"  v-width="300">
+                      <Input v-model="addNews.title_news" placeholder="aa" ></Input>
+                    </FormItem>
+                  
+                    <FormItem label="最新消息照片:" prop="img" :label-width="120">
+                        <input  type="file" multiple />
+                    </FormItem> 
+                    <Space size="large" wrap class="ivu-mb">
+                         <div   style="font-size: 14px;color: #515a6e; padding: 8px 0; margin-left: 20px;">日期:</div>
+                         <DatePicker v-model="addNews.date" type="date" placement="bottom-end" placeholder="Select date" style="width: 200px" />
+                    </Space>
+                    <FormItem    label="內容:" prop="content" :label-width="65" class="ivu-mb">
+                      <Input v-model="addNews.content" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="內容"></Input>
+                    </FormItem> 
+                  </Form>
+              </Modal> 
 
           <Table class="Table" border :columns="columnsNews" :data="dataNews">
                   <template #action="{ row, index }">
                         
-                    <Button  size="small" style="margin-right: 5px" >編輯</Button>
+                    <Button  size="small" style="margin-right: 5px" @click="clickNewsEdit(index)">編輯</Button>
+                    <Modal
+                      title="編輯最新消息資訊"
+                      ok-text="確認修改"
+                      cancel-text="取消"
+                      v-model="NewsEdit[index]"
+                      width="700px"
+                      :closable="true"
+                      @on-ok="ok"
+                      @on-cancel="cancel">
+                      <Form
+                        :model="addNews"
+                        :label-width="80"
+                        enctype="multipart/form-data"
+                        method="post"  >
+                        <FormItem label="消息編號"  :label-width="73">
+                              <text>{{ addNews.number_News }}</text>
+                        </FormItem>
+                        <FormItem label="消息標題:" prop="title_news" :label-width="73" class="ivu-mb"  v-width="300">
+                          <Input v-model="addNews.title_news" placeholder="aa" ></Input>
+                        </FormItem>
+                      
+                        <FormItem label="消息照片" prop="img" :label-width="73">
+                            <input  type="file" multiple />
+                        </FormItem>
+                        <Space size="large" wrap class="ivu-mb">
+                            <div   style="font-size: 14px;color: #515a6e; padding: 8px 0; margin-left: 2px;">日期:</div>
+                            <DatePicker v-model="addNews.date" type="date" placement="bottom-end" placeholder="Select date" style="width: 200px" />
+                        </Space>
+                        <FormItem    label="內容:" prop="content" :label-width="45" class="ivu-mb">
+                          <Input v-model="addNews.content" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="內容"></Input>
+                        </FormItem> 
+                      </Form>
+                   </Modal>
                    <Button  size="small" @click="remove(index ,'News')">刪除</Button>
                   
                   </template>
           </Table>
           </div>
+          <!-- Q&A -->
           <div v-if="changePage==3">
-            <Button @click="modal1 = true" class="add">新增 +</Button> 
-
-          <Table class="Table" border :columns="columnsQA" :data="dataQA">
-                  <template #action="{ row, index }">
-                    <Button  size="small" style="margin-right: 5px" >編輯</Button>
-                   <Button  size="small" @click="remove(index ,'QA')">刪除</Button>
-                  </template>
-          </Table>
+            <Button @click="modalQA = true" class="add ivu-mb">新增 +</Button> 
+                <!-- 彈窗 -->
+            <Modal
+                  title="新增Q&A"
+                  v-model="modalQA"
+                  width="700px"
+                  :closable="true">
+                  <Form
+                    :model="addQA"
+                    :label-width="80"
+                    enctype="multipart/form-data"
+                    method="post"  >
+                    <FormItem label="問題標題:" prop="title_QA" :label-width="70" class="ivu-mb"  v-width="300">
+                      <Input v-model="addNews.title_QA" placeholder="標題" ></Input>
+                    </FormItem>
+                    <FormItem    label="問題答案:" prop="QA_anwer" :label-width="70" class="ivu-mb">
+                      <Input v-model="addNews.QA_anwer" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="內容"></Input>
+                    </FormItem> 
+                  </Form>
+              </Modal> 
+            <Table class="Table" border :columns="columnsQA" :data="dataQA">
+                    <template #action="{ row, index }">
+                      <Button  size="small" style="margin-right: 5px" @click="clickQAEdit(index)">編輯</Button>
+                      <Modal
+                      title="編輯問題資訊"
+                      ok-text="確認修改"
+                      cancel-text="取消"
+                      v-model="QAEdit[index]"
+                      width="700px"
+                      :closable="true"
+                      @on-ok="ok"
+                      @on-cancel="cancel">
+                      <Form
+                        :model="addQA"
+                        :label-width="80"
+                        enctype="multipart/form-data"
+                        method="post"  >
+                      
+                        <FormItem label="問題編號:" :label-width="75">
+                              <text>{{ addQA.number_QA }}</text>
+                        </FormItem>
+                        <FormItem label="問題標題:" prop="title_QA" :label-width="75" class="ivu-mb"  v-width="300">
+                          <Input v-model="addQA.title_QA" placeholder="標題" ></Input>
+                        </FormItem>
+                        <FormItem    label="問題答案:" prop="QA_anwer" :label-width="75" class="ivu-mb">
+                          <Input v-model="addQA.QA_anwer" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="內容"></Input>
+                        </FormItem> 
+                      </Form>
+                   </Modal>
+                    <Button  size="small" @click="remove(index ,'QA')">刪除</Button>
+                    </template>
+            </Table>
 
 
 
@@ -145,43 +281,7 @@ import Side from '@/components/SideNav.vue';
                   {text:'Q&A'},
 
             ],
-            // modEdit:[],
-            // addItem:{
-            //   number:'',
-            //   name:'',
-            //   img:'',
-            //   job:'',
-            //   exp:'',
-            // },
-            // ruleValidate1:[
-            //   {  required: true,
-            //       type: "date",
-            //       message: "請選擇確切穿越日期",
-            //       trigger: "blur",
-            //     },
-            //   {  required: true,
-            //   type: "date",
-            //   message: "請選擇確切穿越日期",
-            //   trigger: "blur",},
-
-            //   { 
-            //      required: true,
-            //   type: "date",
-            //   message: "請選擇確切穿越日期",
-            //   trigger: "blur",},
-              
-            //   { 
-            //      required: true,
-            //   type: "date",
-            //   message: "請選擇確切穿越日期",
-            //   trigger: "blur",},
-              
-            //   { 
-            //      required: true,
-            //   type: "date",
-            //   message: "請選擇確切穿越日期",
-            //   trigger: "blur",},                        
-            // ],
+          
 
             defaultList: [
                     {
@@ -190,9 +290,11 @@ import Side from '@/components/SideNav.vue';
                     },
                     
                 ],
-                imgName: '',
-                visible: false,
-                uploadList: [],
+            imgName: '',
+            visible: false,
+            uploadList: [],
+            modalTeam: false,//彈窗
+            TeamEdit:[],
             columnsMem:[
                 {
                   title: '團隊成員編號',
@@ -204,7 +306,7 @@ import Side from '@/components/SideNav.vue';
                 },      
                 {
                   title: '成員照片路徑',
-                  key: 'img'
+                  key: 'mem_img'
                 },      
                 {
                   title: '成員職位',
@@ -219,15 +321,27 @@ import Side from '@/components/SideNav.vue';
                   slot: 'action',
                 },           
             ],
+            // 彈窗資料
+            addTeamItem:
+            {
+                  number: null,
+                  name: '',
+                  mem_img: '',
+                  job:``,
+                  exp:``,
+            },
+            
             dataMem:[
                 {
                   number: 1,
                   name: '李曉如',
-                  img: '../assets/image/more.svg',
+                  mem_img: '../assets/image/more.svg',
                   job:`工程師`,
                   exp:`111111`,
                 },
             ],
+            NewsEdit:[],
+            modalNews:false, //彈窗
             columnsNews:[
                 {
                   title: '消息編號',
@@ -257,12 +371,23 @@ import Side from '@/components/SideNav.vue';
             dataNews:[
                 {
                   number_News: 1,
-                  title_news: '李曉如',
+                  title_news: 'aaaa',
                   img: '../assets/image/more.svg',
                   date:`1111/11/1`,
                   content:`111111`,
                 },
             ],
+            addNews:[
+                {
+                  number_News: null,
+                  title_news: '',
+                  img: '',
+                  date:``,
+                  content:``,
+                },
+            ],
+            modalQA:false, //彈窗
+            QAEdit:[],
             columnsQA:[
                 {
                   title: '問題編號',
@@ -276,10 +401,10 @@ import Side from '@/components/SideNav.vue';
                   title: '問題答案',
                   key: 'QA_anwer'
                 },      
-              
                 {
                   title: '編輯',
                   slot: 'action',
+                  width:140
                 },           
             ],
 
@@ -287,8 +412,16 @@ import Side from '@/components/SideNav.vue';
                 {
                   number_QA: 1,
                   title_QA: '問題標題',
-             
                   QA_anwer:`QA_anwerQA_anwerQA_anwerQA_anwer`,
+                
+                },
+            ],
+            addQA:[
+                {
+                  number_QA: null,
+                  title_QA: '',
+             
+                  QA_anwer:``,
                 
                 },
             ],
@@ -340,6 +473,18 @@ import Side from '@/components/SideNav.vue';
               this.changePage=index;
               console.log(this.changePage);
             },   
+            clickTeamEdit(index) {
+                this.TeamEdit[index] = true;
+                this.addTeamItem = { ...this.dataMem[index] };
+            },
+            clickNewsEdit(index){
+                this.NewsEdit[index] = true;
+                this.addNews = { ...this.dataNews[index] };
+            },
+            clickQAEdit(index){
+                this.QAEdit[index] = true;
+                this.addQA = { ...this.dataNews[index] };
+            },
             remove (index,type) {
               if(type==='Mem'){
                    this.dataMem.splice(index, 1);
@@ -370,41 +515,7 @@ import Side from '@/components/SideNav.vue';
                 cancelEdit() {
          this.addItem = { ...this.resetItem };
           },
-      
-      //     cancelEdit() {
-      //    this.addItem = { ...this.resetItem };
-      //     },
-      //     clickEditBtn(index, row) {
-      //    this.modal3[index] = true;
-      //    const story_id = row.story_id;
-      //    // console.log(row.story_id);
-
-      //    fetch(`${BASE_URL}/getHistoryArticles.php`, {
-      //       method: "POST",
-      //       body: JSON.stringify({
-      //          story_id: story_id,
-      //       }),
-      //    })
-      //       .then((res) => res.json())
-      //       .then((result) => {
-      //          // console.log(result);
-      //          const articles = {
-      //             story_title_01: result[0].story_title,
-      //             story_title_02: result[1].story_title,
-      //             story_title_03: result[2].story_title,
-      //             story_title_04: result[3].story_title,
-      //             story_title_05: result[4].story_title,
-      //             story_content_01: result[0].story_content,
-      //             story_content_02: result[1].story_content,
-      //             story_content_03: result[2].story_content,
-      //             story_content_04: result[3].story_content,
-      //             story_content_05: result[4].story_content,
-      //          };
-      //          // console.log(articles);
-      //          this.addItem = { ...this.dataList[index], ...articles };
-      //          // console.log(this.addItem);
-      //       });
-      // },
+     
         },
       
         mounted () {
