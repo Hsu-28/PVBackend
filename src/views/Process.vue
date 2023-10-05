@@ -32,14 +32,14 @@
                 <Option value="ggg">金星</Option>
             </Select>
         </FormItem>
-        <div style="display: flex;">
+        <!-- <div style="display: flex;">
           <FormItem  v-width="120" label="人數下限:" prop="min">
               <Input v-model="moreDetail.min" placeholder="aa" ></Input>
           </FormItem>
           <FormItem   v-width="120"  label="人數上限:" prop="max">
               <Input v-model="moreDetail.max" placeholder="aa" ></Input>
           </FormItem>
-        </div>
+        </div> -->
         <FormItem     label="行程簡介:" prop="max">
           
             <Input v-model="moreDetail.summary" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
@@ -51,11 +51,17 @@
           <FormItem     label="日程標題1:" prop="max">
             <Input v-model="moreDetail.day1Title" placeholder="aa" ></Input>          
           </FormItem>
+          <FormItem label="照片1" prop="img1" :label-width="40">
+            <input  type="file" multiple />
+          </FormItem>
           <FormItem     label="日程內容1:" prop="max">
                <Input v-model="moreDetail.day1Text" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
           <FormItem     label="日程標題2:" prop="max">
             <Input v-model="moreDetail.day2Title" placeholder="aa" ></Input>          
+          </FormItem>
+          <FormItem label="照片2" prop="img1" :label-width="40">
+            <input  type="file" multiple />
           </FormItem>
           <FormItem     label="日程內容2:" prop="max">
                <Input v-model="moreDetail.day3Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
@@ -63,11 +69,17 @@
           <FormItem     label="日程標題3:" prop="max">
             <Input v-model="moreDetail.day3Title" placeholder="aa" ></Input>          
           </FormItem>
+          <FormItem label="照片3" prop="img1" :label-width="40">
+            <input  type="file" multiple />
+          </FormItem>
           <FormItem     label="日程內容3:" prop="max">
                <Input v-model="moreDetail.day2Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
           <FormItem     label="日程標題4:" prop="max">
             <Input v-model="moreDetail.day4Title" placeholder="aa" ></Input>          
+          </FormItem>
+          <FormItem label="照片4" prop="img4" :label-width="40">
+            <input  type="file" multiple />
           </FormItem>
           <FormItem     label="日程內容4:" prop="max">
                <Input v-model="moreDetail.day4Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
@@ -75,21 +87,30 @@
           <FormItem     label="日程標題5:" prop="max">
             <Input v-model="moreDetail.day5Title" placeholder="aa" ></Input>          
           </FormItem>
+          <FormItem label="照片5" prop="img5" :label-width="40">
+            <input  type="file" multiple />
+          </FormItem>
           <FormItem     label="日程內容5:" prop="max">
                <Input v-model="moreDetail.day5Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
           <FormItem     label="日程標題6:" prop="max">
             <Input v-model="moreDetail.day6Title" placeholder="aa" ></Input>          
           </FormItem>
+          <FormItem label="照片6" prop="img6" :label-width="40">
+            <input  type="file" multiple />
+          </FormItem>
           <FormItem     label="日程內容6:" prop="max">
                <Input v-model="moreDetail.day6Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
-          <FormItem     label="日程標題7:" prop="max">
+          <!-- <FormItem     label="日程標題7:" prop="max">
             <Input v-model="moreDetail.day7Title" placeholder="aa" ></Input>          
+          </FormItem>
+          <FormItem label="照片7" prop="img7" :label-width="40">
+            <input  type="file" multiple />
           </FormItem>
           <FormItem     label="日程內容7:" prop="max">
                <Input v-model="moreDetail.day7Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
-          </FormItem>
+          </FormItem> -->
       
         <FormItem v-width="700">
             <Button  size="small" style="margin-right: 5px; float: right;" @click="reTable()">返回</Button>

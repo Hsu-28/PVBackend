@@ -45,20 +45,23 @@
             </div>
       </div>
       <div v-if="showMore==3">
-        <p>乘客1</p>
-        <p>旅客編號：  <span>{{passengerDetail.Number}}</span></p>
-            <p>姓名： <span>{{passengerDetail.name}}</span></p>
-            <p>性別： <span>{{passengerDetail.groupNumber}}</span></p>
-            <p>國籍： <span>{{passengerDetail.AppNumber}}</span></p>
-            <p>護照號碼：<span>{{passengerDetail.orderDate}}</span></p>
-            <p>報名狀態： <span>{{passengerDetail.moneyAll}}</span></p>
-            <p>候補順位： <span>{{passengerDetail.payState}}</span></p>
-            <p>座位編號： <span>{{passengerDetail.orderState}}</span></p>
-            <p>訓練服尺寸： <span>{{passengerDetail.orderState}}</span></p>
-            <p>飲食備註： <span>{{passengerDetail.orderState}}</span></p>
-           
+        <div v-for="(passengerMore, index) in passengerDetail" :key="index">
+          <p>乘客</p>
+          <p>旅客編號：  <span>{{passengerMore.id}}</span></p>
+              <p>姓名： <span>{{passengerMore.name}}</span></p>
+              <p>性別： <span>{{passengerMore.gender}}</span></p>
+              <p>國籍： <span>{{passengerMore.nationality}}</span></p>
+              <p>護照號碼：<span>{{passengerMore.passport}}</span></p>
+              <p>報名狀態： <span>{{passengerMore.status}}</span></p>
+              <p>候補順位： <span>{{passengerMore.alternate_order}}</span></p>
+              <p>座位編號： <span>{{passengerMore.seat_no}}</span></p>
+              <p>訓練服尺寸： <span>{{passengerMore.shirt_size}}</span></p>
+              <p>飲食備註: <span>{{passengerMore.diet}}</span></p>
+              <!-- <FormItem    label="飲食備註:" prop="exp" :label-width="45" class="ivu-mb">
+                 <Input v-model="passengerMore.diet" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="經歷"></Input>
+              </FormItem>  -->
+        </div>
             <div>
-                <Button  size="small" style="margin-right: 5px" @click="">乘客總覽</Button>
                 <Button  size="small" style="margin-right: 5px" @click="More()">返回</Button>
 
             </div>
@@ -150,7 +153,25 @@ export default {
                 payState:'已付款',
                 orderState:'???'
 
-              }
+              },
+
+              passengerDetail:[
+                {
+                  id:'111',
+                  name:'Tom Smith',
+                  gender:'男',
+                  nationality:'美國',
+                  passport:'XYZ1234567',
+                  status:'備取',
+                  alternate_order:null,
+                  seat_no:4,
+                  shirt_size:'M',
+                  diet:'不吃牛肉',
+                }
+
+
+
+              ]
 
     }
   },
