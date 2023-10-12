@@ -7,7 +7,97 @@
     <Layout v-width="900" :style="{marginLeft: '300px'} ">
       <div v-if="showMore==1" >
       <h1>行程介紹</h1>
-      <Button @click="modal1 =true" class="add">新增 +</Button> 
+      <Button @click="modalProcess =true" class="add">新增 +</Button>
+        <Modal
+                  title="新增團隊"
+                  v-model="modalProcess"
+                  width="700px"
+                  :closable="true">
+                <Form
+                    :model="moreDetail"
+                    :label-width="80"
+                    enctype="multipart/form-data"
+                    method="post"  >
+                  <FormItem label="地點:" prop="precautions" :label-width="47">
+                   <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
+                  </FormItem>
+            <FormItem  :label-width="60" label="標題" prop="title">
+                <Select v-model="moreDetail.title" >
+                    <Option value="qqq">繞行</Option>
+                    <Option value="moon">月球</Option>
+                    <Option value="fire">火星</Option>
+                    <Option value="ggg">金星</Option>
+                </Select>
+            </FormItem>
+            <FormItem label="小標題:" prop="smTitle" :label-width="58">
+                <Input v-model="moreDetail.smTitle" placeholder="aa" ></Input>
+            </FormItem>
+          
+            <FormItem   :label-width="73"  label="行程簡介:" prop="max">
+              
+                <Input v-model="moreDetail.summary" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              </FormItem>
+              <!-- <FormItem     label="注意事項:" prop="max">
+                  <Input v-model="moreDetail.precautions" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              </FormItem> -->
+              <div style="font-size: 18px;color: #515a6e; padding-left: 2px;padding-bottom: 10px;">行程內容</div>
+              <FormItem     label="日程標題1:" prop="max">
+                <Input v-model="moreDetail.day1Title" placeholder="aa" ></Input>          
+              </FormItem>
+              <FormItem label="照片1" prop="img1" :label-width="50">
+                <input  type="file" multiple />
+              </FormItem>
+              <FormItem     label="日程內容1:" prop="max">
+                  <Input v-model="moreDetail.day1Text" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              </FormItem>
+              <FormItem     label="日程標題2:" prop="max">
+                <Input v-model="moreDetail.day2Title" placeholder="aa" ></Input>          
+              </FormItem>
+              <FormItem label="照片2" prop="img1" :label-width="50">
+                <input  type="file" multiple />
+              </FormItem>
+              <FormItem     label="日程內容2:" prop="max">
+                  <Input v-model="moreDetail.day3Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              </FormItem>
+              <FormItem     label="日程標題3:" prop="max">
+                <Input v-model="moreDetail.day3Title" placeholder="aa" ></Input>          
+              </FormItem>
+              <FormItem label="照片3" prop="img1" :label-width="50">
+                <input  type="file" multiple />
+              </FormItem>
+              <FormItem     label="日程內容3:" prop="max">
+                  <Input v-model="moreDetail.day2Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              </FormItem>
+              <FormItem     label="日程標題4:" prop="max">
+                <Input v-model="moreDetail.day4Title" placeholder="aa" ></Input>          
+              </FormItem>
+              <FormItem label="照片4" prop="img4" :label-width="40">
+                <input  type="file" multiple />
+              </FormItem>
+              <FormItem     label="日程內容4:" prop="max">
+                  <Input v-model="moreDetail.day4Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              </FormItem>
+              <FormItem     label="日程標題5:" prop="max">
+                <Input v-model="moreDetail.day5Title" placeholder="aa" ></Input>          
+              </FormItem>
+              <FormItem label="照片5" prop="img5" :label-width="50">
+                <input  type="file" multiple />
+              </FormItem>
+              <FormItem     label="日程內容5:" prop="max">
+                  <Input v-model="moreDetail.day5Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              </FormItem>
+              <FormItem     label="日程標題6:" prop="max">
+                <Input v-model="moreDetail.day6Title" placeholder="aa" ></Input>          
+              </FormItem>
+              <FormItem label="照片6" prop="img6" :label-width="50">
+                <input  type="file" multiple />
+              </FormItem>
+              <FormItem     label="日程內容6:" prop="max">
+                  <Input v-model="moreDetail.day6Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              </FormItem>
+           </Form>
+          </Modal>
+      
 
           <Table class="Table" border :columns="columns" :data="data">
                   <template #action="{ row, index }">
@@ -21,16 +111,19 @@
         <h1>行程</h1>
         <Form id="FormAll" v-width="700" ref="moreDetail" :model="moreDetail" :rules="ruleValidate" :label-width="80">
         <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{ moreDetail.number }}</p>
-        <FormItem label="地點:" prop="precautions">
+        <FormItem label="地點:" prop="precautions" :label-width="47">
             <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
         </FormItem>
-        <FormItem label="標題" prop="">
-            <Select v-model="moreDetail.location" placeholder="Select your city">
+        <FormItem  :label-width="60" label="標題" prop="title">
+            <Select v-model="moreDetail.title" >
                 <Option value="qqq">繞行</Option>
                 <Option value="moon">月球</Option>
                 <Option value="fire">火星</Option>
                 <Option value="ggg">金星</Option>
             </Select>
+        </FormItem>
+        <FormItem label="小標題:" prop="smTitle" :label-width="58">
+            <Input v-model="moreDetail.smTitle" placeholder="aa" ></Input>
         </FormItem>
         <!-- <div style="display: flex;">
           <FormItem  v-width="120" label="人數下限:" prop="min">
@@ -40,18 +133,18 @@
               <Input v-model="moreDetail.max" placeholder="aa" ></Input>
           </FormItem>
         </div> -->
-        <FormItem     label="行程簡介:" prop="max">
+        <FormItem   :label-width="73"  label="行程簡介:" prop="max">
           
             <Input v-model="moreDetail.summary" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
-          <FormItem     label="注意事項:" prop="max">
+          <!-- <FormItem     label="注意事項:" prop="max">
                <Input v-model="moreDetail.precautions" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
-          </FormItem>
+          </FormItem> -->
           <div style="font-size: 18px;color: #515a6e; padding-left: 2px;padding-bottom: 10px;">行程內容</div>
           <FormItem     label="日程標題1:" prop="max">
             <Input v-model="moreDetail.day1Title" placeholder="aa" ></Input>          
           </FormItem>
-          <FormItem label="照片1" prop="img1" :label-width="40">
+          <FormItem label="照片1" prop="img1" :label-width="50">
             <input  type="file" multiple />
           </FormItem>
           <FormItem     label="日程內容1:" prop="max">
@@ -60,7 +153,7 @@
           <FormItem     label="日程標題2:" prop="max">
             <Input v-model="moreDetail.day2Title" placeholder="aa" ></Input>          
           </FormItem>
-          <FormItem label="照片2" prop="img1" :label-width="40">
+          <FormItem label="照片2" prop="img1" :label-width="50">
             <input  type="file" multiple />
           </FormItem>
           <FormItem     label="日程內容2:" prop="max">
@@ -69,7 +162,7 @@
           <FormItem     label="日程標題3:" prop="max">
             <Input v-model="moreDetail.day3Title" placeholder="aa" ></Input>          
           </FormItem>
-          <FormItem label="照片3" prop="img1" :label-width="40">
+          <FormItem label="照片3" prop="img1" :label-width="50">
             <input  type="file" multiple />
           </FormItem>
           <FormItem     label="日程內容3:" prop="max">
@@ -87,7 +180,7 @@
           <FormItem     label="日程標題5:" prop="max">
             <Input v-model="moreDetail.day5Title" placeholder="aa" ></Input>          
           </FormItem>
-          <FormItem label="照片5" prop="img5" :label-width="40">
+          <FormItem label="照片5" prop="img5" :label-width="50">
             <input  type="file" multiple />
           </FormItem>
           <FormItem     label="日程內容5:" prop="max">
@@ -96,7 +189,7 @@
           <FormItem     label="日程標題6:" prop="max">
             <Input v-model="moreDetail.day6Title" placeholder="aa" ></Input>          
           </FormItem>
-          <FormItem label="照片6" prop="img6" :label-width="40">
+          <FormItem label="照片6" prop="img6" :label-width="50">
             <input  type="file" multiple />
           </FormItem>
           <FormItem     label="日程內容6:" prop="max">
@@ -142,6 +235,7 @@ export default {
       data() {
         return {
           showMore:1,
+          modalProcess: false,
           columns:[
                 {
                   title: '編號',
@@ -240,6 +334,7 @@ export default {
                 number:'1',  
                 location: '月球',
                 title: '月球背面探索之旅2',
+                smTitle:'',
                 summary :'11111111111111',
                 min:"5",
                 max:'10',

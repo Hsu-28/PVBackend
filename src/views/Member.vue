@@ -35,6 +35,7 @@
         <div class="showAll" v-if="showMore==2">
             <p>會員編號: <span>{{moreDetail.number}}</span></p>
             <p>會員等級: <span>{{moreDetail.level}}</span></p>
+            <p>暱稱: <span>{{moreDetail.nickname}}</span></p>
             <p>姓名: <span>{{moreDetail.name}}</span></p>
             <p>性別: <span>{{moreDetail.gender}}</span></p>
             <p>生日: <span>{{moreDetail.birthday}}</span></p>
@@ -186,6 +187,7 @@ import Side from '@/components/SideNav.vue';
               moreDetail:{
                 number:'1',  
                 level:2,
+                nickname:'shun',
                 name:'謝順',
                 gender :'男',
                 birthday:"1993/04/21",

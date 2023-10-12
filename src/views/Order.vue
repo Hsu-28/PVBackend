@@ -46,23 +46,46 @@
       </div>
       <div v-if="showMore==3">
         <div v-for="(passengerMore, index) in passengerDetail" :key="index">
-          <p>乘客</p>
-          <p>旅客編號：  <span>{{passengerMore.id}}</span></p>
-              <p>姓名： <span>{{passengerMore.name}}</span></p>
-              <p>性別： <span>{{passengerMore.gender}}</span></p>
-              <p>國籍： <span>{{passengerMore.nationality}}</span></p>
-              <p>護照號碼：<span>{{passengerMore.passport}}</span></p>
-              <p>報名狀態： <span>{{passengerMore.status}}</span></p>
-              <p>候補順位： <span>{{passengerMore.alternate_order}}</span></p>
-              <p>座位編號： <span>{{passengerMore.seat_no}}</span></p>
-              <p>訓練服尺寸： <span>{{passengerMore.shirt_size}}</span></p>
-              <p>飲食備註: <span>{{passengerMore.diet}}</span></p>
+          <p  class="ivu-mb">乘客 {{index+1}}</p>
+          <p class="ivu-mb">旅客編號：  <span>{{passengerMore.id}}</span></p>
+              <p class="ivu-mb">姓名： <span>{{passengerMore.name}}</span></p>
+              <p class="ivu-mb">性別： <span>{{passengerMore.gender}}</span></p>
+              <p class="ivu-mb">生日： <span>{{passengerMore.birthday }}</span></p>
+              <p class="ivu-mb">國籍： <span>{{passengerMore.nationality}}</span></p>
+              <p class="ivu-mb">護照號碼：<span>{{passengerMore.passport}}</span></p>
+              <div style="width:600px; ">
+                <p>健康審核</p>
+                 
+                  <Select v-model="modelHealth" style="width:200px; "  class="ivu-mb" >
+                    <Option value="審核中" label="審核中">
+                        <span>審核中</span>
+                      
+                      </Option>
+                      <Option value="通過" label="通過">
+                          <span>通過</span>
+                      </Option>
+                      <Option value="未通過" label="未通過">
+                          <span>未通過</span>
+                      </Option>
+                  </Select>
+              </div>
+             
+              <Space  class="ivu-mb" wrap>
+                  <Button :size="buttonSize" icon="ios-download-outline" type="primary">體檢報告</Button>
+              </Space>
+              <p class="ivu-mb">報名狀態： <span>{{passengerMore.status}}</span></p>
+              <p class="ivu-mb">候補順位： <span>{{passengerMore.alternate_order}}</span></p>
+              <p class="ivu-mb">座位編號： <span>{{passengerMore.seat_no}}</span></p>
+              <p class="ivu-mb">訓練審核： <span>{{passengerMore.training_result}}</span></p>
+              <p class="ivu-mb">訓練服尺寸： <span>{{passengerMore.shirt_size}}</span></p>
+              <p class="ivu-mb">飲食備註: <span>{{passengerMore.diet}}</span></p>
               <!-- <FormItem    label="飲食備註:" prop="exp" :label-width="45" class="ivu-mb">
                  <Input v-model="passengerMore.diet" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="經歷"></Input>
               </FormItem>  -->
         </div>
             <div>
                 <Button  size="small" style="margin-right: 5px" @click="More()">返回</Button>
+                <Button  size="small" style="margin-right: 5px;  " @click="reTable()">確定</Button>
 
             </div>
       </div>
@@ -160,11 +183,14 @@ export default {
                   id:'111',
                   name:'Tom Smith',
                   gender:'男',
+                  birthday:'1999/02/11',
                   nationality:'美國',
                   passport:'XYZ1234567',
+                  modelHealth:'通過',
                   status:'備取',
                   alternate_order:null,
                   seat_no:4,
+                  training_result:'通過',
                   shirt_size:'M',
                   diet:'不吃牛肉',
                 }

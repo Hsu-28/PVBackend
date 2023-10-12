@@ -6,7 +6,7 @@
      登出
     </button>
       <Layout v-width="900" :style="{marginLeft: '300px'} ">
-        <h1>會員資料</h1>
+        <h1>內容管理</h1>
         <div class="buttonAll">
             <div  direction="vertical" v-for="(item,index) in changePageText">
                 <div  @click="changeButton(index)" :class="[changePage == index ? 'thisPage' : 'buttonPage' ]">{{item.text}}</div>
@@ -309,7 +309,7 @@ import Side from '@/components/SideNav.vue';
                   key: 'mem_img'
                 },      
                 {
-                  title: '成員職位',
+                  title: '成員職稱',
                   key: 'job'
                 },      
                 {

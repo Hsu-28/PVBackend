@@ -26,8 +26,12 @@
               <FormItem label="名稱:" prop="precautions" :label-width="45" class="ivu-mb">
                 <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
               </FormItem>
-              <Space size="large" wrap class="ivu-mb">
-                  <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">日期:</div>
+              <Space size="large" rap  class="ivu-mb">
+                  <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">訓練起始日期:</div>
+                  <DatePicker v-model="addItem.trianing_date" type="date" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
+              </Space>
+              <Space size="large"  rap class="ivu-mb">
+                  <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">出發日期:</div>
                   <DatePicker v-model="addItem.date" type="date" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
               </Space>
               <FormItem   v-width="150"  label="人數上限:" prop="max" :label-width="72" class="ivu-mb">
@@ -39,15 +43,19 @@
               <FormItem   v-width="150"  label="候補人數:" prop="max" :label-width="72" class="ivu-mb">
                   <Input v-model="addItem.wait" placeholder="aa" ></Input>
               </FormItem> 
+<!--               
+              <template>
+                    <Input v-model="value" placeholder="出發日期" style="width: 150px" />
+                     <span> -</span>
+                    <Input v-model="value" placeholder="回程日期" style="width: 150px" /> 
+              </template>  -->
             </Form>
         </Modal>
+        
+      <!-- <template>
+            <Input v-model="value" placeholder="訓練日期" style="width: 150px" />
+      </template>  -->
 
-
-      <template>
-            <Input v-model="value" placeholder="出發日期" style="width: 150px" />
-            <!-- <span> -</span>
-            <Input v-model="value" placeholder="回程日期" style="width: 150px" /> -->
-      </template> 
           <Table class="Table" border :columns="columns" :data="data">
               <template #action="{ row, index }">
                 <Button  size="small" style="margin-right: 5px" @click="More()">編輯</Button>
@@ -63,10 +71,14 @@
             <FormItem label="名稱:" prop="precautions" :label-width="45">
                 <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
             </FormItem>
-            <Space size="large" wrap >
-              <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">日期:</div>
-                <DatePicker  type="date" v-model="moreDetail.date"  placement="bottom-end" placeholder="Select date" style="width: 200px" />
-            </Space>
+              <Space size="large"   class="ivu-mb">
+                  <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">訓練起始日期:</div>
+                  <DatePicker v-model="addItem.trianing_date" type="date" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
+              </Space>
+                <Space size="large"    class="ivu-mb">
+                  <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">出發日期:</div>
+                    <DatePicker  type="date" v-model="moreDetail.date"  placement="bottom-end" placeholder="Select date" style="width: 200px" />
+                </Space>
               <FormItem   v-width="150"  label="人數上限:" prop="max" :label-width="72">
                   <Input v-model="moreDetail.max" placeholder="aa" ></Input>
               </FormItem>
@@ -88,7 +100,7 @@
 
 </template>
 <style scoped lang="scss">
-@import "~@/assets/sass/page/_Process.scss";
+@import "~@/assets/sass/page/_Group.scss";
 </style>
 
 <script>
@@ -104,16 +116,22 @@ export default {
             {
               title: '旅程編號',
               key: 'number',
-              width:80
             },      
           
             {
               title: '名稱',
-              key: 'title'
-            },      
+              key: 'title',
+              width: 160
+            },  
+            {
+              title: '訓練起始日期',
+              key: 'trianing_date',
+              width: 100
+            },          
             {
               title: '出發日期',
-              key: 'date'
+              key: 'date',
+              width: 110
             },      
             {
               title: '報名人數',
@@ -136,12 +154,13 @@ export default {
             {
               title: '狀態',
               key: 'state',
-              width: 80
+              width: 90
 
             },      
             {
               title: '編輯',
               slot: 'action',
+              width: 150
             },           
         ],
         data:[
@@ -149,6 +168,7 @@ export default {
               number: 1,
               
               title: '月球背面探索之旅1',
+              trianing_date:'1117/11/02',
               date: '2022/01/21',
               applicants: '8/8',
               pass: '7/8',
@@ -164,7 +184,9 @@ export default {
             max :'11',
             applicants:'8/8',
             wait:'6',
+            trianing_date:'1117/11/02',
             daytrain:'1117/12/06',
+
 
           },
           addItem:{
@@ -174,6 +196,7 @@ export default {
             max :'',
             applicants:'',
             wait:'',
+            trianing_date:'',
             daytrain:'',
 
           },
