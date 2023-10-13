@@ -111,10 +111,10 @@
         <h1>行程</h1>
         <Form id="FormAll" v-width="700" ref="moreDetail" :model="moreDetail" :rules="ruleValidate" :label-width="80">
         <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{ moreDetail.number }}</p>
-        <FormItem label="地點:" prop="precautions" :label-width="47">
-            <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
+        <FormItem label="地點:" prop="precautions" :label-width="47" placeholder="aa">
+            <Input v-model="moreDetail.precautions"  ></Input>
         </FormItem>
-        <FormItem  :label-width="60" label="標題" prop="title">
+        <FormItem  :label-width="60" label="標題" placeholder="aa" prop="title">
             <Select v-model="moreDetail.title" >
                 <Option value="qqq">繞行</Option>
                 <Option value="moon">月球</Option>
