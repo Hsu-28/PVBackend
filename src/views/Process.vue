@@ -103,7 +103,7 @@
                   <template #action="{ row, index }">
                   
                     <Button  size="small" style="margin-right: 5px" @click="More()">編輯</Button>
-                   <Button  size="small" @click="remove(index ,'News')">刪除</Button>
+                   <Button  size="small" @click="remove(index)">刪除</Button>
                   </template>
           </Table>  
       </div>
@@ -383,6 +383,9 @@ export default {
             this.showMore=1;
             
         },
+        remove (index) {
+                this.data.splice(index, 1);
+    },
         // handleSubmit (name) {
         //         this.$refs[name].validate((valid) => {
         //             if (valid) {

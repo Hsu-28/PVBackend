@@ -68,7 +68,7 @@
                 
                 
                 
-                <Button  size="small" @click="remove(index ,'News')">刪除</Button>
+                <Button  size="small" @click="remove(index)">刪除</Button>
               </template>
           </Table>  
           <Page  class="nextPage" :total="40" size="20" />
@@ -153,8 +153,8 @@ export default {
         this.showMore=1;
         
     }, 
-     removeN (index) {
-                this.dataNews.splice(index, 1);
+     remove (index) {
+                this.data.splice(index, 1);
             },
 
 }

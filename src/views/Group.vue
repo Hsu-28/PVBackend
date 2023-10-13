@@ -59,7 +59,7 @@
           <Table class="Table" border :columns="columns" :data="data">
               <template #action="{ row, index }">
                 <Button  size="small" style="margin-right: 5px" @click="More()">編輯</Button>
-                <Button  size="small" @click="remove(index ,'News')">刪除</Button>
+                <Button  size="small" @click="remove(index)">刪除</Button>
               </template>
           </Table>  
           <Page  class="nextPage" :total="40" size="" />
@@ -214,8 +214,8 @@ export default {
         this.showMore=1;
         
     }, 
-     removeN (index) {
-                this.dataNews.splice(index, 1);
+     remove (index) {
+                this.data.splice(index, 1);
     },
     ok () {
                 this.$Message.info('新增成功');
