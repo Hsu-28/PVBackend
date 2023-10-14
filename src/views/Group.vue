@@ -126,7 +126,7 @@ export default {
           
             {
               title: '名稱',
-              key: 'title',
+              key: 'planet_subtitle',
               width: 160
             },  
             {

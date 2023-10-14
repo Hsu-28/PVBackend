@@ -5,7 +5,9 @@ header("Content-Type: application/json");
 
 try {
     require_once("../../../connectdb.php");
-    $sql = "SELECT * FROM trip"; 
+    $sql = "SELECT *
+    FROM trip
+    JOIN itinerary "; 
     $query = $pdo->query($sql);
     $orders = $query->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($orders); //將資料轉成JSON格式並輸出
