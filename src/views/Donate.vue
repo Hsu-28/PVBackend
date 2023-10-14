@@ -18,7 +18,7 @@
 
         <DatePicker type="date" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
       </Space>
-          <Table class="Table" border :columns="columns" :data="data">
+          <Table class="Table" border :columns="columns" :data="myData">
               <!-- <template #action="{ row, index }">
                 <Button  size="small" style="margin-right: 5px" @click="More()">編輯</Button>
                 <Button  size="small" @click="remove(index ,'News')">刪除</Button>
@@ -36,6 +36,7 @@
 @import "~@/assets/sass/page/_Donate.scss";
 </style>
 <script>
+import axios from 'axios';
 import Side from '@/components/SideNav.vue';
 
 export default {
@@ -49,22 +50,20 @@ export default {
       columns:[
             {
               title: '捐獻編號',
-              key: 'number',
+              key: 'donate_no',
             },      
-          
-           
             {
               title: '捐獻日期',
-              key: 'date'
+              key: 'donate_date'
             },      
             {
               title: '捐獻金額',
-              key: 'money',
+              key: 'donate_amount',
 
             },    
             {
               title: '會員編號',
-              key: 'numberMem'
+              key: 'donate_id'
             },        
             {
               title: '電子郵件',
@@ -74,45 +73,15 @@ export default {
          
             {
               title: '捐款狀態',
-              key: 'state'
+              key: 'donate_stat'
             },      
             // {
             //   title: '編輯',
             //   slot: 'action',
             // },           
         ],
-        data:[
-            {
-              number: 1,
-              
-              title: '月球背面探索之旅1',
-              date: '2022/01/21',
-              money: '8888',
-              numberMem: '711',
-              email: '5444@gmail.com',
-              state : '????',             
-            },
-            {
-              number: 1,
-              
-              title: '火星背面探索之旅1',
-              date: '2022/02/21',
-              money: '8888',
-              numberMem: '232',
-              email: '334@gmail.com',
-              state : '????',             
-            },
-            {
-              number: 1,
-              
-              title: '火星背面探索之旅1',
-              date: '2022/02/21',
-              money: '8888',
-              numberMem: '151',
-              email: '774@gmail.com',
-              state : '????',             
-            },
-         
+        myData:[
+
         ],
         moreDetail:{
             number:'1',  
@@ -134,25 +103,7 @@ export default {
     },
     methods:{
       search (data1, argumentObj) {
-            // let res = data1;
-            // let dataClone = data1;
-            // for (let argu in argumentObj) {
-            //     if (argumentObj[argu].length > 0 || typeof argumentObj[argu] === 'number') {
-            //         res = dataClone.filter(d => {
-            //             // If the data and argument are strings, use indexOf
-            //             if (typeof d[argu] === 'string' && typeof argumentObj[argu] === 'string') {
-            //                 return d[argu].indexOf(argumentObj[argu]) > -1;
-            //             }
-            //             // If the data and argument are numbers, directly compare
-            //             else if (typeof d[argu] === 'number' && typeof argumentObj[argu] === 'number') {
-            //                 return d[argu] === argumentObj[argu];
-            //             }
-            //             return false;
-            //         });
-            //         dataClone = res;
-            //     }
-            // }
-            // return res;
+            
             return data1.filter(d => {
         for (let argu in argumentObj) {
             if (argumentObj[argu]) {
@@ -172,6 +123,16 @@ export default {
     
 
 
+    },
+    created() {
+        // 發起HTTP GET 請求
+        axios.get('http://localhost/PV/PVBackend/public/php/donate.php')
+            .then(response => {
+                this.myData = response.data;
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 
 }
