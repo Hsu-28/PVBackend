@@ -93,7 +93,7 @@ export default {
               state : '????',             
             },
             {
-              number: 1,
+              number: 2,
               
               title: '火星背面探索之旅1',
               date: '2022/02/21',
@@ -103,7 +103,7 @@ export default {
               state : '????',             
             },
             {
-              number: 1,
+              number: 3 ,
               
               title: '火星背面探索之旅1',
               date: '2022/02/21',

@@ -111,7 +111,19 @@ export default {
 
     },
     remove(index) {
-      this.data.splice(index, 1);
+      let orders_no = this.data[index].orders_no;
+      console.log(orders_no);
+      axios.post('http://localhost/PV/PVBackend/public/php/OrderDelete.php', {
+        orders_no: orders_no
+      })
+      .then(response => {
+        console.log(response.data);
+        this.data.splice(index, 1);  // 從前端數據中移除該筆訂單
+      })
+      .catch(error => {
+        console.log(error);
+        console.log(error.response);
+      });
     },
     passenger(){
       this.showMore = 3;
