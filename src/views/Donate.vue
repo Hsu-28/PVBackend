@@ -99,26 +99,39 @@ export default {
     Side
     },
     created() {
-    this.datac = [...this.data];
+    this.datac = [...this.myData];
     },
     methods:{
-      search (data1, argumentObj) {
+      // search (data1, argumentObj) {
             
-            return data1.filter(d => {
+      //       return data1.filter(d => {
+      //   for (let argu in argumentObj) {
+      //       if (argumentObj[argu]) {
+      //           if (typeof d[argu] === 'string' && typeof argumentObj[argu] === 'string') {
+      //               if (d[argu].indexOf(argumentObj[argu]) === -1) return false;
+      //           } else if (typeof d[argu] === 'number' && typeof argumentObj[argu] === 'number') {
+      //               if (d[argu] !== argumentObj[argu]) return false;
+      //           }
+      //       }
+      //   }
+      //   return true;
+      //    });
+      //   },
+      search(data1, argumentObj) {
+      return data1.filter(d => {
+        console.log("Searching with:", argumentObj);
+
         for (let argu in argumentObj) {
-            if (argumentObj[argu]) {
-                if (typeof d[argu] === 'string' && typeof argumentObj[argu] === 'string') {
-                    if (d[argu].indexOf(argumentObj[argu]) === -1) return false;
-                } else if (typeof d[argu] === 'number' && typeof argumentObj[argu] === 'number') {
-                    if (d[argu] !== argumentObj[argu]) return false;
-                }
-            }
+          if (argumentObj[argu]) {
+            return `${d[argu]}`.includes(`${argumentObj[argu]}`)
+            
+          }
         }
         return true;
-         });
-        },
+      });
+    },
         handleSearch1 () {
-            this.data = this.search(this.datac, {numberMem: this.donateValue});
+            this.myData = this.search(this.datac, {donate_id: Number(this.donateValue)});
         },
     
 
@@ -129,6 +142,7 @@ export default {
         axios.get('http://localhost/PV/PVBackend/public/php/donate.php')
             .then(response => {
                 this.myData = response.data;
+                this.datac = [...this.myData];
             })
             .catch(error => {
                 console.error(error);

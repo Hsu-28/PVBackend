@@ -188,21 +188,22 @@ export default {
             //     }
             // }
             // return res;
+          
+     
             return data1.filter(d => {
-                for (let argu in argumentObj) {
-                    if (argumentObj[argu]) {
-                        if (typeof d[argu] === 'string' && typeof argumentObj[argu] === 'string') {
-                            if (d[argu].indexOf(argumentObj[argu]) === -1) return false;
-                        } else if (typeof d[argu] === 'number' && typeof argumentObj[argu] === 'number') {
-                            if (d[argu] !== argumentObj[argu]) return false;
-                        }
-                    }
+            console.log("Searching with:", argumentObj);
+
+            for (let argu in argumentObj) {
+                if (argumentObj[argu]) {
+                return `${d[argu]}`.includes(`${argumentObj[argu]}`)
+                
                 }
-                return true;
+            }
+            return true;
             });
         },
         handleSearch1() {
-            this.data = this.search(this.datac, { number: Number(this.searchConNumber), email: this.searchEmail });
+            this.myData = this.search(this.datac, { mem_no: Number(this.searchConNumber), email: this.searchEmail });
         },
 
 
@@ -213,6 +214,8 @@ export default {
         axios.get('http://localhost/PV/PVBackend/public/php/Member.php')
             .then(response => {
                 this.myData = response.data;
+                this.datac = [...this.myData];
+
             })
             .catch(error => {
                 console.error(error);

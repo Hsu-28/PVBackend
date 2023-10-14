@@ -130,25 +130,7 @@ export default {
     },
 
     search(data1, argumentObj) {
-      // let res = data1;
-      // let dataClone = data1;
-      // for (let argu in argumentObj) {
-      //     if (argumentObj[argu].length > 0 || typeof argumentObj[argu] === 'number') {
-      //         res = dataClone.filter(d => {
-      //             // If the data and argument are strings, use indexOf
-      //             if (typeof d[argu] === 'string' && typeof argumentObj[argu] === 'string') {
-      //                 return d[argu].indexOf(argumentObj[argu]) > -1;
-      //             }
-      //             // If the data and argument are numbers, directly compare
-      //             else if (typeof d[argu] === 'number' && typeof argumentObj[argu] === 'number') {
-      //                 return d[argu] === argumentObj[argu];
-      //             }
-      //             return false;
-      //         });
-      //         dataClone = res;
-      //     }
-      // }
-      // return res;
+     
       return data1.filter(d => {
         console.log("Searching with:", argumentObj);
 
@@ -173,3 +155,23 @@ export default {
  
 
 }
+//舊的搜尋函數
+ // let res = data1;
+      // let dataClone = data1;
+      // for (let argu in argumentObj) {
+      //     if (argumentObj[argu].length > 0 || typeof argumentObj[argu] === 'number') {
+      //         res = dataClone.filter(d => {
+      //             // If the data and argument are strings, use indexOf
+      //             if (typeof d[argu] === 'string' && typeof argumentObj[argu] === 'string') {
+      //                 return d[argu].indexOf(argumentObj[argu]) > -1;
+      //             }
+      //             // If the data and argument are numbers, directly compare
+      //             else if (typeof d[argu] === 'number' && typeof argumentObj[argu] === 'number') {
+      //                 return d[argu] === argumentObj[argu];
+      //             }
+      //             return false;
+      //         });
+      //         dataClone = res;
+      //     }
+      // }
+      // return res;
