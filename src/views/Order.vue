@@ -6,9 +6,9 @@
     </button>
     <Layout v-width="900" :style="{ marginLeft: '300px' }">
       <h1>訂單</h1>
-      <div v-if="showMore == 1">
-      
 
+      
+      <div v-if="showMore == 1">
         <Space style="margin-bottom: 10px; margin-right: 20px;">
           訂單編號:
           <Input v-model="searchOrder" @on-change="handleSearch1"
@@ -20,6 +20,7 @@
                 placeholder="會員編號" style="width: 150px" />
         </Space>
         <Table class="Table" border :columns="columns" :data="data">
+          <!-- 渲染資料 -->
           <template #action="{ row, index }">
             <Button size="small" style="margin-right: 5px" @click="More()">編輯</Button>
             <Button size="small" @click="remove(index)">刪除</Button>
@@ -27,6 +28,8 @@
         </Table>
         <Page class="nextPage" :total="40" size="" />
       </div>
+
+      <!-- //第二層 -->
       <div class="showAll" v-if="showMore==2">
        
         <p>訂單編號： <span>{{moreDetail.orderNumber}}</span></p>
@@ -44,6 +47,9 @@
 
             </div>
       </div>
+
+
+      <!-- //第三層 -->
       <div v-if="showMore==3">
         <div v-for="(passengerMore, index) in passengerDetail" :key="index">
           <p  class="ivu-mb">乘客 {{index+1}}</p>
