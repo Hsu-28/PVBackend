@@ -16,7 +16,8 @@
       <Space size="large" style="gap :10px"  >
         <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">日期:</div>
 
-        <DatePicker type="date" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
+        <DatePicker type="date" :options="options2" placement="bottom-end" placeholder="Select date" 
+          style="width: 200px"   @on-change="handleSearch1" v-model="dateSeah"/>
       </Space>
           <Table class="Table" border :columns="columns" :data="myData">
               <!-- <template #action="{ row, index }">
@@ -43,7 +44,9 @@ export default {
 
   data() {
     return {
-
+      options2:'',
+      dateSeah:'',
+      dateSeahC:'',
       datac: [],
       donateValue:'',
       showMore:1,
@@ -102,6 +105,7 @@ export default {
     this.datac = [...this.myData];
     },
     methods:{
+      
       // search (data1, argumentObj) {
             
       //       return data1.filter(d => {
@@ -131,7 +135,15 @@ export default {
       });
     },
         handleSearch1 () {
-            this.myData = this.search(this.datac, {donate_id: Number(this.donateValue)});
+          if(this.dateSeah){
+            this.dateSeahC= this.dateSeah.toLocaleDateString()
+            .replace(/\//g, "-");
+          }else{
+            this.dateSeah='';
+            this.dateSeahC='';
+          }
+          console.log(this.dateSeah.toLocaleDateString());
+            this.myData = this.search(this.datac, {donate_id: Number(this.donateValue),donate_date: this.dateSeahC });
         },
     
 
