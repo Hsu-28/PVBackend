@@ -4,7 +4,7 @@
     <button class="out" style="width: 42px;height:32px;line-height: 35px;">
       登出
     </button>
-    <Layout v-width="900" :style="{ marginLeft: '300px' }">
+    <Layout v-width="850" :style="{ marginLeft: '300px' }">
       <h1>訂單</h1>
 
       
@@ -49,11 +49,10 @@
             </div>
       </div>
 
-
       <!-- //第三層 -->
       <div v-if="showMore==3">
-        <div v-for="passengerMore in passengerDetail" >
-          <p  class="ivu-mb">乘客 </p>
+        <div v-for="(passengerMore, index) in passengerDetail" :key="index">
+          <p  class="ivu-mb" style="margin-top: 30px;">乘客 {{index+1}}</p>
           <p class="ivu-mb">旅客編號：  <span>{{passengerMore.passenger_no}}</span></p>
               <p class="ivu-mb">姓名： <span>{{passengerMore.passenger_name}}</span></p>
               <p class="ivu-mb">性別： <span>{{passengerMore.passenger_gender}}</span></p>
@@ -61,18 +60,17 @@
               <p class="ivu-mb">國籍： <span>{{passengerMore.passenger_nationality}}</span></p>
               <p class="ivu-mb">護照號碼：<span>{{passengerMore.passport}}</span></p>
               <div style="width:600px; ">
-                <p>健康審核</p>
+                <p style="margin-bottom:8px; ;">健康審核</p>
                  
-                  <Select v-model="passengerMore.health_check" style="width:200px; "  class="ivu-mb" >
+                  <Select v-model="passengerMore.health_check" placeholder="請選擇審核"   style="width:200px; "   class="ivu-mb" >
                     <Option value="審核中" label="審核中">
-                        <span>審核中</span>
-                      
+                        審核中
                       </Option>
                       <Option value="通過" label="通過">
-                          <span>通過</span>
+                         通過
                       </Option>
                       <Option value="未通過" label="未通過">
-                          <span>未通過</span>
+                        未通過
                       </Option>
                   </Select>
               </div>
@@ -85,7 +83,7 @@
               <p class="ivu-mb">座位編號： <span>{{passengerMore.seat_no}}</span></p>
               <p class="ivu-mb">訓練審核： <span>{{passengerMore.training_result}}</span></p>
               <p class="ivu-mb">訓練服尺寸： <span>{{passengerMore.shirt_size}}</span></p>
-              <p class="ivu-mb">飲食備註: <span>{{passengerMore.diet}}</span></p>
+              <p class="ivu-mb">飲食備註: <span>{{passengerMore.passenger_diet}}</span></p>
               <!-- <FormItem    label="飲食備註:" prop="exp" :label-width="45" class="ivu-mb">
                  <Input v-model="passengerMore.diet" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="經歷"></Input>
               </FormItem>  -->
@@ -232,9 +230,9 @@ export default {
     passenger(oindex) {
       this.showMore = 3;
       let orders_no = this.data[oindex].orders_no;
-          
+          // orders_no= parseInt(orders_no);
       axios.post('http://localhost/PV/PVBackend/public/php/OrderPeople.php', {
-        orders_no: orders_no   
+        orders_no: orders_no 
       })
       .then(response => {
         this.passengerDetail = response.data; 
