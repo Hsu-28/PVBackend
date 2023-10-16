@@ -22,7 +22,7 @@ try {
     if (isset($data['orders_no'])) {  
         $orders_no = $data['orders_no'];
         
-        // 使用 JOIN 進行查詢
+        // 進行查詢
         $stmt = $pdo->prepare("SELECT * FROM  passenger WHERE orders_no = :orders_no");
         $stmt->bindParam(':orders_no', $orders_no, PDO::PARAM_INT);
         $stmt->execute();
