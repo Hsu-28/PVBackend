@@ -22,7 +22,7 @@
         <Table class="Table" border :columns="columns" :data="data">
           <!-- 渲染資料 -->
           <template #action="{ row, index }">
-            <Button size="small" style="margin-right: 5px" @click="oindex = index; More(oindex)">編輯</Button>
+            <Button size="small" style="margin-right: 5px" @click="oindex = index; More()">編輯</Button>
             <Button size="small" @click="remove(index)">刪除</Button>
           </template>
         </Table>
@@ -42,7 +42,7 @@
             <p>訂單狀態： <span>{{data[oindex].orders_stat}}</span></p>
            
             <div>
-                <Button  size="small" style="margin-right: 5px" @click=" passenger()">乘客總覽</Button>
+                <Button  size="small" style="margin-right: 5px" @click=" passenger(oindex)">乘客總覽</Button>
                 <Button  size="small" style="margin-right: 5px" @click="reTable()">返回</Button>
 
 
@@ -52,8 +52,8 @@
 
       <!-- //第三層 -->
       <div v-if="showMore==3">
-        <div v-for="(passengerMore, index) in passengerDetail" :key="index">
-          <p  class="ivu-mb">乘客 {{index+1}}</p>
+        <div v-for="passengerMore in passengerDetail" >
+          <p  class="ivu-mb">乘客 </p>
           <p class="ivu-mb">旅客編號：  <span>{{passengerMore.passenger_no}}</span></p>
               <p class="ivu-mb">姓名： <span>{{passengerMore.passenger_name}}</span></p>
               <p class="ivu-mb">性別： <span>{{passengerMore.passenger_gender}}</span></p>
@@ -184,12 +184,15 @@ export default {
     axios.get("http://localhost/PV/PVBackend/public/php/Order.php")
       .then(response => {
         this.data = response.data;
+        // if (Array.isArray(this.data) && this.data.length > 0) {
+        console.log(typeof this.data[0].total_amount);  // 打印第一個元素的 orders_no 的型態
+     
         this.datac = [...this.data];
+     
       })
       .catch(error => {
         console.error("There was an error fetching the orders:", error);
       });
-
   },
   
   components: {
@@ -202,24 +205,11 @@ export default {
     toOrders2(){
       this.showMore = 2;
     },
-    More(oindex) {
+    More() {
       this.showMore = 2;
-      let orders_no = this.data[oindex].orders_no;
-      console.log(orders_no);
-        axios.post('http://localhost/PV/PVBackend/public/php/OrderPeople.php', {
-        orders_no: orders_no
-      })
-      .then(response => {
-        this.passengerDetail = response.data; 
-        console.log(this.passengerDetail);
-      })
-      .catch(error => {
-        console.log(error);
-        console.log(error.response);
-      });
-     
       
     },
+   
     reTable() {
       this.showMore = 1;
 
@@ -239,8 +229,21 @@ export default {
         console.log(error.response);
       });
     },
-    passenger(){
+    passenger(oindex) {
       this.showMore = 3;
+      let orders_no = this.data[oindex].orders_no;
+          
+      axios.post('http://localhost/PV/PVBackend/public/php/OrderPeople.php', {
+        orders_no: orders_no   
+      })
+      .then(response => {
+        this.passengerDetail = response.data; 
+        console.log(this.passengerDetail);
+      })
+      .catch(error => {
+        console.log(error);
+        console.log(error.response);
+      });  
     },
 
     search(data1, argumentObj) {

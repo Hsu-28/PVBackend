@@ -1,46 +1,49 @@
 <?php
-header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// header("Access-Control-Allow-Headers: Content-Type, X-Requested-With");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Origin:*");
+header("Content-Type: application/json");
+
+
 try {
     require_once("../../../connectdb.php"); 
 
     // 檢查是否接收到 orders_no
-    if (isset($_POST['orders_no']))
-     {  
-        $orders_no = intval($_POST['orders_no']);
-        // $orders_no = $_POST['orders_no'];
-        if (is_int($orders_no)) {
-            echo '$orders_no is an integer';
-        } else {
-            echo '$orders_no is NOT an integer';
-        }
-
-
-        $sql = "SELECT * FROM passenger WHERE orders_no = :orders_no";
-        $stmt = $pdo->prepare($sql);
+    if (isset($_POST['orders_no'])) {  
+        $orders_no = $_POST['orders_no'];
         
-        // 使用參數綁定來避免SQL注入
-        $stmt->bindParam(":orders_no", $orders_no);
+        
+        // 使用 JOIN 進行查詢
+        $stmt = $pdo->prepare("SELECT * FROM  passenger WHERE orders_no = :orders_no");
+        // $stmt->bindParam(':orders_no', $orders_no, PDO::PARAM_INT);
+        $stmt->execute();
 
-
-        if ($stmt->execute()) {
-            $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            // echo json_encode($orders); 
-            //將資料轉成JSON格式並輸出
-            if (empty($orders)) {
-                echo "No records found!";
-            } else {
-                echo json_encode($orders);
-            }
-        } else {
-            echo "Error retrieving data.";
-        }
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        echo json_encode($result); 
+    } else {
+        http_response_code(400); 
+        echo json_encode(["error" => "No orders_no provided!"]);
     }
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    http_response_code(500);
+    echo json_encode(["error" => $e->getMessage()]);
 }
+// header("Access-Control-Allow-Origin:*");
+// header("Content-Type: application/json");
+
+// try {
+//     require_once("../../../connectdb.php");
+//     $sql = "SELECT * FROM  passenger ";  
+//     $query = $pdo->query($sql);
+//     $orders = $query->fetchAll(PDO::FETCH_ASSOC);  
+//     //   echo 'yyy';
+
+//     echo json_encode($orders); //將資料轉成JSON格式並輸出
+
+// } catch (PDOException $e) {
+//     $result = ["error" => true, "msg" => $e->getMessage()];
+//     echo json_encode($result);
+// }
 ?>
