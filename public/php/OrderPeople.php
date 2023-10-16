@@ -15,10 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 try {
     require_once("../../../connectdb.php"); 
 
+      //   如果你使用axios以application/json的形式发送数据，$_POST数组可能是空的
+      //   ，因为PHP默认只解析application/x-www-form-urlencoded数据到$_POST数组。这种情况下，你需要从输入流中手动获取和解析JSON数据：
+     //  可能不能直接用$_POST
     $data = json_decode(file_get_contents("php://input"), true);
  
-    // if (isset($_POST['orders_no'])) {  
-    //     $orders_no = $_POST['orders_no'];
+  
     if (isset($data['orders_no'])) {  
         $orders_no = $data['orders_no'];
         
