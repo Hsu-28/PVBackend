@@ -22,7 +22,7 @@
         <Table class="Table" border :columns="columns" :data="data">
           <!-- 渲染資料 -->
           <template #action="{ row, index }">
-            <Button size="small" style="margin-right: 5px" @click="oindex = index; More(oindex)">編輯</Button>
+            <Button size="small" style="margin-right: 5px" @click="oindex = index; More()">編輯</Button>
             <Button size="small" @click="remove(index)">刪除</Button>
           </template>
         </Table>
@@ -205,7 +205,7 @@ export default {
     toOrders2(){
       this.showMore = 2;
     },
-    More(oindex) {
+    More() {
       this.showMore = 2;
       
     },
