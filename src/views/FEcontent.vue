@@ -97,8 +97,8 @@
 
 
       </div>
-      <!-- 最新消息 -->
-      <div v-if="changePage == 2">
+    <!-- 最新消息 -->
+    <div v-if="changePage == 2">
         <Button @click="modalNews = true" class="add ivu-mb">新增 +</Button>
         <!-- 新增的彈窗 -->
         <Modal title="新增最新消息" v-model="modalNews" width="700px" :closable="true">
@@ -128,7 +128,7 @@
 
             <Button size="small" style="margin-right: 5px" @click="clickNewsEdit(index)">編輯</Button>
             <Modal title="編輯最新消息資訊" ok-text="確認修改" cancel-text="取消" v-model="NewsEdit[index]" width="700px"
-              :closable="true" @on-ok="ok" @on-cancel="cancel">
+              :closable="true" @on-ok="newseditok" @on-cancel="cancel">
               <Form  @submit.prevent :model="addNews" :label-width="80">
                 <FormItem label="消息編號" :label-width="73">
                   <text>{{ addNews.news_no }}</text>
@@ -275,120 +275,116 @@ export default {
             },
             
             dataMem:[
-                {
-                
-                },
+             
             ],
             NewsEdit: [],
-      modalNews: false, //彈窗
-      columnsNews: [
+            modalNews: false, //彈窗
+            columnsNews: [
+              {
+                title: '消息編號',
+                key: 'news_no',
+                width: 70,
+              },
+              {
+                title: '消息標題',
+                key: 'news_title',
+                width: 120,
+              },
+              {
+                title: '消息照片路徑',
+                key: 'news_image',
+                width: 100,
+              },
+              {
+                title: '日期',
+                key: 'news_date',
+                width: 120,
+              },
+              {
+                title: '內容',
+                key: 'news_content'
+              },
+              {
+                title: '編輯',
+                slot: 'action',
+                width: 80,
+              },
+            ],
+        dataNews: [],
+        // dataNews: [
+        //   {
+        //     number_News: 1,
+        //     title_news: 'aaaa',
+        //     img: '../assets/image/more.svg',
+        //     date: `1111/11/1`,
+        //     content: `111111`,
+        //   },
+        // ],
+        addNews: [
+          {
+            news_no: null,
+            news_title: '',
+            news_image: '',
+            news_date: ``,
+            news_content: ``,
+          },
+        ],
+          modalQA:false, //彈窗
+          QAEdit:[],
+          columnsQA: [
         {
-          title: '消息編號',
-          key: 'news_no',
-          width: 70,
+          title: '問題編號',
+          key: 'faq_no'
         },
         {
-          title: '消息標題',
-          key: 'news_title',
-          width: 120,
+          title: '問題標題',
+          key: 'question'
         },
         {
-          title: '消息照片路徑',
-          key: 'news_image',
-          width: 100,
-        },
-        {
-          title: '日期',
-          key: 'news_date',
-          width: 120,
-        },
-        {
-          title: '內容',
-          key: 'news_content'
+          title: '問題答案',
+          key: 'question_ans',
         },
         {
           title: '編輯',
           slot: 'action',
-          width: 80,
+          width: 140
         },
-      ],
-      dataNews: [],
-      // dataNews: [
-      //   {
-      //     number_News: 1,
-      //     title_news: 'aaaa',
-      //     img: '../assets/image/more.svg',
-      //     date: `1111/11/1`,
-      //     content: `111111`,
-      //   },
-      // ],
-      addNews: [
-        {
-          news_no: null,
-          news_title: '',
-          news_image: '',
-          news_date: ``,
-          news_content: ``,
-        },
-      ],
-            modalQA:false, //彈窗
-            QAEdit:[],
-            columnsQA: [
-          {
-            title: '問題編號',
-            key: 'faq_no'
-          },
-          {
-            title: '問題標題',
-            key: 'question'
-          },
-          {
-            title: '問題答案',
-            key: 'question_ans',
-          },
-          {
-            title: '編輯',
-            slot: 'action',
-            width: 140
-          },
-        ],
-        addQA: [
-          {
-            number_QA: null,
-            title_QA: '',
-            QA_anwer: ``,
-          },
-        ],
-        editQA: {
-          QA_no: '',
-          QA_title: '',
-          QA_anser: ''
-        }
+          ],
+          addQA: [
+            {
+              number_QA: null,
+              title_QA: '',
+              QA_anwer: ``,
+            },
+          ],
+          editQA: {
+            QA_no: '',
+            QA_title: '',
+            QA_anser: ''
           }
-        },  
+            }
+          },  
         
         methods: {
-
-
           newseditok() {
-      console.log(this.addNews)
-      const fd = new FormData()
-      const date =  new Date(this.addNews.news_date)
-      fd.append('news_no', this.addNews.news_no);
-      fd.append('news_title', this.addNews.news_title);
-      fd.append('news_content', this.addNews.news_content);
-      fd.append('news_image', this.tempImageFile);
-      fd.append('news_date', `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
+          console.log(this.addNews)
+          const fd = new FormData()
+          const date =  new Date(this.addNews.news_date)
+          fd.append('news_no', this.addNews.news_no);
+          fd.append('news_title', this.addNews.news_title);
+          fd.append('news_content', this.addNews.news_content);
+          fd.append('news_image', this.tempImageFile);
+          fd.append('news_date', `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
 
-      axios.post('http://localhost/PV/PVBackend/public/php/newsUpdateToDb.php', fd)
-      .then(response => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    },
-    cancel() {},
+          axios.post('http://localhost/PV/PVBackend/public/php/newsUpdateToDb.php', fd)
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            console.error(error);
+          });
+        },
+       cancel() {},
             handleView (name) {
                 this.imgName = name;
                 this.visible = true;
@@ -401,67 +397,67 @@ export default {
               
                 // this.uploadList = [];
 
-    //   file.url = 'https://file.iviewui.com/images/image-demo-3.jpg';
-    //   file.name = 'image-demo-3.jpg';
-    //   // this.uploadList.push(file);
-    //   this.uploadList = [file];
+            //   file.url = 'https://file.iviewui.com/images/image-demo-3.jpg';
+            //   file.name = 'image-demo-3.jpg';
+            //   // this.uploadList.push(file);
+            //   this.uploadList = [file];
 
-    },
-    handleFormatError(file) {
-      this.$Notice.warning({
-        title: 'The file format is incorrect',
-        desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
-      });
-    },
-    handleMaxSize(file) {
-      this.$Notice.warning({
-        title: 'Exceeding file size limit',
-        desc: 'File  ' + file.name + ' is too large, no more than 2M.'
-      });
-    },
-    handleBeforeUpload() {
-      const check = this.uploadList.length < 5;
-      if (!check) {
-        this.$Notice.warning({
-          title: 'Up to five pictures can be uploaded.'
-        });
-      }
-      return check;
-    },
-    changeButton(index) {
+            },
+            handleFormatError(file) {
+              this.$Notice.warning({
+                title: 'The file format is incorrect',
+                desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
+              });
+            },
+            handleMaxSize(file) {
+              this.$Notice.warning({
+                title: 'Exceeding file size limit',
+                desc: 'File  ' + file.name + ' is too large, no more than 2M.'
+              });
+            },
+            handleBeforeUpload() {
+              const check = this.uploadList.length < 5;
+              if (!check) {
+                this.$Notice.warning({
+                  title: 'Up to five pictures can be uploaded.'
+                });
+              }
+              return check;
+            },
+            changeButton(index) {
 
-      this.changePage = index;
-      console.log(this.changePage);
-    },
-    clickTeamEdit(index) {
-      this.TeamEdit[index] = true;
-      this.addTeamItem = { ...this.dataMem[index] };
-    },
-    clickNewsEdit(index) {
-      this.NewsEdit[index] = true;
-      this.addNews = { ...this.dataNews[index] };
-    },
-    clickQAEdit(index) {
-      this.editQA = {
-        // 将数据传递给 editQA
-        QA_no: this.dataQA[index].faq_no,
-        QA_title: this.dataQA[index].question,
-        QA_anser: this.dataQA[index].question_ans
-      };
-      this.QAEdit[index] = true;
-    },
-    remove(index, type) {
-      if (type === 'Mem') {
-        this.dataMem.splice(index, 1);
-      } else if (type === 'News') {
+              this.changePage = index;
+              console.log(this.changePage);
+            },
+            clickTeamEdit(index) {
+              this.TeamEdit[index] = true;
+              this.addTeamItem = { ...this.dataMem[index] };
+            },
+            clickNewsEdit(index) {
+              this.NewsEdit[index] = true;
+              this.addNews = { ...this.dataNews[index] };
+            },
+            clickQAEdit(index) {
+              this.editQA = {
+                // 将数据传递给 editQA
+                QA_no: this.dataQA[index].faq_no,
+                QA_title: this.dataQA[index].question,
+                QA_anser: this.dataQA[index].question_ans
+              };
+              this.QAEdit[index] = true;
+            },
+            remove(index, type) {
+              if (type === 'Mem') {
+                this.dataMem.splice(index, 1);
+              } else if (type === 'News') {
 
-        this.dataNews.splice(index, 1);
-      } else if (type === 'QA') {
-        this.dataQA.splice(index, 1);
-      }
+                this.dataNews.splice(index, 1);
+              } else if (type === 'QA') {
+                this.dataQA.splice(index, 1);
+              }
 
 
-    },
+            },
 
     replaceItem(index) {
       this.$refs["updateForm1"].validate((valid) => {
@@ -477,7 +473,7 @@ export default {
               }
                });
           },
-                cancelEdit() {
+        cancelEdit() {
          this.addItem = { ...this.resetItem };
           },
           getTeamMem(){
@@ -504,6 +500,7 @@ export default {
         },
       
         mounted () {
+          this.getTeamMem();
             if (this.$refs.upload) {
         this.uploadList = this.$refs.upload.fileList;
         }
@@ -511,6 +508,28 @@ export default {
         components: {
         Side
         },
+        created() {
+        axios.get('http://localhost/PV/PVBackend/public/php/banner.php')
+          .then(response => {
+            this.banner = response.data;
+            console.log(this.banner);
+            // this.defaultList[0].url =this.banner.banner_pic; 
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+
+        axios.get('http://localhost/PV/PVBackend/public/php/news.php')
+          .then(response => {
+            this.dataNews = response.data;
+            console.log(this.dataNews);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }
+
     }
 
 </script>
