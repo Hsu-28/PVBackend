@@ -130,17 +130,18 @@
             <!-- 編輯的程式@on-ok="newseditok" -->
             <Modal title="編輯最新消息資訊" ok-text="確認修改" cancel-text="取消" v-model="NewsEdit[index]" width="700px"
               :closable="true" @on-ok="newseditok" @on-cancel="cancel">
-              <Form  @submit.prevent :model="addNews" :label-width="80">
+              <Form @submit.prevent :model="addNews" :label-width="80">
                 <FormItem label="消息編號" :label-width="73">
                   <text>{{ addNews.news_no }}</text>
                 </FormItem>
                 <FormItem label="消息標題:" prop="title_news" :label-width="73" class="ivu-mb" v-width="300">
                   <Input name="news_title" v-model="addNews.news_title" placeholder="aa"></Input>
-                <!-- 編輯的程式 name="news_title"-->
+                  <!-- 編輯的程式 name="news_title"-->
                 </FormItem>
 
                 <FormItem label="消息照片" prop="img" :label-width="73">
-                  <input name="news_image" type="file" @change="tempImageFile = $event.target.files[0]" style="width: 150px; height: 40px;"/>
+                  <input name="news_image" type="file" @change="tempImageFile = $event.target.files[0]"
+                    style="width: 150px; height: 40px;" />
                   <img width="200" height="200" v-show="!tempImageFile" :src="`/${addNews.news_image}`" alt="">
                 </FormItem>
                 <Space size="large" wrap class="ivu-mb">
@@ -197,7 +198,6 @@
         </Table>
       </div>
       <!-- <img  v-width="60" src="../assets/image/more.svg" alt="more"> -->
-
     </Layout>
 
   </div>
@@ -375,7 +375,7 @@ export default {
     newseditok() {
       console.log(this.addNews)
       const fd = new FormData()
-      const date =  new Date(this.addNews.news_date)
+      const date = new Date(this.addNews.news_date)
       fd.append('news_no', this.addNews.news_no);
       fd.append('news_title', this.addNews.news_title);
       fd.append('news_content', this.addNews.news_content);
@@ -383,14 +383,14 @@ export default {
       fd.append('news_date', `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
 
       axios.post('http://localhost/PV/PVBackend/public/php/newsUpdateToDb.php', fd)
-      .then(response => {
-        console.log(response)
-      })
-      .catch(error => {
-        console.error(error);
-      });
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
-    cancel() {},
+    cancel() { },
     handleView(name) {
       this.imgName = name;
       this.visible = true;
@@ -401,12 +401,12 @@ export default {
     },
     handleSuccess(res, file) {
 
-    //   // this.uploadList = [];
+      //   // this.uploadList = [];
 
-    //   file.url = 'https://file.iviewui.com/images/image-demo-3.jpg';
-    //   file.name = 'image-demo-3.jpg';
-    //   // this.uploadList.push(file);
-    //   this.uploadList = [file];
+      //   file.url = 'https://file.iviewui.com/images/image-demo-3.jpg';
+      //   file.name = 'image-demo-3.jpg';
+      //   // this.uploadList.push(file);
+      //   this.uploadList = [file];
 
     },
     handleFormatError(file) {
@@ -492,6 +492,7 @@ export default {
   components: {
     Side
   },
+
   created() {
     axios.get('http://localhost/PV/PVBackend/public/php/banner.php')
       .then(response => {
@@ -508,6 +509,15 @@ export default {
       .then(response => {
         this.dataNews = response.data;
         console.log(this.dataNews);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+      axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
+      .then(response => {
+        this.dataQA = response.data;
+        console.log(this.dataQA)
       })
       .catch(error => {
         console.error(error);
