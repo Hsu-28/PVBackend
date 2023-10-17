@@ -100,11 +100,11 @@
       <!-- 最新消息 -->
       <div v-if="changePage == 2">
         <Button @click="modalNews = true" class="add ivu-mb">新增 +</Button>
-        <!-- 新增的彈窗 -->
+        <!-- 彈窗 -->
         <Modal title="新增最新消息" v-model="modalNews" width="700px" :closable="true">
           <Form :model="addNews" :label-width="80" enctype="multipart/form-data" method="post">
             <FormItem label="最新消息標題:" prop="precautions" :label-width="120" class="ivu-mb" v-width="300">
-              <Input v-model="addNews.news_title" placeholder="aa"></Input>
+              <Input v-model="addNews.title_news" placeholder="aa"></Input>
             </FormItem>
 
             <FormItem label="最新消息照片:" prop="img" :label-width="120">
@@ -112,17 +112,16 @@
             </FormItem>
             <Space size="large" wrap class="ivu-mb">
               <div style="font-size: 14px;color: #515a6e; padding: 8px 0; margin-left: 20px;">日期:</div>
-              <DatePicker v-model="addNews.news_date" type="date" placement="bottom-end" placeholder="Select date"
+              <DatePicker v-model="addNews.date" type="date" placement="bottom-end" placeholder="Select date"
                 style="width: 200px" />
             </Space>
             <FormItem label="內容:" prop="content" :label-width="65" class="ivu-mb">
-              <Input v-model="addNews.news_content" type="textarea" :autosize="{ minRows: 5, maxRows: 5 }"
+              <Input v-model="addNews.content" type="textarea" :autosize="{ minRows: 5, maxRows: 5 }"
                 placeholder="內容"></Input>
             </FormItem>
           </Form>
         </Modal>
 
-        <!-- news欄位抬頭 -->
         <Table class="Table" border :columns="columnsNews" :data="dataNews">
           <template #action="{ row, index }">
 
@@ -132,7 +131,7 @@
               :closable="true" @on-ok="newseditok" @on-cancel="cancel">
               <Form  @submit.prevent :model="addNews" :label-width="80">
                 <FormItem label="消息編號" :label-width="73">
-                  <text>{{ addNews.news_no }}</text>
+                  <text>{{ addNews.number_News }}</text>
                 </FormItem>
                 <FormItem label="消息標題:" prop="title_news" :label-width="73" class="ivu-mb" v-width="300">
                   <Input name="news_title" v-model="addNews.news_title" placeholder="aa"></Input>
@@ -145,12 +144,12 @@
                 </FormItem>
                 <Space size="large" wrap class="ivu-mb">
                   <div style="font-size: 14px;color: #515a6e; padding: 8px 0; margin-left: 2px;">日期:</div>
-                  <DatePicker name="news_date" v-model="addNews.news_date" type="date" placement="bottom-end"
-                    placeholder="Select date" style="width: 200px" />
+                  <DatePicker v-model="addNews.date" type="date" placement="bottom-end" placeholder="Select date"
+                    style="width: 200px" />
                 </Space>
                 <FormItem label="內容:" prop="content" :label-width="45" class="ivu-mb">
-                  <Input name="news_content" v-model="addNews.news_content" type="textarea"
-                    :autosize="{ minRows: 5, maxRows: 5 }" placeholder="內容"></Input>
+                  <Input v-model="addNews.content" type="textarea" :autosize="{ minRows: 5, maxRows: 5 }"
+                    placeholder="內容"></Input>
                 </FormItem>
               </Form>
             </Modal>
@@ -209,10 +208,10 @@
 <script>
 import Side from '@/components/SideNav.vue';
 import axios from 'axios';
+
 export default {
   data() {
     return {
-      tempImageFile: null,
       clickEditBtnT: false,
       memore: 0,
       changePage: 0,
@@ -221,15 +220,15 @@ export default {
         { text: '團隊介紹' },
         { text: '最新消息' },
         { text: 'Q&A' },
-
       ],
 
-      banner: [],
+
       defaultList: [
         {
           'name': 'image-demo-1.jpg',
-          'url': 'https://file.iviewui.com/images/image-demo-1.jpg',
+          'url': 'https://file.iviewui.com/images/image-demo-1.jpg'
         },
+
       ],
       imgName: '',
       visible: false,
@@ -286,51 +285,45 @@ export default {
       columnsNews: [
         {
           title: '消息編號',
-          key: 'news_no',
-          width: 70,
+          key: 'number_News'
         },
         {
           title: '消息標題',
-          key: 'news_title',
-          width: 120,
+          key: 'title_news'
         },
         {
           title: '消息照片路徑',
-          key: 'news_image',
-          width: 100,
+          key: 'img'
         },
         {
           title: '日期',
-          key: 'news_date',
-          width: 120,
+          key: 'date'
         },
         {
           title: '內容',
-          key: 'news_content'
+          key: 'content'
         },
         {
           title: '編輯',
           slot: 'action',
-          width: 80,
         },
       ],
-      dataNews: [],
-      // dataNews: [
-      //   {
-      //     number_News: 1,
-      //     title_news: 'aaaa',
-      //     img: '../assets/image/more.svg',
-      //     date: `1111/11/1`,
-      //     content: `111111`,
-      //   },
-      // ],
+      dataNews: [
+        {
+          number_News: 1,
+          title_news: 'aaaa',
+          img: '../assets/image/more.svg',
+          date: `1111/11/1`,
+          content: `111111`,
+        },
+      ],
       addNews: [
         {
-          news_no: null,
-          news_title: '',
-          news_image: '',
-          news_date: ``,
-          news_content: ``,
+          number_News: null,
+          title_news: '',
+          img: '',
+          date: ``,
+          content: ``,
         },
       ],
       modalQA: false, //彈窗
@@ -401,12 +394,12 @@ export default {
     },
     handleSuccess(res, file) {
 
-    //   // this.uploadList = [];
+      // this.uploadList = [];
 
-    //   file.url = 'https://file.iviewui.com/images/image-demo-3.jpg';
-    //   file.name = 'image-demo-3.jpg';
-    //   // this.uploadList.push(file);
-    //   this.uploadList = [file];
+      file.url = 'https://file.iviewui.com/images/image-demo-3.jpg';
+      file.name = 'image-demo-3.jpg';
+      // this.uploadList.push(file);
+      this.uploadList = [file];
 
     },
     handleFormatError(file) {
@@ -492,22 +485,13 @@ export default {
   components: {
     Side
   },
+
   created() {
-    axios.get('http://localhost/PV/PVBackend/public/php/banner.php')
+    // 發起HTTP GET 請求
+    axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
       .then(response => {
-        this.banner = response.data;
-        console.log(this.banner);
-        // this.defaultList[0].url =this.banner.banner_pic; 
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
-
-    axios.get('http://localhost/PV/PVBackend/public/php/news.php')
-      .then(response => {
-        this.dataNews = response.data;
-        console.log(this.dataNews);
+        this.dataQA = response.data;
+        console.log(this.dataQA)
       })
       .catch(error => {
         console.error(error);
