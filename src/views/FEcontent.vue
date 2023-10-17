@@ -52,7 +52,7 @@
        </div>
        <!-- 團隊介紹 -->
        <div v-if="changePage==1">
-        <Button @click="modalTeam = true" class="add ivu-mb">新增 +</Button> 
+        <!-- <Button @click="modalTeam = true" class="add ivu-mb">新增 +</Button>  -->
            <!-- 彈窗 -->
             <Modal
                   title="新增團隊"
@@ -64,12 +64,12 @@
                     :label-width="80"
                     enctype="multipart/form-data"
                     method="post"  >
-                    <FormItem label="姓名:" prop="precautions" :label-width="45" class="ivu-mb"  v-width="200">
+                    <FormItem label="姓名:" prop="precautions" :label-width="45" class="ivu-mb"  v-width="200" >
                       <Input v-model="addTeamItem.name" placeholder="aa" ></Input>
                     </FormItem>
                   
                     <FormItem label="照片" prop="mem_img" :label-width="40">
-                        <input  type="file" multiple />
+                        <input  type="file" id="upMemFile" name="upMemFile" />
                     </FormItem>
                     <FormItem   v-width="200"  label="職稱:" prop="job" :label-width="45" class="ivu-mb">
                         <Input v-model="addTeamItem.job" placeholder="職稱" ></Input>
@@ -89,7 +89,7 @@
                       v-model="TeamEdit[index]"
                       width="700px"
                       :closable="true"
-                      @on-ok="ok"
+                      @on-ok="TeamEditPhp"
                       @on-cancel="cancel">
                       <Form
                         :model="addTeamItem"
@@ -97,20 +97,20 @@
                         enctype="multipart/form-data"
                         method="post"  >
                         <FormItem label="團隊編號" :label-width="68">
-                              <text>{{ addTeamItem.number }}</text>
+                              <text>{{ addTeamItem.team_memno }}</text>
                         </FormItem>
                         <FormItem label="姓名:" prop="precautions" :label-width="45" class="ivu-mb"  v-width="200">
-                          <Input v-model="addTeamItem.name" placeholder="aa" ></Input>
+                          <Input v-model="addTeamItem.team_memname" placeholder="aa" ></Input>
                         </FormItem>
                       
                         <FormItem label="照片" prop="mem_img" :label-width="40">
                             <input  type="file" multiple />
                         </FormItem>
                         <FormItem   v-width="200"  label="職稱:" prop="job" :label-width="45" class="ivu-mb">
-                            <Input v-model="addTeamItem.job" placeholder="職稱" ></Input>
+                            <Input v-model="addTeamItem.team_memjob" placeholder="職稱" ></Input>
                         </FormItem>
                         <FormItem    label="經歷:" prop="exp" :label-width="45" class="ivu-mb">
-                          <Input v-model="addTeamItem.exp" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="經歷"></Input>
+                          <Input v-model="addTeamItem.team_memexperience" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="經歷"></Input>
                         </FormItem> 
                       </Form>
                    </Modal>
@@ -267,6 +267,7 @@
 
 <script>
 import Side from '@/components/SideNav.vue';
+import axios from 'axios';
 
   export default {
       data () {
@@ -298,23 +299,23 @@ import Side from '@/components/SideNav.vue';
             columnsMem:[
                 {
                   title: '團隊成員編號',
-                  key: 'number'
+                  key: 'team_memno'
                 },      
                 {
                   title: '成員名稱',
-                  key: 'name'
+                  key: 'team_memname'
                 },      
                 {
                   title: '成員照片路徑',
-                  key: 'mem_img'
+                  key: 'team_memimage'
                 },      
                 {
                   title: '成員職稱',
-                  key: 'job'
+                  key: 'team_memjob'
                 },      
                 {
                   title: '成員經歷',
-                  key: 'exp'
+                  key: 'team_memexperience'
                 }, 
                 {
                   title: '編輯',
@@ -324,20 +325,16 @@ import Side from '@/components/SideNav.vue';
             // 彈窗資料
             addTeamItem:
             {
-                  number: null,
-                  name: '',
-                  mem_img: '',
-                  job:``,
-                  exp:``,
+              team_memno: null,
+              team_memname: '',
+              memteam_memimage_img: '',
+              team_memjob:'',
+              team_memexperience:'',
             },
             
             dataMem:[
                 {
-                  number: 1,
-                  name: '李曉如',
-                  mem_img: '../assets/image/more.svg',
-                  job:`工程師`,
-                  exp:`111111`,
+                
                 },
             ],
             NewsEdit:[],
@@ -515,14 +512,38 @@ import Side from '@/components/SideNav.vue';
                 cancelEdit() {
          this.addItem = { ...this.resetItem };
           },
+          getTeamMem(){
+            axios.get("http://localhost/PV/PVBackend/public/php/TeamMem.php")
+          .then(response => {
+              this.dataMem = response.data;
+          })
+          .catch(error => {
+              console.error("There was an error fetching the TeamMem:", error);
+          });
+          },
+          TeamEditPhp() {
+          axios.post('http://localhost/PV/PVBackend/public/php/TeamMemEdit.php', this.addTeamItem)
+              .then(response => {
+                  console.log(response);
+                  // this.dataMem = response.data; 
+              })
+              .catch(error => {
+                  console.log(error);
+              });
+              this.getTeamMem();
+          },
+          
      
-        },
-      
-        mounted () {
-            if (this.$refs.upload) {
-        this.uploadList = this.$refs.upload.fileList;
-        }
       },
+      
+        mounted() {
+          this.getTeamMem();
+         
+          if (this.$refs.upload) {
+              this.uploadList = this.$refs.upload.fileList;
+          }
+        },
+
         components: {
         Side
         },

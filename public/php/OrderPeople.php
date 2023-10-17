@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 
 try {
-    require_once("../../../connectdb.php"); 
+    require_once("../../../connect_chd103g3.php");
 
       //   如果你使用axios以application/json的形式发送数据，$_POST数组可能是空的
       //   ，因为PHP默认只解析application/x-www-form-urlencoded数据到$_POST数组。这种情况下，你需要从输入流中手动获取和解析JSON数据：
