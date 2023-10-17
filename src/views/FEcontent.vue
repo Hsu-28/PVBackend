@@ -127,18 +127,20 @@
           <template #action="{ row, index }">
 
             <Button size="small" style="margin-right: 5px" @click="clickNewsEdit(index)">編輯</Button>
+            <!-- 編輯的程式@on-ok="newseditok" -->
             <Modal title="編輯最新消息資訊" ok-text="確認修改" cancel-text="取消" v-model="NewsEdit[index]" width="700px"
-              :closable="true" @on-ok="ok" @on-cancel="cancel">
+              :closable="true" @on-ok="newseditok" @on-cancel="cancel">
               <Form  @submit.prevent :model="addNews" :label-width="80">
                 <FormItem label="消息編號" :label-width="73">
                   <text>{{ addNews.news_no }}</text>
                 </FormItem>
                 <FormItem label="消息標題:" prop="title_news" :label-width="73" class="ivu-mb" v-width="300">
                   <Input name="news_title" v-model="addNews.news_title" placeholder="aa"></Input>
+                <!-- 編輯的程式 name="news_title"-->
                 </FormItem>
 
                 <FormItem label="消息照片" prop="img" :label-width="73">
-                  <input name="news_image" type="file" @change="tempImageFile = $event.target.files[0]" style="width: 50px; height: 50px;"/>
+                  <input name="news_image" type="file" @change="tempImageFile = $event.target.files[0]" style="width: 150px; height: 40px;"/>
                   <img width="200" height="200" v-show="!tempImageFile" :src="`/${addNews.news_image}`" alt="">
                 </FormItem>
                 <Space size="large" wrap class="ivu-mb">
@@ -369,7 +371,8 @@ export default {
   },
 
   methods: {
-    ok() {
+    //編輯的程式
+    newseditok() {
       console.log(this.addNews)
       const fd = new FormData()
       const date =  new Date(this.addNews.news_date)
