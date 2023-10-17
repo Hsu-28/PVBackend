@@ -512,31 +512,7 @@ export default {
         components: {
         Side
         },
-    //     created() {
-    //     axios.get('http://localhost/PV/PVBackend/public/php/banner.php')
-    //       .then(response => {
-    //         this.banner = response.data;
-    //         console.log(this.banner);
-    //         // this.defaultList[0].url =this.banner.banner_pic; 
-    //       })
-    //       .catch(error => {
-    //         console.error(error);
-    //       });
 
-
-    //     axios.get('http://localhost/PV/PVBackend/public/php/news.php')
-    //       .then(response => {
-    //         this.dataNews = response.data;
-    //         console.log(this.dataNews);
-    //       })
-    //       .catch(error => {
-    //         console.error(error);
-    //       });
-    //   }
-
-    //   }
-    // },
- 
 
   created() {
     axios.get('http://localhost/PV/PVBackend/public/php/banner.php')
