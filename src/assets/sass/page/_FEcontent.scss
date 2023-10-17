@@ -1,92 +1,109 @@
+#layoutFE {
+  background: #F5F7F9;
+  width: 100vw;
+  min-height: 100vh;
+  color: $black;
+  position: relative;
+  border-radius: 4px;
 
-#layoutFE{
-    background: #F5F7F9;
-width: 100vw;
-min-height: 100vh;
-color: $black;
-position: relative;
-   border-radius: 4px;
-   h1{
-     color: $black;
-     font-size: 24px;
-     padding: 20px 0 20px 0;
-   }
-   .out{
-     float: right;
-     margin-top: 15px;
-     margin-right:20px ;
-     font-size: 16px;
-     border-radius: 10px;
-     border: 1px solid $black;
-     cursor: pointer;
-   }
+  h1 {
+    color: $black;
+    font-size: 24px;
+    padding: 20px 0 20px 0;
+  }
 
-   .buttonAll{
-     width: 50%;
-     display: flex;
-     justify-content: space-between;
-     margin-bottom: 30px;
-     
-    
-     .thisPage{
-       border: 1px solid $black;
+  .out {
+    float: right;
+    margin-top: 15px;
+    margin-right: 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid $black;
+    cursor: pointer;
+  }
+
+  .buttonAll {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+
+    .thisPage {
+      border: 1px solid $black;
       padding: 5px 10px;
-       border-radius: 10px;
-       color: $white;
-       background: $black;
-     }
-     .buttonPage{
-     border: 1px solid $black;
-   padding: 5px 10px;
-   border-radius: 10px;
-   cursor: pointer;
-   &:hover{
-     color: $white;
-     background: $black;
-   }
-   
-   }
- }
- 
-   
- }
- #TableFE{
-   width:900px ;
- }
+      border-radius: 10px;
+      color: $white;
+      background: $black;
+    }
 
- .demo-upload-list{
-     display: inline-block;
-     width: 400px;
-     height: 400px;
-     text-align: center;
-     line-height: 60px;
-     border: 1px solid transparent;
-     border-radius: 4px;
-     overflow: hidden;
-     background: #fff;
-     position: relative;
-     box-shadow: 0 1px 1px rgba(0,0,0,.2);
-     margin-right: 4px;
- }
- .demo-upload-list img{
-     width: 100%;
-     height: 100%;
- }
- .demo-upload-list-cover{
-     display: none;
-     position: absolute;
-     top: 0;
-     bottom: 0;
-     left: 0;
-     right: 0;
-     background: rgba(0,0,0,.6);
- }
- .demo-upload-list:hover .demo-upload-list-cover{
-     display: block;
- }
- .demo-upload-list-cover i{
-     color: #fff;
-     font-size: 20px;
-     cursor: pointer;
-     margin: 0 2px;
- }
+    .buttonPage {
+      border: 1px solid $black;
+      padding: 5px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+
+      &:hover {
+        color: $white;
+        background: $black;
+      }
+
+    }
+  }
+
+
+}
+
+#TableFE {
+  width: 900px;
+}
+
+.demo-upload-list {
+  display: inline-block;
+  width: 400px;
+  height: 400px;
+  text-align: center;
+  line-height: 60px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+  margin-right: 4px;
+}
+
+.demo-upload-list img {
+  width: 100%;
+  height: 100%;
+}
+
+.demo-upload-list-cover {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .6);
+}
+
+.demo-upload-list:hover .demo-upload-list-cover {
+  display: block;
+}
+
+.demo-upload-list-cover i {
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 2px;
+}
+
+.ivu-table-cell {
+  padding: 10px 20px;
+}
+
+.Table {
+  line-height: 1.5;
+  padding: 10px 0;
+}
