@@ -127,18 +127,21 @@
           <template #action="{ row, index }">
 
             <Button size="small" style="margin-right: 5px" @click="clickNewsEdit(index)">編輯</Button>
+            <!-- 編輯的程式@on-ok="newseditok" -->
             <Modal title="編輯最新消息資訊" ok-text="確認修改" cancel-text="取消" v-model="NewsEdit[index]" width="700px"
               :closable="true" @on-ok="newseditok" @on-cancel="cancel">
-              <Form  @submit.prevent :model="addNews" :label-width="80">
+              <Form @submit.prevent :model="addNews" :label-width="80">
                 <FormItem label="消息編號" :label-width="73">
                   <text>{{ addNews.news_no }}</text>
                 </FormItem>
                 <FormItem label="消息標題:" prop="title_news" :label-width="73" class="ivu-mb" v-width="300">
                   <Input name="news_title" v-model="addNews.news_title" placeholder="aa"></Input>
+                  <!-- 編輯的程式 name="news_title"-->
                 </FormItem>
 
                 <FormItem label="消息照片" prop="img" :label-width="73">
-                  <input name="news_image" type="file" @change="tempImageFile = $event.target.files[0]" style="width: 50px; height: 50px;"/>
+                  <input name="news_image" type="file" @change="tempImageFile = $event.target.files[0]"
+                    style="width: 150px; height: 40px;" />
                   <img width="200" height="200" v-show="!tempImageFile" :src="`/${addNews.news_image}`" alt="">
                 </FormItem>
                 <Space size="large" wrap class="ivu-mb">
@@ -195,7 +198,6 @@
         </Table>
       </div>
       <!-- <img  v-width="60" src="../assets/image/more.svg" alt="more"> -->
-
     </Layout>
 
   </div>
@@ -365,96 +367,98 @@ export default {
             }
           },  
         
-        methods: {
-          newseditok() {
-          console.log(this.addNews)
-          const fd = new FormData()
-          const date =  new Date(this.addNews.news_date)
-          fd.append('news_no', this.addNews.news_no);
-          fd.append('news_title', this.addNews.news_title);
-          fd.append('news_content', this.addNews.news_content);
-          fd.append('news_image', this.tempImageFile);
-          fd.append('news_date', `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
+       
+    methods: {
+    //編輯的程式
+    newseditok() {
+      console.log(this.addNews)
+      const fd = new FormData()
+      const date = new Date(this.addNews.news_date)
+      fd.append('news_no', this.addNews.news_no);
+      fd.append('news_title', this.addNews.news_title);
+      fd.append('news_content', this.addNews.news_content);
+      fd.append('news_image', this.tempImageFile);
+      fd.append('news_date', `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
 
-          axios.post('http://localhost/PV/PVBackend/public/php/newsUpdateToDb.php', fd)
-          .then(response => {
-            console.log(response)
-          })
-          .catch(error => {
-            console.error(error);
-          });
-        },
-       cancel() {},
-            handleView (name) {
-                this.imgName = name;
-                this.visible = true;
-            },
-            handleRemove (file) {
-                const fileList = this.$refs.upload.fileList;
-                this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-            },
-            handleSuccess (res, file) {
-              
-                // this.uploadList = [];
+      axios.post('http://localhost/PV/PVBackend/public/php/newsUpdateToDb.php', fd)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    cancel() { },
+    handleView(name) {
+      this.imgName = name;
+      this.visible = true;
+    },
+    handleRemove(file) {
+      const fileList = this.$refs.upload.fileList;
+      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+    },
+    handleSuccess(res, file) {
 
-            //   file.url = 'https://file.iviewui.com/images/image-demo-3.jpg';
-            //   file.name = 'image-demo-3.jpg';
-            //   // this.uploadList.push(file);
-            //   this.uploadList = [file];
+      //   // this.uploadList = [];
 
-            },
-            handleFormatError(file) {
-              this.$Notice.warning({
-                title: 'The file format is incorrect',
-                desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
-              });
-            },
-            handleMaxSize(file) {
-              this.$Notice.warning({
-                title: 'Exceeding file size limit',
-                desc: 'File  ' + file.name + ' is too large, no more than 2M.'
-              });
-            },
-            handleBeforeUpload() {
-              const check = this.uploadList.length < 5;
-              if (!check) {
-                this.$Notice.warning({
-                  title: 'Up to five pictures can be uploaded.'
-                });
-              }
-              return check;
-            },
-            changeButton(index) {
+      //   file.url = 'https://file.iviewui.com/images/image-demo-3.jpg';
+      //   file.name = 'image-demo-3.jpg';
+      //   // this.uploadList.push(file);
+      //   this.uploadList = [file];
 
-              this.changePage = index;
-              console.log(this.changePage);
-            },
-            clickTeamEdit(index) {
-              this.TeamEdit[index] = true;
-              this.addTeamItem = { ...this.dataMem[index] };
-            },
-            clickNewsEdit(index) {
-              this.NewsEdit[index] = true;
-              this.addNews = { ...this.dataNews[index] };
-            },
-            clickQAEdit(index) {
-              this.editQA = {
-                // 将数据传递给 editQA
-                QA_no: this.dataQA[index].faq_no,
-                QA_title: this.dataQA[index].question,
-                QA_anser: this.dataQA[index].question_ans
-              };
-              this.QAEdit[index] = true;
-            },
-            remove(index, type) {
-              if (type === 'Mem') {
-                this.dataMem.splice(index, 1);
-              } else if (type === 'News') {
+    },
+    handleFormatError(file) {
+      this.$Notice.warning({
+        title: 'The file format is incorrect',
+        desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
+      });
+    },
+    handleMaxSize(file) {
+      this.$Notice.warning({
+        title: 'Exceeding file size limit',
+        desc: 'File  ' + file.name + ' is too large, no more than 2M.'
+      });
+    },
+    handleBeforeUpload() {
+      const check = this.uploadList.length < 5;
+      if (!check) {
+        this.$Notice.warning({
+          title: 'Up to five pictures can be uploaded.'
+        });
+      }
+      return check;
+    },
+    changeButton(index) {
 
-                this.dataNews.splice(index, 1);
-              } else if (type === 'QA') {
-                this.dataQA.splice(index, 1);
-              }
+      this.changePage = index;
+      console.log(this.changePage);
+    },
+    clickTeamEdit(index) {
+      this.TeamEdit[index] = true;
+      this.addTeamItem = { ...this.dataMem[index] };
+    },
+    clickNewsEdit(index) {
+      this.NewsEdit[index] = true;
+      this.addNews = { ...this.dataNews[index] };
+    },
+    clickQAEdit(index) {
+      this.editQA = {
+        // 将数据传递给 editQA
+        QA_no: this.dataQA[index].faq_no,
+        QA_title: this.dataQA[index].question,
+        QA_anser: this.dataQA[index].question_ans
+      };
+      this.QAEdit[index] = true;
+    },
+    remove(index, type) {
+      if (type === 'Mem') {
+        this.dataMem.splice(index, 1);
+      } else if (type === 'News') {
+
+        this.dataNews.splice(index, 1);
+      } else if (type === 'QA') {
+        this.dataQA.splice(index, 1);
+      }
 
 
             },
@@ -508,28 +512,62 @@ export default {
         components: {
         Side
         },
-        created() {
-        axios.get('http://localhost/PV/PVBackend/public/php/banner.php')
-          .then(response => {
-            this.banner = response.data;
-            console.log(this.banner);
-            // this.defaultList[0].url =this.banner.banner_pic; 
-          })
-          .catch(error => {
-            console.error(error);
-          });
+    //     created() {
+    //     axios.get('http://localhost/PV/PVBackend/public/php/banner.php')
+    //       .then(response => {
+    //         this.banner = response.data;
+    //         console.log(this.banner);
+    //         // this.defaultList[0].url =this.banner.banner_pic; 
+    //       })
+    //       .catch(error => {
+    //         console.error(error);
+    //       });
 
 
-        axios.get('http://localhost/PV/PVBackend/public/php/news.php')
-          .then(response => {
-            this.dataNews = response.data;
-            console.log(this.dataNews);
-          })
-          .catch(error => {
-            console.error(error);
-          });
-      }
+    //     axios.get('http://localhost/PV/PVBackend/public/php/news.php')
+    //       .then(response => {
+    //         this.dataNews = response.data;
+    //         console.log(this.dataNews);
+    //       })
+    //       .catch(error => {
+    //         console.error(error);
+    //       });
+    //   }
 
-    }
+    //   }
+    // },
+ 
+
+  created() {
+    axios.get('http://localhost/PV/PVBackend/public/php/banner.php')
+      .then(response => {
+        this.banner = response.data;
+        console.log(this.banner);
+        // this.defaultList[0].url =this.banner.banner_pic; 
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+
+    axios.get('http://localhost/PV/PVBackend/public/php/news.php')
+      .then(response => {
+        this.dataNews = response.data;
+        console.log(this.dataNews);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
+      axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
+      .then(response => {
+        this.dataQA = response.data;
+        console.log(this.dataQA)
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }
+}
 
 </script>
