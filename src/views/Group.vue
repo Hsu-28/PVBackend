@@ -14,7 +14,8 @@
             v-model="modal1"
             width="700px"
             :closable="true"
-            @on-ok="ok"
+            @on-ok="addgroup"
+            ok-text="確認新增"
             @on-cancel="cancel">
             <Form
               :width="500"
@@ -23,9 +24,26 @@
               :label-width="80"
               enctype="multipart/form-data"
               method="post"  >
-              <FormItem label="名稱:" prop="precautions" :label-width="45" class="ivu-mb">
-                <Input v-model="addItem.title" placeholder="輸入旅程名稱" ></Input>
+
+              <FormItem label="旅程名稱" prop="precautions" :label-width="45" class="ivu-mb">
+                <Select v-model="addItem.title" placeholder="選擇增加旅程">
+                  <Option value="1"> &nbsp; 星際繞行</Option>
+                  <Option value="2"> &nbsp; 月 球 巡 禮</Option>
+                  <Option value="3"> &nbsp; 太空之心 </Option>
+                  <Option value="4"> &nbsp; 奧林帕斯山脈之旅</Option>
+                  <Option value="5"> &nbsp; 尋找生命之旅</Option>
+                  <Option value="6"> &nbsp; 人文遺跡之旅</Option>
+                  <Option value="7"> &nbsp; 金星夢幻秘境</Option>
+                  
+                </Select>
               </FormItem>
+
+
+
+
+              <!-- <FormItem label="名稱:" prop="precautions" :label-width="45" class="ivu-mb">
+                <Input v-model="addItem.title" placeholder="選擇增加旅程" ></Input>
+              </FormItem> -->
               <Space size="large" rap  class="ivu-mb">
                   <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">訓練起始日期:</div>
                   <DatePicker v-model="addItem.trianing_date" type="date" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
@@ -34,18 +52,7 @@
                   <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">出發日期:</div>
                   <DatePicker v-model="addItem.date" type="date" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
               </Space>
-              <!-- <FormItem   v-width="150"  label="人數上限:" prop="max" :label-width="72" class="ivu-mb">
-                  <Input v-model="addItem.max" placeholder="10" ></Input>
-              </FormItem>
-              <FormItem   v-width="150"  label="已報名人數:" prop="max" :label-width="86" class="ivu-mb">
-                  <Input v-model="addItem.applicants" placeholder="0" ></Input>
-              </FormItem>
-              <FormItem   v-width="150"  label="出團狀態:" prop="max" :label-width="72" class="ivu-mb">
-                  <Input v-model="addItem.applicants" placeholder="0" ></Input>
-              </FormItem>
-              <FormItem   v-width="150"  label="候補人數:" prop="max" :label-width="72" class="ivu-mb">
-                  <Input v-model="addItem.wait" placeholder="0" ></Input>
-              </FormItem>  -->
+
             </Form>
       </Modal>
         
@@ -55,7 +62,7 @@
 
           <Table class="Table" border :columns="columns" :data="myData">
               <template #action="{ row, index }">
-                <Button  size="small" style="margin-right: 5px" @click=" tabIndex = index; More()">編輯</Button>
+                <Button  size="small" style="margin-right: 5px" @click=" tabIndex = index; More(tabIndex)">編輯</Button>
                 <Button  size="small" @click="remove()">刪除</Button>
               </template>
           </Table>  
@@ -66,36 +73,50 @@
       <div v-if="showMore==2">
         <h1>行程</h1>
         <Form id="FormAll" v-width="700" ref="moreDetail" :model="moreDetail" :rules="ruleValidate" :label-width="80">
-            <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{index}}</p>
-            <FormItem label="名稱:" prop="precautions" :label-width="45">
+            <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{myData[tabIndex].trip_no}}</p>
+            <!-- <FormItem label="名稱:" prop="precautions" :label-width="45">
                 <Input v-model="myData[tabIndex].title" placeholder="輸入旅程名稱" ></Input>
-            </FormItem>
+            </FormItem> -->
+
+            <FormItem label="旅程名稱" prop="precautions" :label-width="45">
+                <Select v-model="myData[tabIndex].planet_subtitle" placeholder="修改旅程名稱">
+                  <Option value="1"> &nbsp; 星際繞行</Option>
+                  <Option value="2"> &nbsp; 月 球 巡 禮</Option>
+                  <Option value="3"> &nbsp; 太空之心</Option>
+                  <Option value="4"> &nbsp; 奧林帕斯山脈之旅</Option>
+                  <Option value="5"> &nbsp; 尋找生命之旅</Option>
+                  <Option value="6"> &nbsp; 人文遺跡之旅</Option>
+                  <Option value="7"> &nbsp; 金星夢幻秘境</Option>
+                </Select>
+              </FormItem>
+
+
               <Space size="large"   class="ivu-mb">
                   <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">訓練日期:</div>
-                  <DatePicker v-model="myData[tabIndex].trianing_date" type="date" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
+                  <DatePicker v-model="myData[tabIndex].training_date" type="date" :options="options2" placement="bottom-end" placeholder="Select date" style="width: 200px" />
               </Space>
                 <Space size="large"    class="ivu-mb">
                   <div  style="font-size: 14px;color: #515a6e; padding: 8px 0;">出發日期:</div>
-                    <DatePicker  type="date" v-model="myData[tabIndex].date"  placement="bottom-end" placeholder="Select date" style="width: 200px" />
+                    <DatePicker  type="date" v-model="myData[tabIndex].trip_date"  placement="bottom-end" placeholder="Select date" style="width: 200px" />
                 </Space>
               <FormItem   v-width="150"  label="人數上限:" prop="max" :label-width="72">
                   <Input v-model="myData[tabIndex].max_num" placeholder="10" ></Input>
               </FormItem>
               <FormItem   v-width="150"  label="已報名人數:" prop="applicants" :label-width="86">
-                  <Input v-model="myData[tabIndex].applicants" placeholder="0" ></Input>
+                  <Input v-model="myData[tabIndex].signup_num" placeholder="0" ></Input>
               </FormItem>
               <FormItem   v-width="170"  label="審核通過人數:" prop="pass" :label-width="100">
                   <Input v-model="myData[tabIndex].pass" placeholder="0" ></Input>
               </FormItem>
               <FormItem   v-width="150"  label="候補人數:" prop="wait" :label-width="72">
-                  <Input v-model="myData[tabIndex].wait" placeholder="0" ></Input>
+                  <Input v-model="myData[tabIndex].waiting_people" placeholder="0" ></Input>
               </FormItem> 
-              <FormItem   v-width="150"  label="出團狀態:" prop="max" :label-width="72" class="ivu-mb">
+              <!-- <FormItem   v-width="150"  label="出團狀態:" prop="max" :label-width="72" class="ivu-mb">
                   <Input v-model="myData[tabIndex].state" placeholder="" ></Input>
-              </FormItem>
+              </FormItem> -->
             <FormItem v-width="700">
                 <Button  size="small" style="margin-right: 5px; float: right;" @click="reTable()">返回</Button>
-                <Button  size="small" style="margin-right: 5px;  float: right;" @click="reTable()">確定</Button>
+                <Button  size="small" style="margin-right: 5px;  float: right;" @click=" editgroup(tabIndex)">確定</Button>
             </FormItem>
         </Form>
       </div>
@@ -169,31 +190,9 @@ export default {
               width: 130
             },           
         ],
+
         myData:[
-             
-            {
-              number: 1, //trip_no
-              title: '月球背面探索之旅1',  //name
-              trianing_date:'1117/11/02',//training_date
-              date: '2022/01/21',//trip_date
-              applicants: '8/8',//signup_num
-              pass: '7/8',//pass
-              wait: '5',//waiting_people
-              state : '成團',//none
-              max_num: '10',//max_num 
-     
-            },
-            {
-              number: 2,
-              title: '月球背面探索之旅2',
-              trianing_date:'1117/11/02',
-              date: '202/01/21',
-              applicants: '8/8',
-              pass: '8',
-              wait: '',
-              state : '成團', 
-              max_num: '10',//max_num             
-            },
+
             
         ],
           addItem:[{
@@ -205,25 +204,18 @@ export default {
             wait:'',
             trianing_date:'',
             daytrain:'',
-            //   number: 1, //trip_no
-            //   title: '月球背面探索之旅1',  //name
-            //   trianing_date:'1117/11/02',//training_date
-            //   date: '2022/01/21',//trip_date
-            //   applicants: '8/8',//signup_num
-            //   pass: '7/8',//pass
-            //   wait: '5',//waiting_people
-            //   state : '成團',//none   
           }],
   }
 },
   components: {
     Side
+    
     },
     methods:{
-      
-    More(){
+    
+    More(tabIndex   ){
       this.showMore = 2;
-
+      console.log(this.myData[tabIndex].trip_no)
     },
     reTable(){
         this.showMore=1;
@@ -245,7 +237,7 @@ export default {
           state: this.addItem.state,
   };
   this.myData.push(newItem);
-  // 清空表单字段以准备输入下一个项目
+  //  清空資料
   this.addItem = {
     number: '',
     title: '',
@@ -257,6 +249,69 @@ export default {
     state: '',
   };
     },
+    addgroup() {
+
+      const addjourney = new FormData()
+      const tdate = new Date(this.addItem.trianing_date)
+      const gdate = new Date(this.addItem.date)
+      const tripno = this.addItem.title
+      addjourney.append('itinerary_no',tripno );
+      addjourney.append('training_date', `${tdate.getFullYear()}-${tdate.getMonth() + 1}-${tdate.getDate()}`);
+      addjourney.append('trip_date', `${gdate.getFullYear()}-${gdate.getMonth() + 1}-${gdate.getDate()}`);
+
+      axios.post('http://localhost/PV/PVBackend/public/php/GroupAdd.php',  addjourney )
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    editgroup(tabIndex) {
+        this.showMore=1;
+        const editjourney = new FormData()
+        // const tdate = new Date(this.addItem.trianing_date)
+        // const gdate = new Date(this.addItem.date)
+        // const pass = myData[tabIndex].pass
+        // const waiting_people = myData[tabIndex].wait
+        // const signup_num = myData[tabIndex].applicants
+        // const max_num = myData[tabIndex].max_num
+        // const tripno = myData[tabIndex].title
+
+
+        // this.editjourney
+        // this.tdate
+        // this.gdate
+        // this.pass
+        // this.waiting_people
+        // this.signup_num
+        // this.max_num
+        // this.tripno
+
+
+
+
+        editjourney.append('trip_no',this.myData[tabIndex].trip_no);
+        editjourney.append('itinerary_no',this.myData[tabIndex].itinerary_no);
+        editjourney.append('training_date', this.myData[tabIndex].training_date);
+        editjourney.append('trip_date', this.myData[tabIndex].trip_date);
+        editjourney.append('pass',this.myData[tabIndex].pass );
+        editjourney.append('waiting_people',this.myData[tabIndex].waiting_people );
+        editjourney.append('signup_num',this.myData[tabIndex].signup_num );
+        editjourney.append('max_num',10);
+
+        axios.post('http://localhost/PV/PVBackend/public/php/Groupedit.php', editjourney, {
+    headers: {
+      'Content-Type': 'multipart/form-data' // Use 'multipart/form-data' for FormData
+    }
+  })
+          .then(response => {
+            console.log(response)
+          })
+          .catch(error => {
+            console.error(error);
+          });
+},
 
 },
 created() {
