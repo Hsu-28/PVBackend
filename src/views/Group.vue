@@ -157,12 +157,12 @@ export default {
               width: 96
 
             },      
-            {
-              title: '出團狀態',
-              key: 'state',
-              width: 96
+            // {
+            //   title: '出團狀態',
+            //   key: 'state',
+            //   width: 96
 
-            },      
+            // },      
             {
               title: '編輯',
               slot: 'action',

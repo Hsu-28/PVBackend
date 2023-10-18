@@ -91,7 +91,7 @@
               </Form>
             </Modal>
             <!-- @click="clickEditBtn(index, row)" -->
-            <Button size="small" @click="remove(index, 'Mem')">刪除</Button>
+            <!-- <Button size="small" @click="remove(index, 'Mem')">刪除</Button> -->
 
           </template>
 
@@ -267,6 +267,7 @@ export default {
                 {
                   title: '編輯',
                   slot: 'action',
+                  width: 90
                 },           
             ],
             // 彈窗資料

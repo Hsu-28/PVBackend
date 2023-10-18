@@ -102,7 +102,7 @@
           <Table class="Table" border :columns="columns" :data="data">
                   <template #action="{ row, index }">
                   
-                    <Button  size="small" style="margin-right: 5px" @click="More()">編輯</Button>
+                    <Button  size="small" style="margin-right: 5px" @click="Mindex = index;More()">編輯</Button>
                    <Button  size="small" @click="remove(index)">刪除</Button>
                   </template>
           </Table>  
@@ -222,30 +222,34 @@
 
 </template>
 <style scoped lang="scss">
+
 @import "~@/assets/sass/page/_Process.scss";
 // :deep(tr.ivu-table-row-hover td){
 //   background-color: red;
 // }
 </style>
 <script>
+import axios from 'axios';
+
 import Side from '@/components/SideNav.vue';
      
 export default {
 
       data() {
         return {
+          Mindex:0,
           showMore:1,
           modalProcess: false,
           columns:[
                 {
                   title: '編號',
-                  key: 'number',
+                  key: 'itinerary_no',
                   width:80
 
                 },      
                 {
-                  title: '地點',
-                  key: 'location',
+                  title: '星球名稱',
+                  key: 'planet_name',
                   filters: [
                             {
                                 label: '繞行',
@@ -280,7 +284,7 @@ export default {
                 },      
                 {
                   title: '名稱',
-                  key: 'title'
+                  key: 'planet_subtitle'
                 },      
               
                 {
@@ -290,45 +294,45 @@ export default {
                 },           
             ],
             data:[
-                {
-                  number: 1,
-                  location: '月球',
-                  title: '月球背面探索之旅1',
+                // {
+                //   number: 1,
+                //   location: '月球',
+                //   title: '月球背面探索之旅1',
                  
                 
-                },
-                {
-                  number: 2,
-                  location: '火星',
-                  title: '火星背面探索之旅1',
+                // },
+                // {
+                //   number: 2,
+                //   location: '火星',
+                //   title: '火星背面探索之旅1',
                  
                 
-                },
-                {
-                  number: 3,
-                  location: '月球',
-                  title: '月球背面探索之旅2',
-                },
-                {
-                  number: 4,
-                  location: '火星',
-                  title: '火星背面探索之旅2',                
-                },
-                {
-                  number: 5,
-                  location: '金星',
-                  title: '金星背面探索之旅1',                
-                },
-                {
-                  number: 6,
-                  location: '金星',
-                  title: '金星背面探索之旅2',                
-                },
-                {
-                  number: 7,
-                  location: '繞行',
-                  title: '繞行探索之旅1',                
-                },
+                // },
+                // {
+                //   number: 3,
+                //   location: '月球',
+                //   title: '月球背面探索之旅2',
+                // },
+                // {
+                //   number: 4,
+                //   location: '火星',
+                //   title: '火星背面探索之旅2',                
+                // },
+                // {
+                //   number: 5,
+                //   location: '金星',
+                //   title: '金星背面探索之旅1',                
+                // },
+                // {
+                //   number: 6,
+                //   location: '金星',
+                //   title: '金星背面探索之旅2',                
+                // },
+                // {
+                //   number: 7,
+                //   location: '繞行',
+                //   title: '繞行探索之旅1',                
+                // },
             ],
             moreDetail:{
                 number:'1',  
@@ -398,9 +402,23 @@ export default {
         //     handleReset (name) {
         //         this.$refs[name].resetFields();
         //     }
-        }
+        },
+         created() {
+        // // 發起HTTP GET 請求
+        // axios.get('http://localhost/PV/PVBackend/public/php/Process.php')
+        //     .then(response => {
+        //         this.data = response.data;
+        //         // this.datac = [...this.myData];
 
+        //     })
+        //     .catch(error => {
+        //         console.error(error);
+        //     });
     }
+  }
+
+  
+    
 
 
 </script>

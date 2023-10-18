@@ -59,7 +59,7 @@
               <p class="ivu-mb">生日： <span>{{passengerMore.birthday }}</span></p>
               <p class="ivu-mb">國籍： <span>{{passengerMore.passenger_nationality}}</span></p>
               <p class="ivu-mb">護照號碼：<span>{{passengerMore.passport}}</span></p>
-              <div style="width:600px; ">
+              <!-- <div style="width:600px; ">
                 <p style="margin-bottom:8px; ;">健康審核</p>
                  
                   <Select v-model="passengerMore.health_check" placeholder="請選擇審核"   style="width:200px; "   class="ivu-mb" >
@@ -74,19 +74,17 @@
                       </Option>
                   </Select>
               </div>
-             
-              <Space  class="ivu-mb" wrap>
+              -->
+              <!-- <Space  class="ivu-mb" wrap>
                   <Button :size="buttonSize" icon="ios-download-outline" type="primary">體檢報告</Button>
-              </Space>
+              </Space> -->
               <p class="ivu-mb">報名狀態： <span>{{passengerMore.passenger_status}}</span></p>
               <p class="ivu-mb">候補順位： <span>{{passengerMore.alternate_order}}</span></p>
               <p class="ivu-mb">座位編號： <span>{{passengerMore.seat_no}}</span></p>
               <p class="ivu-mb">訓練審核： <span>{{passengerMore.training_result}}</span></p>
               <p class="ivu-mb">訓練服尺寸： <span>{{passengerMore.shirt_size}}</span></p>
               <p class="ivu-mb">飲食備註: <span>{{passengerMore.passenger_diet}}</span></p>
-              <!-- <FormItem    label="飲食備註:" prop="exp" :label-width="45" class="ivu-mb">
-                 <Input v-model="passengerMore.diet" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="經歷"></Input>
-              </FormItem>  -->
+              
         </div>
             <div>
                 <Button  size="small" style="margin-right: 5px" @click="toOrders2()">返回</Button>
@@ -182,11 +180,10 @@ export default {
     axios.get("http://localhost/PV/PVBackend/public/php/Order.php")
       .then(response => {
         this.data = response.data;
-        // if (Array.isArray(this.data) && this.data.length > 0) {
-        console.log(typeof this.data[0].total_amount);  // 打印第一個元素的 orders_no 的型態
+      
      
         this.datac = [...this.data];
-     
+        this.ChangeStatName();     
       })
       .catch(error => {
         console.error("There was an error fetching the orders:", error);
@@ -198,8 +195,22 @@ export default {
   },
   created() {
     this.datac = [...this.data];
+
   },
   methods: {
+    ChangeStatName(){
+     this.data.forEach((item) => {
+        if (item.orders_stat == "0") {
+            item.state = "處理中";
+        } else if (item.orders_stat == "1") {
+            item.state = "已確認";
+            console.log( this.data[1].orders_stat);
+        } else if (item.orders_stat == "2") {
+            item.state = "已完成";
+        }
+      
+    });
+    },
     toOrders2(){
       this.showMore = 2;
     },
