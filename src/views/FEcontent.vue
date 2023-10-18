@@ -49,10 +49,11 @@
           <Form :model="addTeamItem" :label-width="80" enctype="multipart/form-data" method="post">
             <FormItem label="姓名:" prop="precautions" :label-width="45" class="ivu-mb" v-width="200">
               <Input v-model="addTeamItem.name" placeholder="aa"></Input>
+
             </FormItem>
 
             <FormItem label="照片" prop="mem_img" :label-width="40">
-              <input type="file" id="upMemFile" name="upMemFile" />
+              <input type="file" />
             </FormItem>
             <FormItem v-width="200" label="職稱:" prop="job" :label-width="45" class="ivu-mb">
               <Input v-model="addTeamItem.job" placeholder="職稱"></Input>
@@ -75,9 +76,11 @@
                 <FormItem label="姓名:" prop="precautions" :label-width="45" class="ivu-mb" v-width="200">
                   <Input v-model="addTeamItem.team_memname" placeholder="aa"></Input>
                 </FormItem>
-
+                <!-- 照片上傳 -->
                 <FormItem label="照片" prop="mem_img" :label-width="40">
-                  <input type="file" multiple />
+                  <input type="file" @change="addTeamItem.TeamImageFile = $event.target.files[0]" id="TeamImageFile"
+                    name="TeamImageFile" />
+
                 </FormItem>
                 <FormItem v-width="200" label="職稱:" prop="job" :label-width="45" class="ivu-mb">
                   <Input v-model="addTeamItem.team_memjob" placeholder="職稱"></Input>
@@ -219,6 +222,7 @@ export default {
   data() {
     return {
 
+      tempImageFile: null,
       clickEditBtnT: false,
       memore: 0,
       changePage: 0,
@@ -382,14 +386,7 @@ export default {
         this.addNews.news_image = ''; // 如果未選擇檔案，清空資料
       }
     },
-    // updateFileName(event) {
-    //   const selectedFile = event.target.files[0]; // 獲取所選檔案
-    //   if (selectedFile) {
-    //     this.tempImageFileName = selectedFile.name; // 更新檔案名稱
-    //   } else {
-    //     this.tempImageFileName = ''; // 如果沒有選擇檔案，清空檔案名稱
-    //   }
-    // },
+
     //編輯的程式
     newseditok() {
       console.log(this.addNews)
@@ -520,7 +517,18 @@ export default {
         });
     },
     TeamEditPhp() {
-      axios.post('http://localhost/PV/PVBackend/public/php/TeamMemEdit.php', this.addTeamItem)
+      const fd = new FormData()
+      fd.append('team_memno', this.addTeamItem.team_memno);
+      fd.append('team_memname', this.addTeamItem.team_memname);
+      fd.append('team_memimageFile', this.addTeamItem.TeamImageFile);
+      fd.append('team_memimage', this.addTeamItem.team_memimage);
+      fd.append('team_memjob', this.addTeamItem.team_memjob);
+      fd.append('team_memexperience', this.addTeamItem.team_memexperience);
+      axios.post('http://localhost/PV/PVBackend/public/php/TeamMemEdit.php', fd
+        // headers: {
+        //     'Content-Type': 'multipart/form-data'
+        // }
+      )
         .then(response => {
           console.log(response);
           // this.dataMem = response.data; 
@@ -528,10 +536,44 @@ export default {
         .catch(error => {
           console.log(error);
         });
-      this.getTeamMem();
+
+      // this.getTeamMem();
     },
 
   },
+
+  mounted() {
+    this.getTeamMem();
+    if (this.$refs.upload) {
+      this.uploadList = this.$refs.upload.fileList;
+    }
+  },
+
+  cancelEdit() {
+    this.addItem = { ...this.resetItem };
+  },
+  getTeamMem() {
+    axios.get("http://localhost/PV/PVBackend/public/php/TeamMem.php")
+      .then(response => {
+        this.dataMem = response.data;
+      })
+      .catch(error => {
+        console.error("There was an error fetching the TeamMem:", error);
+      });
+  },
+  TeamEditPhp() {
+    axios.post('http://localhost/PV/PVBackend/public/php/TeamMemEdit.php', this.addTeamItem)
+      .then(response => {
+        console.log(response);
+        // this.dataMem = response.data; 
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    this.getTeamMem();
+  },
+
+
 
   mounted() {
     this.$nextTick(() => {
