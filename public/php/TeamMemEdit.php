@@ -24,7 +24,9 @@ try {
         // 更新文件并扩展SQL语句
         move_uploaded_file($_FILES['team_memimageFile']['tmp_name'], $targetFilePath);
     }
-    $sql="UPDATE teamintro SET team_memname = :team_memname,  team_memjob = :team_memjob, team_memexperience = :team_memexperience WHERE team_memno = :team_memno";
+    $sql="UPDATE teamintro SET team_memname = :team_memname, team_memimage = :team_memimage, team_memjob = :team_memjob, team_memexperience = :team_memexperience WHERE team_memno = :team_memno";
+
+    // $sql="UPDATE teamintro SET team_memname = :team_memname,  team_memjob = :team_memjob, team_memexperience = :team_memexperience WHERE team_memno = :team_memno";
     $stmt = $pdo->prepare($sql);
 
     $stmt->bindValue(":team_memno", $_POST["team_memno"]);

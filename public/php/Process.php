@@ -10,12 +10,13 @@ try {
 
     require_once("../../../connect_chd103g3.php");
     $sql = "SELECT * FROM itinerary";  
-
+    $itineraryday=[];
     $query = $pdo->query($sql);
     $itinerary = $query->fetchAll(PDO::FETCH_ASSOC);  
-    foreach   ($itinerary as $index => $itinerary){
-        $itinerary = explode("\r\n", $itinerary['itinerary_day']);
-
+    foreach ($itinerary as $index => $item) {
+        $itineraryday = explode("\r\n", $item['itinerary_day']);
+        // $itineraryday = mb_split("\r\n", $item['itinerary_day']);
+        $itinerary[$index]['itinerary_day'] = $itineraryday;
     }
 
     echo json_encode($itinerary); //將資料轉成JSON格式並輸出

@@ -268,19 +268,23 @@ export default {
         },
         {
           title: '成員經歷',
-          key: 'team_memexperience'
+          key: 'team_memexperience',
+          width: 160
+
         },
         {
           title: '編輯',
           slot: 'action',
+          width: 90
         },
       ],
       // 彈窗資料
       addTeamItem:
       {
+        team_memimage:'',
+        TeamImageFile:null,
         team_memno: null,
         team_memname: '',
-        memteam_memimage_img: '',
         team_memjob: '',
         team_memexperience: '',
       },
@@ -544,11 +548,12 @@ export default {
       fd.append('team_memimage', this.addTeamItem.team_memimage);
       fd.append('team_memjob', this.addTeamItem.team_memjob);
       fd.append('team_memexperience', this.addTeamItem.team_memexperience);
-      axios.post('http://localhost/PV/PVBackend/public/php/TeamMemEdit.php', fd
-        // headers: {
-        //     'Content-Type': 'multipart/form-data'
-        // }
-      )
+    
+      axios.post('http://localhost/PV/PVBackend/public/php/TeamMemEdit.php', fd, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
         .then(response => {
           console.log(response);
           // this.dataMem = response.data; 
