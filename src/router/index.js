@@ -69,11 +69,11 @@ const routes = [
   },
   {
     path: '/',
-    name: 'Longin',
+    name: 'Login',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "Longin" */ '../views/Longin.vue')
+    component: () => import(/* webpackChunkName: "Longin" */ '../views/Login.vue')
   },
   {
     path: '/Member',
@@ -91,4 +91,4 @@ const router = createRouter({
   routes
 })
 
-export default router
+export default router;
