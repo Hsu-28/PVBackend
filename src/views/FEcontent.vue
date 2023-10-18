@@ -175,10 +175,10 @@
         <Modal title="新增Q&A" v-model="modalQA" width="700px" :closable="true">
           <Form :model="addQA" :label-width="80" enctype="multipart/form-data" method="post">
             <FormItem label="問題標題:" prop="title_QA" :label-width="70" class="ivu-mb" v-width="300">
-              <Input v-model="addNews.title_QA" placeholder="標題"></Input>
+              <Input v-model="addQA.title_QA" placeholder="標題"></Input>
             </FormItem>
             <FormItem label="問題答案:" prop="QA_anwer" :label-width="70" class="ivu-mb">
-              <Input v-model="addNews.QA_anwer" type="textarea" :autosize="{ minRows: 5, maxRows: 5 }"
+              <Input v-model="addQA.QA_anwer" type="textarea" :autosize="{ minRows: 5, maxRows: 5 }"
                 placeholder="內容"></Input>
             </FormItem>
           </Form>
@@ -187,17 +187,17 @@
           <template #action="{ row, index }">
             <Button size="small" style="margin-right: 5px" @click="clickQAEdit(index)">編輯</Button>
             <Modal title="編輯問題資訊" ok-text="確認修改" cancel-text="取消" v-model="QAEdit[index]" width="700px" :closable="true"
-              @on-ok="ok" @on-cancel="cancel">
+              @on-ok="QAeditok" @on-cancel="cancel">
               <Form :model="editQA" :label-width="80" enctype="multipart/form-data" method="post">
                 <FormItem label="問題編號:" :label-width="75">
-                  <text v-text="editQA.QA_no"></text>
+                  <text name="faq_no" v-text="editQA.faq_no"></text>
                 </FormItem>
                 <FormItem label="問題標題:" :label-width="75" class="ivu-mb" v-width="300">
-                  <Input v-model="editQA.QA_title" type="text" placeholder="標題"></Input>
+                  <Input name="question" v-model="editQA.question" type="textarea" placeholder="標題"></Input>
                 </FormItem>
                 <FormItem label="問題答案:" :label-width="75" class="ivu-mb">
-                  <Input v-model="editQA.QA_anser" type="textarea" :autosize="{ minRows: 5, maxRows: 5 }"
-                    placeholder="內容"></Input>
+                  <Input name="question_ans" v-model="editQA.question_ans" type="textarea"
+                    :autosize="{ minRows: 5, maxRows: 5 }" placeholder="內容"></Input>
                 </FormItem>
               </Form>
             </Modal>
@@ -345,11 +345,13 @@ export default {
       columnsQA: [
         {
           title: '問題編號',
-          key: 'faq_no'
+          key: 'faq_no',
+          width: 100
         },
         {
           title: '問題標題',
-          key: 'question'
+          key: 'question',
+          width: 300
         },
         {
           title: '問題答案',
@@ -358,7 +360,7 @@ export default {
         {
           title: '編輯',
           slot: 'action',
-          width: 140
+          width: 90
         },
       ],
       addQA: [
@@ -368,11 +370,13 @@ export default {
           QA_anwer: ``,
         },
       ],
-      editQA: {
-        QA_no: '',
-        QA_title: '',
-        QA_anser: ''
-      }
+      editQA: [
+        {
+          faq_no: '',
+          question: '',
+          question_ans: ''
+        }
+      ]
     }
   },
 
@@ -412,6 +416,21 @@ export default {
             .catch(error => {
               console.error(error);
             });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    QAeditok() {
+      console.log(this.editQA)
+      const fd = new FormData()
+      fd.append('faq_no', this.editQA.faq_no);
+      fd.append('question', this.editQA.question);
+      fd.append('question_ans', this.editQA.question_ans);
+
+      axios.post('http://localhost/PV/PVBackend/public/php/faqUpdateToDb.php', fd)
+        .then(response => {
+          console.log(response)
         })
         .catch(error => {
           console.error(error);
@@ -471,13 +490,14 @@ export default {
       this.addNews = { ...this.dataNews[index] };
     },
     clickQAEdit(index) {
-      this.editQA = {
-        // 将数据传递给 editQA
-        QA_no: this.dataQA[index].faq_no,
-        QA_title: this.dataQA[index].question,
-        QA_anser: this.dataQA[index].question_ans
-      };
+      // this.editQA = {
+      //   // 将数据传递给 editQA
+      //   faq_no: this.dataQA[index].faq_no,
+      //   question: this.dataQA[index].question,
+      //   question_ans: this.dataQA[index].question_ans
+      // };
       this.QAEdit[index] = true;
+      this.editQA = { ...this.dataQA[index] };
     },
     remove(index, type) {
       if (type === 'Mem') {
