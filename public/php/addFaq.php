@@ -7,18 +7,18 @@ try {
     header("Content-Type: application/json"); 
     require_once("../../../connect_chd103g3.php");
 
-    $chat_no = $_POST['chat_no'];
-    $keyword = $_POST['keyword'];
-    $chat_ans = $_POST['chat_ans'];
+    $faq_no = $_POST['faq_no'];
+    $question = $_POST['question'];
+    $question_ans = $_POST['question_ans'];
 
     // 使用反引號括住表名和欄位名
-    $sql = "INSERT INTO `chatbot` (`chat_no`, `keyword`, `chat_ans`)
-            VALUES (:chat_no, :keyword, :chat_ans)";
+    $sql = "INSERT INTO `faq` (`faq_no`, `question`, `question_ans`)
+            VALUES (:faq_no, :question, :question_ans)";
 
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':chat_no', $chat_no);
-    $stmt->bindParam(':keyword', $keyword);
-    $stmt->bindParam(':chat_ans', $chat_ans);
+    $stmt->bindParam(':faq_no', $faq_no);
+    $stmt->bindParam(':question', $question);
+    $stmt->bindParam(':question_ans', $question_ans);
     $stmt->execute();
 }
 catch (Exception $e) {

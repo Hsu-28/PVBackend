@@ -8,13 +8,15 @@
       <div v-if="showMore == 1">
         <h1>聊天機器人</h1>
         <!-- <Button @click="news = true" class="add">新增 +</Button> -->
+        <!-- <Button @click="news(index)" class="add">新增 +</Button> -->
         <Button @click="news(index)" class="add">新增 +</Button>
         <!-- 彈窗 -->
-        <Modal title="新增聊天機器人" ok-text="確認新增" cancel-text="取消 " v-model="RTnews[index]" width="700px" :closable="true">
-          <!-- 新增 v-model="RTnews[index]" -->
+        <Modal title="新增聊天機器人" ok-text="確認新增" cancel-text="取消" v-model="RTnews[index]" width="700px" :closable="true"
+          @on-ok="RTaddok" @on-cancel="cancel">
+          <!-- 新增資料 v-model="RTnews[index]" -->
           <Form :model="addRobot" :label-width="80" enctype="multipart/form-data" method="post">
             <FormItem label="關鍵字:" prop="keyword" :label-width="70" class="ivu-mb" v-width="300">
-              <Input v-model="addRobot.keyword" placeholder="關鍵字"></Input>
+              <Input v-model="addRobot.keyword" type="text" placeholder="關鍵字"></Input>
             </FormItem>
             <FormItem label="回覆:" prop="chat_ans" :label-width="70" class="ivu-mb">
               <Input v-model="addRobot.chat_ans" type="textarea" :autosize="{ minRows: 5, maxRows: 5 }"
@@ -63,7 +65,7 @@ export default {
       showMore: 1,
       // news: false,
       RTEdit: [],
-      RTnews: [], //新增
+      RTnews: [], //新增資料
       columns: [
         {
           title: '編號',
@@ -111,24 +113,33 @@ export default {
       axios.post('http://localhost/PV/PVBackend/public/php/chatbotUpdateToDb.php', fd)
         .then(response => {
           console.log(response)
+          axios.get('http://localhost/PV/PVBackend/public/php/chatbot.php')
+            .then(response => {
+              this.data = response.data;
+              console.log(this.data);
+            })
+            .catch(error => {
+              console.error(error);
+            });
         })
         .catch(error => {
           console.error(error);
         });
     },
 
-    // 新增
+    // 新增資料
     news(index) {
       this.RTnews[index] = true;
       // this.addRobot = { ...this.data[index] };
-
+    },
+    // 新增資料-確認按鈕
+    RTaddok() {
       // 傳送
       const data = {
-        // chat_no: 1,
         keyword: this.addRobot.keyword,
         chat_ans: this.addRobot.chat_ans
       };
-      axios.post('http://localhost/PV/PlanetVoyager/public/php/addChatbot.php', data, {
+      axios.post('http://localhost/PV/PVBackend/public/php/addChatbot.php', data, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -141,7 +152,6 @@ export default {
         });
     },
 
-
     cancel() { },
     More() {
       this.showMore = 2;
@@ -152,7 +162,20 @@ export default {
 
     },
     remove(index) {
-      this.data.splice(index, 1);
+      // this.data.splice(index, 1);
+      let chat_no = this.data[index].chat_no;
+      console.log(chat_no);
+      axios.post('http://localhost/PV/PVBackend/public/php/chatDelete.php', {
+        chat_no: chat_no
+      })
+        .then(response => {
+          console.log(response.data);
+          this.data.splice(index, 1);  // 從前端數據中移除該筆訂單
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(error.response);
+        });
     },
   },
   created() {
