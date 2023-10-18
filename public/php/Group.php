@@ -7,7 +7,8 @@ try {
     require_once("../../../connectdb.php");
     $sql = "SELECT *
     FROM trip
-    JOIN itinerary "; 
+    JOIN itinerary ON trip.itinerary_no = itinerary.itinerary_no;
+     "; 
     $query = $pdo->query($sql);
     $orders = $query->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($orders); //將資料轉成JSON格式並輸出
