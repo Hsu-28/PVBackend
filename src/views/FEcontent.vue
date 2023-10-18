@@ -573,14 +573,7 @@ export default {
     this.getTeamMem();
   },
 
-
-
   mounted() {
-    this.$nextTick(() => {
-      const fileInput = document.getElementById('theFile');
-      fileInput.addEventListener('change', this.fileChange);
-    });
-
     this.getTeamMem();
     if (this.$refs.upload) {
       this.uploadList = this.$refs.upload.fileList;
