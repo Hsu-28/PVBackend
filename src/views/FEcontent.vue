@@ -47,7 +47,7 @@
         <!-- 彈窗 -->
         <Modal title="新增團隊" v-model="modalTeam" width="700px" :closable="true">
           <Form :model="addTeamItem" :label-width="80" enctype="multipart/form-data" method="post">
-            <FormItem label="姓名:" prop="precautions" :label-width="45" class="ivu-mb" v-width="200" >
+            <FormItem label="姓名:" prop="precautions" :label-width="45" class="ivu-mb" v-width="200">
               <Input v-model="addTeamItem.name" placeholder="aa"></Input>
             </FormItem>
 
@@ -97,8 +97,8 @@
 
 
       </div>
-    <!-- 最新消息 -->
-    <div v-if="changePage == 2">
+      <!-- 最新消息 -->
+      <div v-if="changePage == 2">
         <Button @click="modalNews = true" class="add ivu-mb">新增 +</Button>
         <!-- 新增的彈窗 -->
         <Modal title="新增最新消息" v-model="modalNews" width="700px" :closable="true">
@@ -167,10 +167,10 @@
         <Modal title="新增Q&A" v-model="modalQA" width="700px" :closable="true">
           <Form :model="addQA" :label-width="80" enctype="multipart/form-data" method="post">
             <FormItem label="問題標題:" prop="title_QA" :label-width="70" class="ivu-mb" v-width="300">
-              <Input v-model="addNews.title_QA" placeholder="標題"></Input>
+              <Input v-model="addQA.title_QA" placeholder="標題"></Input>
             </FormItem>
             <FormItem label="問題答案:" prop="QA_anwer" :label-width="70" class="ivu-mb">
-              <Input v-model="addNews.QA_anwer" type="textarea" :autosize="{ minRows: 5, maxRows: 5 }"
+              <Input v-model="addQA.QA_anwer" type="textarea" :autosize="{ minRows: 5, maxRows: 5 }"
                 placeholder="內容"></Input>
             </FormItem>
           </Form>
@@ -179,17 +179,17 @@
           <template #action="{ row, index }">
             <Button size="small" style="margin-right: 5px" @click="clickQAEdit(index)">編輯</Button>
             <Modal title="編輯問題資訊" ok-text="確認修改" cancel-text="取消" v-model="QAEdit[index]" width="700px" :closable="true"
-              @on-ok="ok" @on-cancel="cancel">
+              @on-ok="QAeditok" @on-cancel="cancel">
               <Form :model="editQA" :label-width="80" enctype="multipart/form-data" method="post">
                 <FormItem label="問題編號:" :label-width="75">
-                  <text v-text="editQA.QA_no"></text>
+                  <text name="faq_no" v-text="editQA.faq_no"></text>
                 </FormItem>
                 <FormItem label="問題標題:" :label-width="75" class="ivu-mb" v-width="300">
-                  <Input v-model="editQA.QA_title" type="text" placeholder="標題"></Input>
+                  <Input name="question" v-model="editQA.question" type="textarea" placeholder="標題"></Input>
                 </FormItem>
                 <FormItem label="問題答案:" :label-width="75" class="ivu-mb">
-                  <Input v-model="editQA.QA_anser" type="textarea" :autosize="{ minRows: 5, maxRows: 5 }"
-                    placeholder="內容"></Input>
+                  <Input name="question_ans" v-model="editQA.question_ans" type="textarea"
+                    :autosize="{ minRows: 5, maxRows: 5 }" placeholder="內容"></Input>
                 </FormItem>
               </Form>
             </Modal>
@@ -217,130 +217,132 @@ export default {
       clickEditBtnT: false,
       memore: 0,
       changePage: 0,
-      banner : [],
+      banner: [],
       changePageText: [
         { text: '首頁照片' },
         { text: '團隊介紹' },
         { text: '最新消息' },
         { text: 'Q&A' },
-        
 
-            ],
-          
 
-            defaultList: [
-                    {
-                        'name': 'image-demo-1.jpg',
-                        'url': 'https://file.iviewui.com/images/image-demo-1.jpg'
-                    },
-                    
-                ],
-            imgName: '',
-            visible: false,
-            uploadList: [],
-            modalTeam: false,//彈窗
-            TeamEdit:[],
-            columnsMem:[
-                {
-                  title: '團隊成員編號',
-                  key: 'team_memno'
-                },      
-                {
-                  title: '成員名稱',
-                  key: 'team_memname'
-                },      
-                {
-                  title: '成員照片路徑',
-                  key: 'team_memimage'
-                },      
-                {
-                  title: '成員職稱',
-                  key: 'team_memjob'
-                },      
-                {
-                  title: '成員經歷',
-                  key: 'team_memexperience'
-                }, 
-                {
-                  title: '編輯',
-                  slot: 'action',
-                },           
-            ],
-            // 彈窗資料
-            addTeamItem:
-            {
-              team_memno: null,
-              team_memname: '',
-              memteam_memimage_img: '',
-              team_memjob:'',
-              team_memexperience:'',
-            },
-            
-            dataMem:[
-             
-            ],
-            NewsEdit: [],
-            modalNews: false, //彈窗
-            columnsNews: [
-              {
-                title: '消息編號',
-                key: 'news_no',
-                width: 70,
-              },
-              {
-                title: '消息標題',
-                key: 'news_title',
-                width: 120,
-              },
-              {
-                title: '消息照片路徑',
-                key: 'news_image',
-                width: 100,
-              },
-              {
-                title: '日期',
-                key: 'news_date',
-                width: 120,
-              },
-              {
-                title: '內容',
-                key: 'news_content'
-              },
-              {
-                title: '編輯',
-                slot: 'action',
-                width: 80,
-              },
-            ],
-        dataNews: [],
-        // dataNews: [
-        //   {
-        //     number_News: 1,
-        //     title_news: 'aaaa',
-        //     img: '../assets/image/more.svg',
-        //     date: `1111/11/1`,
-        //     content: `111111`,
-        //   },
-        // ],
-        addNews: [
-          {
-            news_no: null,
-            news_title: '',
-            news_image: '',
-            news_date: ``,
-            news_content: ``,
-          },
-        ],
-          modalQA:false, //彈窗
-          QAEdit:[],
-          columnsQA: [
+      ],
+
+
+      defaultList: [
+        {
+          'name': 'image-demo-1.jpg',
+          'url': 'https://file.iviewui.com/images/image-demo-1.jpg'
+        },
+
+      ],
+      imgName: '',
+      visible: false,
+      uploadList: [],
+      modalTeam: false,//彈窗
+      TeamEdit: [],
+      columnsMem: [
+        {
+          title: '團隊成員編號',
+          key: 'team_memno'
+        },
+        {
+          title: '成員名稱',
+          key: 'team_memname'
+        },
+        {
+          title: '成員照片路徑',
+          key: 'team_memimage'
+        },
+        {
+          title: '成員職稱',
+          key: 'team_memjob'
+        },
+        {
+          title: '成員經歷',
+          key: 'team_memexperience'
+        },
+        {
+          title: '編輯',
+          slot: 'action',
+        },
+      ],
+      // 彈窗資料
+      addTeamItem:
+      {
+        team_memno: null,
+        team_memname: '',
+        memteam_memimage_img: '',
+        team_memjob: '',
+        team_memexperience: '',
+      },
+
+      dataMem: [
+
+      ],
+      NewsEdit: [],
+      modalNews: false, //彈窗
+      columnsNews: [
+        {
+          title: '消息編號',
+          key: 'news_no',
+          width: 70,
+        },
+        {
+          title: '消息標題',
+          key: 'news_title',
+          width: 120,
+        },
+        {
+          title: '消息照片路徑',
+          key: 'news_image',
+          width: 100,
+        },
+        {
+          title: '日期',
+          key: 'news_date',
+          width: 120,
+        },
+        {
+          title: '內容',
+          key: 'news_content'
+        },
+        {
+          title: '編輯',
+          slot: 'action',
+          width: 80,
+        },
+      ],
+      dataNews: [],
+      // dataNews: [
+      //   {
+      //     number_News: 1,
+      //     title_news: 'aaaa',
+      //     img: '../assets/image/more.svg',
+      //     date: `1111/11/1`,
+      //     content: `111111`,
+      //   },
+      // ],
+      addNews: [
+        {
+          news_no: null,
+          news_title: '',
+          news_image: '',
+          news_date: ``,
+          news_content: ``,
+        },
+      ],
+      modalQA: false, //彈窗
+      QAEdit: [],
+      columnsQA: [
         {
           title: '問題編號',
-          key: 'faq_no'
+          key: 'faq_no',
+          width: 100
         },
         {
           title: '問題標題',
-          key: 'question'
+          key: 'question',
+          width: 300
         },
         {
           title: '問題答案',
@@ -349,26 +351,28 @@ export default {
         {
           title: '編輯',
           slot: 'action',
-          width: 140
+          width: 90
         },
-          ],
-          addQA: [
-            {
-              number_QA: null,
-              title_QA: '',
-              QA_anwer: ``,
-            },
-          ],
-          editQA: {
-            QA_no: '',
-            QA_title: '',
-            QA_anser: ''
-          }
-            }
-          },  
-        
-       
-    methods: {
+      ],
+      addQA: [
+        {
+          number_QA: null,
+          title_QA: '',
+          QA_anwer: ``,
+        },
+      ],
+      editQA: [
+        {
+          faq_no: '',
+          question: '',
+          question_ans: ''
+        }
+      ]
+    }
+  },
+
+
+  methods: {
     //編輯的程式
     newseditok() {
       console.log(this.addNews)
@@ -381,6 +385,21 @@ export default {
       fd.append('news_date', `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
 
       axios.post('http://localhost/PV/PVBackend/public/php/newsUpdateToDb.php', fd)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    QAeditok() {
+      console.log(this.editQA)
+      const fd = new FormData()
+      fd.append('faq_no', this.editQA.faq_no);
+      fd.append('question', this.editQA.question);
+      fd.append('question_ans', this.editQA.question_ans);
+
+      axios.post('http://localhost/PV/PVBackend/public/php/faqUpdateToDb.php', fd)
         .then(response => {
           console.log(response)
         })
@@ -442,13 +461,14 @@ export default {
       this.addNews = { ...this.dataNews[index] };
     },
     clickQAEdit(index) {
-      this.editQA = {
-        // 将数据传递给 editQA
-        QA_no: this.dataQA[index].faq_no,
-        QA_title: this.dataQA[index].question,
-        QA_anser: this.dataQA[index].question_ans
-      };
+      // this.editQA = {
+      //   // 将数据传递给 editQA
+      //   faq_no: this.dataQA[index].faq_no,
+      //   question: this.dataQA[index].question,
+      //   question_ans: this.dataQA[index].question_ans
+      // };
       this.QAEdit[index] = true;
+      this.editQA = { ...this.dataQA[index] };
     },
     remove(index, type) {
       if (type === 'Mem') {
@@ -461,7 +481,7 @@ export default {
       }
 
 
-            },
+    },
 
     replaceItem(index) {
       this.$refs["updateForm1"].validate((valid) => {
@@ -471,47 +491,47 @@ export default {
               .toLocaleDateString()
               .replace(/\//g, "-");
 
-                this.updateData(index);
-              } else {
-                alert("修改失敗，請確認表格是否輸入正確");
-              }
-               });
-          },
-        cancelEdit() {
-         this.addItem = { ...this.resetItem };
-          },
-          getTeamMem(){
-            axios.get("http://localhost/PV/PVBackend/public/php/TeamMem.php")
-          .then(response => {
-              this.dataMem = response.data;
-          })
-          .catch(error => {
-              console.error("There was an error fetching the TeamMem:", error);
-          });
-          },
-          TeamEditPhp() {
-          axios.post('http://localhost/PV/PVBackend/public/php/TeamMemEdit.php', this.addTeamItem)
-              .then(response => {
-                  console.log(response);
-                  // this.dataMem = response.data; 
-              })
-              .catch(error => {
-                  console.log(error);
-              });
-              this.getTeamMem();
-          },
-     
-        },
-      
-        mounted () {
-          this.getTeamMem();
-            if (this.$refs.upload) {
-        this.uploadList = this.$refs.upload.fileList;
+          this.updateData(index);
+        } else {
+          alert("修改失敗，請確認表格是否輸入正確");
         }
-      },
-        components: {
-        Side
-        },
+      });
+    },
+    cancelEdit() {
+      this.addItem = { ...this.resetItem };
+    },
+    getTeamMem() {
+      axios.get("http://localhost/PV/PVBackend/public/php/TeamMem.php")
+        .then(response => {
+          this.dataMem = response.data;
+        })
+        .catch(error => {
+          console.error("There was an error fetching the TeamMem:", error);
+        });
+    },
+    TeamEditPhp() {
+      axios.post('http://localhost/PV/PVBackend/public/php/TeamMemEdit.php', this.addTeamItem)
+        .then(response => {
+          console.log(response);
+          // this.dataMem = response.data; 
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      this.getTeamMem();
+    },
+
+  },
+
+  mounted() {
+    this.getTeamMem();
+    if (this.$refs.upload) {
+      this.uploadList = this.$refs.upload.fileList;
+    }
+  },
+  components: {
+    Side
+  },
 
 
   created() {
@@ -535,7 +555,7 @@ export default {
         console.error(error);
       });
 
-      axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
+    axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
       .then(response => {
         this.dataQA = response.data;
         console.log(this.dataQA)
