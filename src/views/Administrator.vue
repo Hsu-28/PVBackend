@@ -11,7 +11,7 @@
             <Table class="Table" height="400" border :columns="columns" :data="data">
                 <template #action="{ row, index }">
                     <Button v-if="show(index)" size="small" style="margin-right: 5px"
-                        @click="stop(index), updateStatus(index)" @on-change="onChange(index)">
+                        @click="stop(index);updateStatus(index)" @on-change="onChange(index)" name="admin_status">
                         {{ this.data[index].admin_status }}
 
                     </Button>
@@ -104,7 +104,6 @@ export default {
             }
         },
         show(index) {
-            console.log
             if (this.data[index].admin_allow == 'FullAccess') {
                 return false;
             } else {
@@ -122,17 +121,16 @@ export default {
         //         this.$Message.info("管理員狀態： 停權");
         //     }
 
-    },
+    
 
     updateStatus(index) {
-        console.log(this.data[index]);
+    
         const formData = new FormData();
         formData.append("admin_status", this.data[index].admin_status);
-        console.log(formData.admin_status);
-        formData.append("admin_account", this.data[index].admin_account);
-
+        console.log(this.data);
+        formData.append("admin_account",this.data[index].admin_account);
         fetch(`${this.$store.state.phpPublicPath}adminupdate.php`, {
-            method: "POST",
+            method: "post",
             body: formData,
         })
             .then((res) => res.json())
@@ -143,10 +141,11 @@ export default {
             });
     },
 
-
+    }
 //     // return this.data.map(index => index.permissions !== '最高');
 
 // },
+,
 created() {
     axios.get(`${this.$store.state.phpPublicPath}admin.php`)
         .then((res) => {
@@ -156,7 +155,8 @@ created() {
             console.error(error);
         });
 
-}
+
+    },
 }
 //登入狀態驗證
 // fetch('http://localhost/PV/PVBackend/public/php/verifyLogin.php')
@@ -172,6 +172,6 @@ created() {
 //         console.error(error);
 //     });
 
-
-
+// }
+// }
 </script>
