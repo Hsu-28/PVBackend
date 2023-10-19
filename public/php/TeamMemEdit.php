@@ -10,7 +10,9 @@ header("Content-Type: application/json");
 //     exit;
 // }
 try {
-    require_once("../../../connect_chd103g3.php");
+    // require_once("../../../connect_chd103g3.php");
+    require_once("../../connect_chd103g3.php");
+
 
    
 

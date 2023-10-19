@@ -66,7 +66,7 @@
                 <Button  size="small" @click="remove()">刪除</Button>
               </template>
           </Table>  
-          <Page  class="nextPage" :total="40" size="" />
+          <!-- <Page  class="nextPage" :total="40" size="" /> -->
       </div>
 
       <!-- 編輯  彈窗區塊 -->
@@ -259,7 +259,7 @@ export default {
       addjourney.append('training_date', `${tdate.getFullYear()}-${tdate.getMonth() + 1}-${tdate.getDate()}`);
       addjourney.append('trip_date', `${gdate.getFullYear()}-${gdate.getMonth() + 1}-${gdate.getDate()}`);
 
-      axios.post('http://localhost/PV/PVBackend/public/php/GroupAdd.php',  addjourney )
+      axios.post(`${this.$store.state.phpPublicPath}GroupAdd.php`,  addjourney )
         .then(response => {
           console.log(response)
         })
@@ -300,7 +300,7 @@ export default {
         editjourney.append('signup_num',this.myData[tabIndex].signup_num );
         editjourney.append('max_num',10);
 
-        axios.post('http://localhost/PV/PVBackend/public/php/Groupedit.php', editjourney, {
+        axios.post(`${this.$store.state.phpPublicPath}Groupedit.php`, editjourney, {
     headers: {
       'Content-Type': 'multipart/form-data' // Use 'multipart/form-data' for FormData
     }
@@ -316,7 +316,7 @@ export default {
 },
 created() {
         // 發起HTTP GET 請求
-        axios.get('http://localhost/PV/PVBackend/public/php/Group.php')
+        axios.get(`${this.$store.state.phpPublicPath}Group.php`)
             .then(response => {
                 this.myData = response.data;
             })

@@ -13,19 +13,19 @@
           <Input v-model="donateValue" @on-change="handleSearch1" placeholder="會員編號" style="width: 150px" />
         </Space>
         <br>
-        <Space size="large" style="gap :10px">
+        <!-- <Space size="large" style="gap :10px">
           <div style="font-size: 14px;color: #515a6e; padding: 8px 0;">日期:</div>
 
           <DatePicker type="date" :options="options2" placement="bottom-end" placeholder="Select date"
             style="width: 200px" @on-change="handleSearch1" v-model="dateSeah" />
-        </Space>
+        </Space> -->
         <Table class="Table" border :columns="columns" :data="myData">
           <!-- <template #action="{ row, index }">
                 <Button  size="small" style="margin-right: 5px" @click="More()">編輯</Button>
                 <Button  size="small" @click="remove(index ,'News')">刪除</Button>
               </template> -->
         </Table>
-        <Page class="nextPage" :total="40" size="20" />
+        <!-- <Page class="nextPage" :total="40" size="20" /> -->
       </div>
 
 
@@ -147,20 +147,21 @@ export default {
 
    
     handleSearch1() {
-      if (this.dateSeah) {
-        this.dateSeahC = this.dateSeah.toLocaleDateString()
-          .replace(/\//g, "-");
-      } else {
-        this.dateSeah = '';
-        this.dateSeahC = '';
-      }
-      console.log(this.dateSeah.toLocaleDateString());
-      this.myData = this.search(this.datac, { donate_id: Number(this.donateValue), donate_date: this.dateSeahC });
+      // if (this.dateSeah) {
+      //   this.dateSeahC = this.dateSeah.toLocaleDateString()
+      //     .replace(/\//g, "-");
+      // } else {
+      //   this.dateSeah = '';
+      //   this.dateSeahC = '';
+      // }
+      // console.log(this.dateSeah.toLocaleDateString());
+      this.myData = this.search(this.datac, { donate_id: Number(this.donateValue)});
+      // , donate_date: this.dateSeahC 
     },
   },
   created() {
     // 發起HTTP GET 請求
-    axios.get('http://localhost/PV/PVBackend/public/php/donate.php')
+    axios.get(`${this.$store.state.phpPublicPath}donate.php`)
       .then(response => {
         this.myData = response.data;
         this.datac = [...this.myData];

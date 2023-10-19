@@ -12,7 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 try {
 
 
-    require_once("../../../connect_chd103g3.php");
+    // require_once("../../../connect_chd103g3.php");
+    require_once("../../connect_chd103g3.php");
+
     $sql = "SELECT * FROM teamintro";  
     $query = $pdo->query($sql);
     $orders = $query->fetchAll(PDO::FETCH_ASSOC);  

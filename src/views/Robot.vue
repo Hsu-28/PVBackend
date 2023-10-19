@@ -47,7 +47,7 @@
             <Button size="small" @click="remove(index)">刪除</Button>
           </template>
         </Table>
-        <Page class="nextPage" :total="40" size="20" />
+        <!-- <Page class="nextPage" :total="40" size="20" /> -->
       </div>
     </Layout>
   </div>
@@ -110,10 +110,10 @@ export default {
       fd.append('keyword', this.addRobot.keyword);
       fd.append('chat_ans', this.addRobot.chat_ans);
 
-      axios.post('http://localhost/PV/PVBackend/public/php/chatbotUpdateToDb.php', fd)
+      axios.post(`${this.$store.state.phpPublicPath}chatbotUpdateToDb.php`, fd)
         .then(response => {
           console.log(response)
-          axios.get('http://localhost/PV/PVBackend/public/php/chatbot.php')
+          axios.get(`${this.$store.state.phpPublicPath}chatbot.php`)
             .then(response => {
               this.data = response.data;
               console.log(this.data);
@@ -139,7 +139,7 @@ export default {
         keyword: this.addRobot.keyword,
         chat_ans: this.addRobot.chat_ans
       };
-      axios.post('http://localhost/PV/PVBackend/public/php/addChatbot.php', data, {
+      axios.post(`${this.$store.state.phpPublicPath}addChatbot.php`, data, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -165,7 +165,7 @@ export default {
       // this.data.splice(index, 1);
       let chat_no = this.data[index].chat_no;
       console.log(chat_no);
-      axios.post('http://localhost/PV/PVBackend/public/php/chatDelete.php', {
+      axios.post(`${this.$store.state.phpPublicPath}chatDelete.php`, {
         chat_no: chat_no
       })
         .then(response => {
@@ -179,7 +179,7 @@ export default {
     },
   },
   created() {
-    axios.get('http://localhost/PV/PVBackend/public/php/chatbot.php')
+    axios.get(`${this.$store.state.phpPublicPath}chatbot.php`)
       .then(response => {
         this.data = response.data;
         console.log(this.data);

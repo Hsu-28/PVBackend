@@ -8,7 +8,9 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 try {
 
 
-    require_once("../../../connect_chd103g3.php");
+    // require_once("../../../connect_chd103g3.php");
+    require_once("../../connect_chd103g3.php");
+
     $sql = "SELECT * FROM itinerary";  
     $itineraryday=[];
     $query = $pdo->query($sql);

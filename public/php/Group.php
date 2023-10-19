@@ -4,7 +4,8 @@ header("Access-Control-Allow-Origin:*");
 header("Content-Type: application/json");
 
 try {
-    require_once("../../../connect_chd103g3.php");
+    // require_once("../../../connect_chd103g3.php");
+    require_once("../../connect_chd103g3.php");
     $sql = "SELECT *
     FROM trip
     JOIN itinerary ON trip.itinerary_no = itinerary.itinerary_no;

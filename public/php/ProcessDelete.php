@@ -6,7 +6,9 @@ header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 try {
-    require_once("../../../connect_chd103g3.php");
+    // require_once("../../../connect_chd103g3.php");
+    require_once("../../connect_chd103g3.php");
+
     
     if (isset($_POST['itinerary_no'])) {  
         $itinerary_no = $_POST['itinerary_no'];

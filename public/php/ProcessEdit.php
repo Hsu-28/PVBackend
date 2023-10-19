@@ -8,7 +8,9 @@
         exit;
     }
     try {
-        require_once("../../../connect_chd103g3.php");
+        // require_once("../../../connect_chd103g3.php");
+        require_once("../../connect_chd103g3.php");
+
         // 更新資料庫
         // $fileCount = count($_FILES['ProcessimageFile']['tmp_name']);
 

@@ -4,10 +4,13 @@ import { createStore } from 'vuex'
 
 
 //中央狀態管理
-const publicURL = process.env.NODE_ENV === 'development' ? '' : 'https://tibamef2e.com/chd103/g3/PlanetVoyager'
-const phpPublicPath = process.env.NODE_ENV === 'development' ? 'http://localhost/PV/PlanetVoyager/public/php/' : 'https://tibamef2e.com/chd103/g3/PlanetVoyager/php/'
+// const publicURL = process.env.NODE_ENV === 'development' ? '' : 'https://tibamef2e.com/chd103/g3/PlanetVoyager'
+// const phpPublicPath = process.env.NODE_ENV === 'development' ? 'http://localhost/PV/PlanetVoyager/public/php/' : 'https://tibamef2e.com/chd103/g3/PlanetVoyager/php/'
+// const publicPath = process.env.NODE_ENV === 'development' ? process.env.BASE_URL : ''
+// //中央狀態管理
+const publicURL = process.env.NODE_ENV === 'development' ? '' : 'https://tibamef2e.com/chd103/g3/PVBackend'
+const phpPublicPath = process.env.NODE_ENV === 'development' ? 'http://localhost/PV/PVBackend/public/php/' : 'https://tibamef2e.com/chd103/g3/PVBackend/php/'
 const publicPath = process.env.NODE_ENV === 'development' ? process.env.BASE_URL : ''
-
 
 
 export default createStore({

@@ -446,10 +446,10 @@ export default {
       fd.append('carouse_image', this.addCarouse.carouse_image);
       fd.append('carouse_imageFile', this.addCarouse.CarouseImageFile);
 
-      axios.post('http://localhost/PV/PVBackend/public/php/carouseUpdateToDb.php', fd)
+      axios.post(`${this.$store.state.phpPublicPath}carouseUpdateToDb.php`, fd)
         .then(response => {
           console.log(response)
-          axios.get('http://localhost/PV/PVBackend/public/php/carouse.php')
+          axios.get(`${this.$store.state.phpPublicPath}carouse.php`)
             .then(response => {
               this.dataCarouse = response.data;
               console.log(this.dataCarouse);
@@ -467,9 +467,9 @@ export default {
       fd.append('carouse_title', this.addCarouse.carouse_title);
       fd.append('carouse_image', this.addCarouse.CarouseImageFile);
 
-      axios.post('http://localhost/PV/PVBackend/public/php/addCarouse.php', fd)
+      axios.post(`${this.$store.state.phpPublicPath}addCarouse.php`, fd)
         .then(response => {
-          axios.get('http://localhost/PV/PVBackend/public/php/carouse.php')
+          axios.get(`${this.$store.state.phpPublicPath}carouse.php`)
             .then(response => {
               this.dataCarouse = response.data;
               console.log(this.dataCarouse);
@@ -497,11 +497,11 @@ export default {
       // fd.append('news_image', theFile);
       fd.append('news_date', `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
 
-      axios.post('http://localhost/PV/PVBackend/public/php/newsUpdateToDb.php', fd)
+      axios.post(`${this.$store.state.phpPublicPath}newsUpdateToDb.php`, fd)
         .then(response => {
           console.log(response)
 
-          axios.get('http://localhost/PV/PVBackend/public/php/news.php')
+          axios.get(`${this.$store.state.phpPublicPath}news.php`)
             .then(response => {
               this.dataNews = response.data;
               console.log(this.dataNews);
@@ -522,9 +522,9 @@ export default {
       fd.append('news_image', this.addNews.NewsImageFile);
       fd.append('news_date', `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
 
-      axios.post('http://localhost/PV/PVBackend/public/php/addNews.php', fd)
+      axios.post(`${this.$store.state.phpPublicPath}addNews.php`, fd)
         .then(response => {
-          axios.get('http://localhost/PV/PVBackend/public/php/news.php')
+          axios.get(`${this.$store.state.phpPublicPath}news.php`)
             .then(response => {
               this.dataNews = response.data;
             })
@@ -545,13 +545,13 @@ export default {
       fd.append('question', this.editQA.question);
       fd.append('question_ans', this.editQA.question_ans);
 
-      axios.post('http://localhost/PV/PVBackend/public/php/faqUpdateToDb.php', fd)
+      axios.post(`${this.$store.state.phpPublicPath}faqUpdateToDb.php`, fd)
         .then(response => {
           console.log(response)
-          axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
+          axios.get(`${this.$store.state.phpPublicPath}faq.php`)
             .then(response => {
               this.dataQA = response.data;
-              axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
+              axios.get(`${this.$store.state.phpPublicPath}faq.php`)
                 .then(response => {
                   this.dataQA = response.data;
                   console.log(this.dataQA)
@@ -578,13 +578,13 @@ export default {
         question: this.editQA.question,
         question_ans: this.editQA.question_ans,
       };
-      axios.post('http://localhost/PV/PVBackend/public/php/addFaq.php', dataQA, {
+      axios.post(`${this.$store.state.phpPublicPath}addFaq.php`, dataQA, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       })
         .then(response => {
-          axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
+          axios.get(`${this.$store.state.phpPublicPath}faq.php`)
             .then(response => {
               this.dataQA = response.data;
               console.log(this.dataQA)
@@ -627,7 +627,7 @@ export default {
       } else if (type === 'Carouse') {
         let carouse_no = this.dataCarouse[index].carouse_no;
         console.log(carouse_no);
-        axios.post('http://localhost/PV/PVBackend/public/php/carouseDelete.php', {
+        axios.post(`${this.$store.state.phpPublicPath}carouseDelete.php`, {
           carouse_no: carouse_no
         })
           .then(response => {
@@ -641,7 +641,7 @@ export default {
       } else if (type === 'News') {
         let news_no = this.dataNews[index].news_no;
         console.log(news_no);
-        axios.post('http://localhost/PV/PVBackend/public/php/newsDelete.php', {
+        axios.post(`${this.$store.state.phpPublicPath}newsDelete.php`, {
           news_no: news_no
         })
           .then(response => {
@@ -657,7 +657,7 @@ export default {
         // this.dataQA.splice(index, 1);
         let faq_no = this.dataQA[index].faq_no;
         console.log(faq_no);
-        axios.post('http://localhost/PV/PVBackend/public/php/faqDelete.php', {
+        axios.post(`${this.$store.state.phpPublicPath}faqDelete.php`, {
           faq_no: faq_no
         })
           .then(response => {
@@ -689,7 +689,7 @@ export default {
       this.addItem = { ...this.resetItem };
     },
     getTeamMem() {
-      axios.get("http://localhost/PV/PVBackend/public/php/TeamMem.php")
+      axios.get(`${this.$store.state.phpPublicPath}TeamMem.php`)
         .then(response => {
           this.dataMem = response.data;
         })
@@ -706,7 +706,7 @@ export default {
       fd.append('team_memjob', this.addTeamItem.team_memjob);
       fd.append('team_memexperience', this.addTeamItem.team_memexperience);
 
-      axios.post('http://localhost/PV/PVBackend/public/php/TeamMemEdit.php', fd, {
+      axios.post(`${this.$store.state.phpPublicPath}TeamMemEdit.php`, fd, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -736,7 +736,7 @@ export default {
     this.addItem = { ...this.resetItem };
   },
   getTeamMem() {
-    axios.get("http://localhost/PV/PVBackend/public/php/TeamMem.php")
+    axios.get(`${this.$store.state.phpPublicPath}TeamMem.php`)
       .then(response => {
         this.dataMem = response.data;
       })
@@ -745,7 +745,7 @@ export default {
       });
   },
   TeamEditPhp() {
-    axios.post('http://localhost/PV/PVBackend/public/php/TeamMemEdit.php', this.addTeamItem)
+    axios.post(`${this.$store.state.phpPublicPath}TeamMemEdit.php`, this.addTeamItem)
       .then(response => {
         console.log(response);
         // this.dataMem = response.data; 
@@ -768,7 +768,7 @@ export default {
 
 
   created() {
-    axios.get('http://localhost/PV/PVBackend/public/php/carouse.php')
+    axios.get(`${this.$store.state.phpPublicPath}carouse.php`)
       .then(response => {
         this.dataCarouse = response.data;
         console.log(this.dataCarouse);
@@ -778,7 +778,7 @@ export default {
       });
 
 
-    axios.get('http://localhost/PV/PVBackend/public/php/news.php')
+    axios.get(`${this.$store.state.phpPublicPath}news.php`)
       .then(response => {
         this.dataNews = response.data;
         console.log(this.dataNews);
@@ -787,7 +787,7 @@ export default {
         console.error(error);
       });
 
-    axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
+    axios.get(`${this.$store.state.phpPublicPath}faq.php`)
       .then(response => {
         this.dataQA = response.data;
         console.log(this.dataQA)

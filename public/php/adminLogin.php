@@ -11,7 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 try{
-  require_once("../../../connect_chd103g3.php");
+  // require_once("../../../connect_chd103g3.php");
+  require_once("../../connect_chd103g3.php");
+
   $sql = "select * from `admin` where admin_account=:adminid and admin_psw=:adminpsw"; 
   $admin = $pdo->prepare($sql);
   $admin->bindValue(":adminid", $_POST["adminid"]);

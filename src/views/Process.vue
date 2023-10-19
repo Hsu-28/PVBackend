@@ -348,7 +348,7 @@ export default {
             let itinerary_no = this.data[index].itinerary_no;
             const fd = new FormData();
             fd.append('itinerary_no',itinerary_no);
-            axios.post('http://localhost/PV/PVBackend/public/php/ProcessGetPhoto.php', fd)
+            axios.post(`${this.$store.state.phpPublicPath}ProcessGetPhoto.php`, fd)
           .then(response => {
             this.itinerary_photo_noData= response.data;
             console.log(this.itinerary_photo_noData);
@@ -368,7 +368,7 @@ export default {
           const fd = new FormData()
            let itinerary_no = this.data[index].itinerary_no;
            fd.append('itinerary_no',itinerary_no);
-            axios.post('http://localhost/PV/PVBackend/public/php/ProcessDelete.php',fd)
+            axios.post(`${this.$store.state.phpPublicPath}ProcessDelete.php`,fd)
           .then(response => {
             console.log(response.data);
             this.data.splice(index, 1);  // 從前端數據中移除該筆訂單
@@ -379,7 +379,7 @@ export default {
           });
       },
         getProcess(){
-          axios.get('http://localhost/PV/PVBackend/public/php/Process.php')
+          axios.get(`${this.$store.state.phpPublicPath}Process.php`)
             .then(response => {
          
                 this.data = response.data;
@@ -424,7 +424,7 @@ export default {
           console.log(this.filesArray);
        
         
-          axios.post('http://localhost/PV/PVBackend/public/php/ProcessEdit.php', fd, {
+          axios.post(`${this.$store.state.phpPublicPath}ProcessEdit.php`, fd, {
          headers: { "Content-Type": "multipart/form-data" }
          })
         .then(response => {

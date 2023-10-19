@@ -22,7 +22,7 @@
                     </template>
                 </Table>
                 <!-- <div class="nextPage"> -->
-                <Page class="nextPage" :total="40" size="" />
+                <!-- <Page class="nextPage" :total="40" size="" /> -->
 
                 <!-- </div> -->
 
@@ -215,7 +215,7 @@ export default {
     },
     created() {
         // 發起HTTP GET 請求
-        axios.get('http://localhost/PV/PVBackend/public/php/Member.php')
+        axios.get(`${this.$store.state.phpPublicPath}Member.php`)
             .then(response => {
                 this.myData = response.data;
                 this.datac = [...this.myData];

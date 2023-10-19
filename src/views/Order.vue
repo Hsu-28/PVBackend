@@ -154,30 +154,15 @@ export default {
    
 
               passengerDetail:[
-                // {
-                //   id:'111',
-                //   name:'Tom Smith',
-                //   gender:'男',
-                //   birthday:'1999/02/11',
-                //   nationality:'美國',
-                //   passport:'XYZ1234567',
-                //   modelHealth:'通過',
-                //   status:'備取',
-                //   alternate_order:null,
-                //   seat_no:4,
-                //   training_result:'通過',
-                //   shirt_size:'M',
-                //   diet:'不吃牛肉',
-                // }
-
-
-
+          
               ]
 
     }
   },
    mounted() {
-    axios.get("http://localhost/PV/PVBackend/public/php/Order.php")
+    // axios.get("http://localhost/PV/PVBackend/public/php/Order.php")
+    axios.get(`${this.$store.state.phpPublicPath}Order.php`)
+
       .then(response => {
         this.data = response.data;
       
@@ -226,7 +211,8 @@ export default {
     remove(index) {
       let orders_no = this.data[index].orders_no;
       console.log(orders_no);
-      axios.post('http://localhost/PV/PVBackend/public/php/OrderDelete.php', {
+      // axios.post('http://localhost/PV/PVBackend/public/php/OrderDelete.php', {
+      axios.post(`${this.$store.state.phpPublicPath}OrderDelete.php`, {
         orders_no: orders_no
       })
       .then(response => {
@@ -242,7 +228,7 @@ export default {
       this.showMore = 3;
       let orders_no = this.data[oindex].orders_no;
           // orders_no= parseInt(orders_no);
-      axios.post('http://localhost/PV/PVBackend/public/php/OrderPeople.php', {
+      axios.post(`${this.$store.state.phpPublicPath}OrderPeople.php`, {
         orders_no: orders_no 
       })
       .then(response => {

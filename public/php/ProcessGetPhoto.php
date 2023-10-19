@@ -5,7 +5,9 @@ header("Access-Control-Allow-Origin:*");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
 try {
-    require_once("../../../connect_chd103g3.php");
+    // require_once("../../../connect_chd103g3.php");
+    require_once("../../connect_chd103g3.php");
+
 
     $itinerary_no = $_POST["itinerary_no"];
     $sql = "SELECT itinerary_pic FROM itinerary_photos WHERE itinerary_no = :itinerary_no ";

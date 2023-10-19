@@ -11,7 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 try {
-    require_once("../../../connect_chd103g3.php");
+    // require_once("../../../connect_chd103g3.php");
+    require_once("../../connect_chd103g3.php");
+
     $data = json_decode(file_get_contents("php://input"), true);
     if (isset($data['news_no'])) {  
         $news_no = $data['news_no'];
