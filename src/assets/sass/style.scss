@@ -100,8 +100,8 @@ h1 {
     &::after {
         content: "";
         position: relative;
-        top: -32px;
-        right: -35px;
+        top: 3px;
+        right: -5px;
         background-image: url('~@/assets/image/out.svg');
         background-size: cover;
         display: inline-block;
