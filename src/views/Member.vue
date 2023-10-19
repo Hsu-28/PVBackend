@@ -124,6 +124,10 @@ export default {
                     title: '電子郵件',
                     key: 'email'
                 },
+                {
+                    title: '密碼',
+                    key: 'mem_pw'
+                },
 
                 {
                     title: '詳細資訊',
