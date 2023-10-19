@@ -515,7 +515,6 @@ export default {
         });
     },
     Newsaddok() {
-      // 傳送
       const fd = new FormData()
       const date = new Date(this.addNews.news_date)
       fd.append('news_title', this.addNews.news_title);
