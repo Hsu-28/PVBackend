@@ -2,9 +2,9 @@
 <template>
   <div id="layoutFE">
     <Side :activePage='3' />
-    <button class="out" style="width: 42px;height:32px;line-height: 35px; ">
+    <Button  to="/" class="out" style="width: 42px;height:32px;line-height: 35px; ">
       登出
-    </button>
+    </Button>
     <Layout v-width="900" :style="{ marginLeft: '300px' }">
       <h1>內容管理</h1>
       <div class="buttonAll">
@@ -725,12 +725,12 @@ export default {
 
   },
 
-  mounted() {
-    this.getTeamMem();
-    if (this.$refs.upload) {
-      this.uploadList = this.$refs.upload.fileList;
-    }
-  },
+  // mounted() {
+  //   this.getTeamMem();
+  //   if (this.$refs.upload) {
+  //     this.uploadList = this.$refs.upload.fileList;
+  //   }
+  // },
 
   cancelEdit() {
     this.addItem = { ...this.resetItem };

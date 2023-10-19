@@ -1,14 +1,14 @@
 <template>
    <div class=" layout" >
     <Side :activePage='4'/> 
-    <button  class="out" style="width: 42px;height:32px;line-height: 35px;">
+    <Button to="/" class="out" style="width: 42px;height:32px;line-height: 35px;">
      登出
-    </button>
+    </Button>
     <Layout v-width="900" :style="{marginLeft: '300px'} ">
       <div v-if="showMore==1" >
       <h1>行程介紹</h1>
       <!-- <Button @click="modalProcess =true" class="add">新增 +</Button> -->
-        <Modal
+        <!-- <Modal
                   title="新增團隊"
                   v-model="modalProcess"
                   width="900px"
@@ -36,11 +36,9 @@
             <FormItem   :label-width="80"  label="行程簡介:" class="ivu-mb">
               
                 <Input v-model="addProcess.introduction "  placeholder="請輸入行程簡介" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
-              </FormItem>
-              <!-- <FormItem     label="注意事項:" prop="max">
-                  <Input v-model="addProcess.precautions" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
               </FormItem> -->
-              <div style="font-size: 18px;color: #515a6e; padding-left:10px;padding-bottom: 10px;">行程內容</div>
+
+              <!-- <div style="font-size: 18px;color: #515a6e; padding-left:10px;padding-bottom: 10px;">行程內容</div>
               <FormItem :label-width="90"      label="日程標題1:" class="ivu-mb">
                 <Input v-model="addProcess.itinerary_day[0]" placeholder="請輸入日程標題" ></Input>          
               </FormItem>
@@ -96,13 +94,13 @@
                   <Input v-model="addProcess.itinerary_day[11]" placeholder="請輸入日程內容" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
               </FormItem>
            </Form>
-          </Modal>
+          </Modal> -->
       
 
           <Table class="Table" border :columns="columns" :data="data">
                   <template #action="{ row, index }">
                   
-                    <Button  size="small" style="margin-right: 5px" @click="Memindex = index;More()">編輯</Button>
+                    <Button  size="small" style="margin-right: 5px" @click="Memindex = index;More(index)">編輯</Button>
                    <Button  size="small" @click="remove(index)">刪除</Button>
                   </template>
           </Table>  
@@ -291,7 +289,8 @@ export default {
             data:[
             
             ],
-            filesArray: Array(18).fill(null),
+            filesArray: new Array(18).fill(null),
+            itinerary_photo_noData :[],
             addProcess:{
              
         // itinerary_no: "1",
@@ -300,19 +299,6 @@ export default {
             content_title : "",
             introduction : "",
             itinerary_day : [ ],
-            // "",
-            // "",
-            // "",
-            // "",
-            // "Day3 金星秘景探索",
-            // "藉由蟲洞跳躍，我們前往金星，探索這個炎熱的星球。在金星空中的飛航期間，您將發現更多奇異的景色和未知生物，使我們的旅程更加驚喜。",
-            // "Day4、5 火星遺跡巡航",
-            // "再次飛入蟲洞，前往火星。在這顆紅色星球上，於空中觀看遠古遺跡、麥田圈等等，尋訪生命的起源和消亡，為您的旅程添上色彩。",
-            // "Day 6 台日共構月球基地--蒂芬妮丘",
-            // "蒂芬妮丘是深太空探索的跳板，有助於實現我們登陸更遠的星系。月球基地的太陽能發電站將為未來太空任務提供可再生能源，強化星際探索空持續性。旅客在此休息養足精神，隔日再行返家。",
-            // "Day 7 返回家鄉--地球",
-            // "星際旅遊的壯闊冒險完美收尾！在無重力中飄浮的日子即將結束，我們即將返回地球。帶著難以置信的回憶和深刻的體驗，我們準備迎接重力的擁抱。也請各位珍惜回程最後飽覽太空的絕美景觀的機會。如果捨不得，我們期待著下次再與您共度星際旅遊的美好時光，感謝您的參與！",
-            // ""
        
               },
               ruleValidate: {
@@ -344,36 +330,45 @@ export default {
     // 確定只有三個文件被選中
     if (selectedFiles.length > 3) {
         alert("不能超過三張圖片");
-        inputElement.value = '';  // 清空選擇的文件
+        inputElement.value = '';  
         return;
     }
 
     // 更新 filesArray
     for (let i = 0; i < selectedFiles.length; i++) {
       this.filesArray[offset + i] = selectedFiles[i];
-;
+        
         }
     },
 
           
         
-        More(){
+        More(index){
             this.showMore=2;
+            let itinerary_no = this.data[index].itinerary_no;
+            const fd = new FormData();
+            fd.append('itinerary_no',itinerary_no);
+            axios.post('http://localhost/PV/PVBackend/public/php/ProcessGetPhoto.php', fd)
+          .then(response => {
+            this.itinerary_photo_noData= response.data;
+            console.log(this.itinerary_photo_noData);
+          })
+          .catch(error => {
+            console.log(error);
+            console.log(error.response);
+          });
+
+
         },
         reTable(){
             this.showMore=1;
             
         },
         remove (index) {
+          const fd = new FormData()
            let itinerary_no = this.data[index].itinerary_no;
-            console.log(itinerary_no);
-            axios.post('http://localhost/PV/PVBackend/public/php/ProcessDelete.php', {
-              itinerary_no: itinerary_no,
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-                
-            }
-          })
+           fd.append('itinerary_no',itinerary_no);
+            axios.post('http://localhost/PV/PVBackend/public/php/ProcessDelete.php',fd)
           .then(response => {
             console.log(response.data);
             this.data.splice(index, 1);  // 從前端數據中移除該筆訂單
@@ -393,44 +388,7 @@ export default {
                 console.error(error);
             });
         },
-        ProcessAddPhp(){
-          const fd = new FormData()
-          
-          let itinerary_dayString=this.addProcess.itinerary_day.join('\r\n');
-          itinerary_dayString=[itinerary_dayString+'\r\n'];
-          
-          fd.append('planet_name', this.addProcess.planet_name);
-          fd.append('planet_subtitle', this.addProcess.planet_subtitle);
-          fd.append('content_title', this.addProcess.content_title);
-          fd.append('introduction', this.addProcess.introduction);
-          fd.append('itinerary_day', itinerary_dayString);
-
-          if (!this.addProcess.planet_name ||
-            !this.addProcess.planet_subtitle ||
-            !this.addProcess.content_title ||
-            !this.addProcess.introduction ||
-            !itinerary_dayString) {
-              // this.addProcess.planet_name = null;
-              // this.addProcess.planet_subtitle = null;
-              // this.addProcess.content_title = null;
-              // this.addProcess.introduction = null;
-              // this.addProcess.itinerary_day = null;
-            //   window.alert('全部都要填');
-            // return;  // 退出函數，不執行後續的axios請求
-            }
-          axios.post('http://localhost/PV/PVBackend/public/php/ProcessAdd.php', fd, {
-            // headers: {
-            //     'Content-Type': 'multipart/form-data'
-            // }
-        })
-        .then(response => {
-          console.log(response);
-          this.getProcess()
-        })
-        .catch(error => {
-          console.log(error);
-        });
-        },
+      
         ProcessEditPhp(Memindex){ 
           this.showMore=1;   
           // if (!this.addProcess.planet_name ||
@@ -442,26 +400,36 @@ export default {
           //   return;  // 退出函數，不執行後續的axios請求
           //   }
           const fd = new FormData()
-          
-          let itinerary_dayString=this.data[Memindex].itinerary_day.join('\r\n');
-          itinerary_dayString=[itinerary_dayString];
+          let files;
+          let dayString=this.data[Memindex].itinerary_day.join('\r\n');
+          console.log(dayString);
+          let itinerary_dayString;
+          itinerary_dayString=[dayString];
+          //  files =Array.from(this.filesArray);
+
+          // files.forEach((file) => {
+          //    fd.append("ProcessimageFile", file);
+          // });
           fd.append('itinerary_no', this.data[Memindex].itinerary_no);
           fd.append('planet_name', this.data[Memindex].planet_name);
           fd.append('planet_subtitle', this.data[Memindex].planet_subtitle);
           fd.append('content_title', this.data[Memindex].content_title);
-          fd.append('introduction ', this.data[Memindex].introduction);
-          fd.append('ProcessimageFile', this.filesArray);
+          fd.append('introduction', this.data[Memindex].introduction);
+          for(let i=0; i<this.filesArray.length; i++){
+            fd.append(`ProcessimageFile${i}`, this.filesArray[i]);
+          }
           fd.append('itinerary_day', itinerary_dayString);
+          fd.append('photo_noData' ,JSON.stringify(this.itinerary_photo_noData));
+          console.log(itinerary_dayString);
+          console.log(this.filesArray);
        
         
           axios.post('http://localhost/PV/PVBackend/public/php/ProcessEdit.php', fd, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+         headers: { "Content-Type": "multipart/form-data" }
+         })
         .then(response => {
           console.log(response);
-          getProcess()
+          this.getProcess()
         })
         .catch(error => {
           console.log(error);

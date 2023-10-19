@@ -1,9 +1,9 @@
 <template>
   <div class=" layout">
     <Side :activePage='7' />
-    <button class="out" style="width: 42px;height:32px;line-height: 35px;">
+    <Button to="/" class="out" style="width: 42px;height:32px;line-height: 35px;">
       登出
-    </button>
+    </Button>
     <Layout v-width="900" :style="{ marginLeft: '300px' }">
       <div v-if="showMore == 1">
         <h1>捐款</h1>
@@ -120,18 +120,32 @@ export default {
     //    });
     //   },
     search(data1, argumentObj) {
-      return data1.filter(d => {
+    //   return data1.filter(d => {
+    //     console.log("Searching with:", argumentObj);
+
+    //     for (let argu in argumentObj) {
+    //       if (argumentObj[argu]) {
+    //         return `${d[argu]}`.includes(`${argumentObj[argu]}`)
+
+    //       }
+    //     }
+    //     return true;
+    //   });
+    // },
+    return data1.filter(d => {
         console.log("Searching with:", argumentObj);
 
         for (let argu in argumentObj) {
           if (argumentObj[argu]) {
             return `${d[argu]}`.includes(`${argumentObj[argu]}`)
-
+            
           }
         }
         return true;
       });
     },
+
+   
     handleSearch1() {
       if (this.dateSeah) {
         this.dateSeahC = this.dateSeah.toLocaleDateString()

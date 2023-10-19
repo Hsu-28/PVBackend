@@ -155,24 +155,24 @@ export default {
                 info.append("adminid", this.adminid);
                 info.append("adminpsw", this.adminpsw);
 
-                fetch('http://localhost/PV/PVBackend/public/php/adminLogin.php', {
+                fetch(`${this.$store.state.phpPublicPath}adminLogin.php`, {
                     method: 'POST',
                     body: info,
                 })
                     .then(res => res.json())
                     .then((result) => {
-                        console.log(result);
-                        if (result.adminid == this.adminid && result.adminpsw == this.adminpsw) {
-                            alert("登入成功！")
-                            this.$router.push('/Administrator')
-                        } else {
-                            alert("帳號或密碼錯誤")
+                        if (result.adminid == this.adminid && result.adminpsw == this.adminpsw && result.admin_status !== "停權") {
+                            alert("登入成功！");
+                            this.$router.push('/Member')
+                         } else if(result.admin_status === "停權"){
+                            alert("沒有權限");
+                        }else{
+                            alert("帳號或密碼錯誤");
                         }
                     })
                     .catch(error => {
                         console.error(error);
                     })
-
             }
         }
     }
