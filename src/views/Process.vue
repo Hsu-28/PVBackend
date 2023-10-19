@@ -1,9 +1,9 @@
 <template>
    <div class=" layout" >
     <Side :activePage='4'/> 
-    <button  class="out" style="width: 42px;height:32px;line-height: 35px;">
+    <Button to="/" class="out" style="width: 42px;height:32px;line-height: 35px;">
      登出
-    </button>
+    </Button>
     <Layout v-width="900" :style="{marginLeft: '300px'} ">
       <div v-if="showMore==1" >
       <h1>行程介紹</h1>
