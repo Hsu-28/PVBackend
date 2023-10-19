@@ -131,7 +131,7 @@ export default {
         console.log(formData.admin_status);
         formData.append("admin_account", this.data[index].admin_account);
 
-        fetch(`http://localhost/PV/PVBackend/public/php/adminupdate.php`, {
+        fetch(`${this.$store.state.phpPublicPath}adminupdate.php`, {
             method: "POST",
             body: formData,
         })
@@ -148,7 +148,7 @@ export default {
 
 // },
 created() {
-    axios.get('http://localhost/PV/PVBackend/public/php/admin.php')
+    axios.get(`${this.$store.state.phpPublicPath}admin.php`)
         .then((res) => {
             this.data = res.data;
             console.log(this.data);

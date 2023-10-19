@@ -8,7 +8,6 @@ try {
     // require_once("../../../connect_chd103g3.php");
     require_once("../../connect_chd103g3.php");
 
-
     $chat_no = $_POST['chat_no'];
     $keyword = $_POST['keyword'];
     $chat_ans = $_POST['chat_ans'];

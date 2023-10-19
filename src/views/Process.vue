@@ -101,7 +101,7 @@
                   <template #action="{ row, index }">
                   
                     <Button  size="small" style="margin-right: 5px" @click="Memindex = index;More(index)">編輯</Button>
-                   <Button  size="small" @click="remove(index)">刪除</Button>
+                   <!-- <Button  size="small" @click="remove(index)">刪除</Button> -->
                   </template>
           </Table>  
       </div>
@@ -109,10 +109,10 @@
         <h1>行程</h1>
         <Form id="FormAll" v-width="700" ref="moreDetail" :model="data[Memindex]" :rules="ruleValidate" :label-width="80">
         <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{ data[Memindex].itinerary_no }}</p>
-        <FormItem label="行程名稱:" prop="precautions" :label-width="47" >
+        <FormItem label="行程名稱:" prop="precautions" :label-width="72" >
             <Input v-model="data[Memindex].content_title"  ></Input>
         </FormItem>
-        <FormItem  :label-width="60" label="星球名稱" placeholder="輸入名稱" prop="title">
+        <FormItem  :label-width="80" label="星球名稱" placeholder="輸入名稱" prop="title">
             <Select v-model="data[Memindex].planet_name" >
                 <Option value="繞行">繞行</Option>
                 <Option value="月球">月球</Option>
@@ -391,14 +391,7 @@ export default {
       
         ProcessEditPhp(Memindex){ 
           this.showMore=1;   
-          // if (!this.addProcess.planet_name ||
-          //   !this.addProcess.planet_subtitle ||
-          //   !this.addProcess.content_title ||
-          //   !this.addProcess.introduction ||
-          //   !itinerary_dayString) {
-          //   window.alert('全部欄位都要填');
-          //   return;  // 退出函數，不執行後續的axios請求
-          //   }
+         
           const fd = new FormData()
           let files;
           let dayString=this.data[Memindex].itinerary_day.join('\r\n');

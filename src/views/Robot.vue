@@ -1,9 +1,9 @@
 <template>
   <div class=" layout">
     <Side :activePage='8' />
-    <Button to="/" class="out" style="width: 42px;height:32px;line-height: 35px;">
+    <button class="out" style="width: 42px;height:32px;line-height: 35px;">
       登出
-    </Button>
+    </button>
     <Layout v-width="900" :style="{ marginLeft: '300px' }">
       <div v-if="showMore == 1">
         <h1>聊天機器人</h1>
@@ -110,10 +110,10 @@ export default {
       fd.append('keyword', this.addRobot.keyword);
       fd.append('chat_ans', this.addRobot.chat_ans);
 
-      axios.post(`${this.$store.state.phpPublicPath}chatbotUpdateToDb.php`, fd)
+      axios.post('http://localhost/PV/PVBackend/public/php/chatbotUpdateToDb.php', fd)
         .then(response => {
           console.log(response)
-          axios.get(`${this.$store.state.phpPublicPath}chatbot.php`)
+          axios.get('http://localhost/PV/PVBackend/public/php/chatbot.php')
             .then(response => {
               this.data = response.data;
               console.log(this.data);
@@ -190,4 +190,3 @@ export default {
   }
 }
 </script>
-
