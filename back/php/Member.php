@@ -4,7 +4,9 @@ header("Access-Control-Allow-Origin:*");
 header("Content-Type: application/json");
 
 try {
-    require_once("../../../connectdb.php");
+    // require_once("../../../connect_chd103g3.php");
+    require_once("../../connect_chd103g3.php");
+
     $sql = "SELECT * FROM member"; 
     $query = $pdo->query($sql);
     $orders = $query->fetchAll(PDO::FETCH_ASSOC);

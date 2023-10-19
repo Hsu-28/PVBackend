@@ -110,10 +110,12 @@ export default {
       fd.append('keyword', this.addRobot.keyword);
       fd.append('chat_ans', this.addRobot.chat_ans);
 
-      axios.post('http://localhost/PV/PVBackend/public/php/chatbotUpdateToDb.php', fd)
+      // axios.post('http://localhost/PV/PVBackend/public/php/chatbotUpdateToDb.php', fd)
+      axios.post(`${this.$store.state.phpPublicPath}chatbotUpdateToDb.php`, fd)
         .then(response => {
           console.log(response)
-          axios.get('http://localhost/PV/PVBackend/public/php/chatbot.php')
+          // axios.get('http://localhost/PV/PVBackend/public/php/chatbot.php')
+          axios.get(`${this.$store.state.phpPublicPath}chatbot.php`)
             .then(response => {
               this.data = response.data;
               console.log(this.data);

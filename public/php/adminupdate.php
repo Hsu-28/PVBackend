@@ -12,7 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 try {
-    require_once("../../../connect_chd103g3.php");
+    // require_once("../../../connect_chd103g3.php");
+    require_once("../../connect_chd103g3.php");
 
     $admin_status = $_POST['admin_status'];
     $admin_account = $_POST['admin_account'];
