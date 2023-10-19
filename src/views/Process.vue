@@ -7,93 +7,93 @@
     <Layout v-width="900" :style="{marginLeft: '300px'} ">
       <div v-if="showMore==1" >
       <h1>行程介紹</h1>
-      <Button @click="modalProcess =true" class="add">新增 +</Button>
+      <!-- <Button @click="modalProcess =true" class="add">新增 +</Button> -->
         <Modal
                   title="新增團隊"
                   v-model="modalProcess"
-                  width="700px"
-                  :closable="true">
+                  width="900px"
+                  @on-ok="ProcessAddPhp"
+                  @on-cancel="Addclose"
+                  :closable="false">
                 <Form
-                    :model="moreDetail"
-                    :label-width="80"
-                    enctype="multipart/form-data"
+                    :model="addProcess"
                     method="post"  >
-                  <FormItem label="地點:" prop="precautions" :label-width="47">
-                   <Input v-model="moreDetail.precautions" placeholder="aa" ></Input>
+                  <FormItem label="行程名稱:" class="ivu-mb" :label-width="80">
+                   <Input v-model="addProcess.content_title" placeholder="請輸入行程名稱" ></Input>
                   </FormItem>
-            <FormItem  :label-width="60" label="標題" prop="title">
-                <Select v-model="moreDetail.title" >
-                    <Option value="qqq">繞行</Option>
-                    <Option value="moon">月球</Option>
-                    <Option value="fire">火星</Option>
-                    <Option value="ggg">金星</Option>
+            <FormItem  :label-width="80" label="星球名稱:" class="ivu-mb">
+                <Select v-model="addProcess.planet_name" >
+                    <Option value="繞行">繞行</Option>
+                    <Option value="月球">月球</Option>
+                    <Option value="火星">火星</Option>
+                    <Option value="金星">金星</Option>
                 </Select>
             </FormItem>
-            <FormItem label="小標題:" prop="smTitle" :label-width="58">
-                <Input v-model="moreDetail.smTitle" placeholder="aa" ></Input>
+            <FormItem label="小標題:" prop="smTitle" :label-width="66" class="ivu-mb">
+                <Input v-model="addProcess.planet_subtitle" placeholder="請輸入星球名稱" ></Input>
             </FormItem>
           
-            <FormItem   :label-width="73"  label="行程簡介:" prop="max">
+            <FormItem   :label-width="80"  label="行程簡介:" class="ivu-mb">
               
-                <Input v-model="moreDetail.summary" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+                <Input v-model="addProcess.introduction "  placeholder="請輸入行程簡介" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
               </FormItem>
               <!-- <FormItem     label="注意事項:" prop="max">
-                  <Input v-model="moreDetail.precautions" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+                  <Input v-model="addProcess.precautions" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
               </FormItem> -->
-              <div style="font-size: 18px;color: #515a6e; padding-left: 2px;padding-bottom: 10px;">行程內容</div>
-              <FormItem     label="日程標題1:" prop="max">
-                <Input v-model="moreDetail.day1Title" placeholder="aa" ></Input>          
+              <div style="font-size: 18px;color: #515a6e; padding-left:10px;padding-bottom: 10px;">行程內容</div>
+              <FormItem :label-width="90"      label="日程標題1:" class="ivu-mb">
+                <Input v-model="addProcess.itinerary_day[0]" placeholder="請輸入日程標題" ></Input>          
               </FormItem>
-              <FormItem label="照片1" prop="img1" :label-width="50">
+              <FormItem label="照片1" class="ivu-mb" :label-width="60">
+                <input  type="file" @change="addTeamItem.TeamImageFile = $event.target.files" multiple />
+              </FormItem>
+              <FormItem  :label-width="90"   label="日程內容1:" class="ivu-mb">
+                  <Input v-model="addProcess.itinerary_day[1]" placeholder="請輸入日程內容" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              </FormItem>
+              <FormItem  :label-width="90"   label="日程標題2:" class="ivu-mb">
+                <Input v-model="addProcess.itinerary_day[2]" placeholder="請輸入日程標題" ></Input>          
+              </FormItem>
+              <FormItem label="照片2" class="ivu-mb" :label-width="60">
                 <input  type="file" multiple />
               </FormItem>
-              <FormItem     label="日程內容1:" prop="max">
-                  <Input v-model="moreDetail.day1Text" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              <FormItem   :label-width="90"  label="日程內容2:" class="ivu-mb">
+                  <Input v-model="addProcess.itinerary_day[3]"  placeholder="請輸入日程內容" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
               </FormItem>
-              <FormItem     label="日程標題2:" prop="max">
-                <Input v-model="moreDetail.day2Title" placeholder="aa" ></Input>          
+              <FormItem    :label-width="90" label="日程標題3:" class="ivu-mb">
+                <Input v-model="addProcess.itinerary_day[4]"  placeholder="請輸入日程標題" ></Input>          
               </FormItem>
-              <FormItem label="照片2" prop="img1" :label-width="50">
+              <FormItem label="照片3" class="ivu-mb" :label-width="60">
                 <input  type="file" multiple />
               </FormItem>
-              <FormItem     label="日程內容2:" prop="max">
-                  <Input v-model="moreDetail.day3Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              <FormItem   :label-width="90"  label="日程內容3:" class="ivu-mb">
+                  <Input v-model="addProcess.itinerary_day[5]" placeholder="請輸入日程內容" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
               </FormItem>
-              <FormItem     label="日程標題3:" prop="max">
-                <Input v-model="moreDetail.day3Title" placeholder="aa" ></Input>          
+              <FormItem  :label-width="111"   label="日程標題4、5" class="ivu-mb">
+                <Input v-model="addProcess.itinerary_day[6]" placeholder="請輸入日程標題" ></Input>          
               </FormItem>
-              <FormItem label="照片3" prop="img1" :label-width="50">
+              <FormItem label="照片4、5" class="ivu-mb" :label-width="85">
                 <input  type="file" multiple />
               </FormItem>
-              <FormItem     label="日程內容3:" prop="max">
-                  <Input v-model="moreDetail.day2Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              <FormItem  :label-width="115"    label="日程內容4、5:" class="ivu-mb">
+                  <Input v-model="addProcess.itinerary_day[7]" placeholder="請輸入日程內容" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
               </FormItem>
-              <FormItem     label="日程標題4:" prop="max">
-                <Input v-model="moreDetail.day4Title" placeholder="aa" ></Input>          
+              <FormItem   :label-width="90"   label="日程標題6:" class="ivu-mb">
+                <Input v-model="addProcess.itinerary_day[8]" placeholder="請輸入日程標題" ></Input>          
               </FormItem>
-              <FormItem label="照片4" prop="img4" :label-width="40">
+              <FormItem label="照片6" class="ivu-mb" :label-width="60">
                 <input  type="file" multiple />
               </FormItem>
-              <FormItem     label="日程內容4:" prop="max">
-                  <Input v-model="moreDetail.day4Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              <FormItem  :label-width="90"    label="日程內容6:" class="ivu-mb">
+                  <Input v-model="addProcess.itinerary_day[9]" placeholder="請輸入日程內容" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
               </FormItem>
-              <FormItem     label="日程標題5:" prop="max">
-                <Input v-model="moreDetail.day5Title" placeholder="aa" ></Input>          
+              <FormItem  :label-width="90"    label="日程標題7:" class="ivu-mb">
+                <Input v-model="addProcess.itinerary_day[10]" placeholder="請輸入日程標題" ></Input>          
               </FormItem>
-              <FormItem label="照片5" prop="img5" :label-width="50">
+              <FormItem label="照片7" prop="img6" :label-width="60">
                 <input  type="file" multiple />
               </FormItem>
-              <FormItem     label="日程內容5:" prop="max">
-                  <Input v-model="moreDetail.day5Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
-              </FormItem>
-              <FormItem     label="日程標題6:" prop="max">
-                <Input v-model="moreDetail.day6Title" placeholder="aa" ></Input>          
-              </FormItem>
-              <FormItem label="照片6" prop="img6" :label-width="50">
-                <input  type="file" multiple />
-              </FormItem>
-              <FormItem     label="日程內容6:" prop="max">
-                  <Input v-model="moreDetail.day6Title" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
+              <FormItem   :label-width="90"   label="日程內容7:" class="ivu-mb">
+                  <Input v-model="addProcess.itinerary_day[11]" placeholder="請輸入日程內容" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
               </FormItem>
            </Form>
           </Modal>
@@ -109,12 +109,12 @@
       </div>
       <div class="showAll" v-if="showMore==2">
         <h1>行程</h1>
-        <Form id="FormAll" v-width="700" ref="moreDetail" :model="moreDetail" :rules="ruleValidate" :label-width="80">
+        <Form id="FormAll" v-width="700" ref="moreDetail" :model="data[Memindex]" :rules="ruleValidate" :label-width="80">
         <p style="font-size: 14px;color: #515a6e; padding-bottom: 8px;">編號:{{ data[Memindex].itinerary_no }}</p>
-        <FormItem label="星球名稱:" prop="precautions" :label-width="47" placeholder="aa">
+        <FormItem label="行程名稱:" prop="precautions" :label-width="47" >
             <Input v-model="data[Memindex].content_title"  ></Input>
         </FormItem>
-        <FormItem  :label-width="60" label="名稱" placeholder="輸入名稱" prop="title">
+        <FormItem  :label-width="60" label="星球名稱" placeholder="輸入名稱" prop="title">
             <Select v-model="data[Memindex].planet_name" >
                 <Option value="繞行">繞行</Option>
                 <Option value="月球">月球</Option>
@@ -133,7 +133,7 @@
               <Input v-model="moreDetail.max" placeholder="aa" ></Input>
           </FormItem>
         </div> -->
-        <FormItem   :label-width="73"  label="行程簡介:" prop="max">
+        <FormItem   :label-width="73"  label="行程簡介:" >
           
             <Input v-model="data[Memindex].introduction " type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
@@ -142,61 +142,61 @@
           </FormItem> -->
           <div style="font-size: 18px;color: #515a6e; padding-left: 2px;padding-bottom: 10px;">行程內容</div>
           <FormItem     label="日程標題1:" prop="max">
-            <Input v-model="data[Memindex].itinerary_day[0]" placeholder="aa" ></Input>          
+            <Input v-model="data[Memindex].itinerary_day[0]"  ></Input>          
           </FormItem>
           <FormItem label="照片1" prop="img1" :label-width="50">
-            <input  type="file" multiple />
+            <input  type="file" multiple  @change=" FilesChange($event, 0)" />
           </FormItem>
           <FormItem     label="日程內容1:" prop="max">
                <Input v-model="data[Memindex].itinerary_day[1]" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
           <FormItem     label="日程標題2:" prop="max">
-            <Input v-model="data[Memindex].itinerary_day[2]" placeholder="aa" ></Input>          
+            <Input v-model="data[Memindex].itinerary_day[2]"  ></Input>          
           </FormItem>
-          <FormItem label="照片2" prop="img1" :label-width="50">
+          <FormItem label="照片2" prop="img1"  @change=" FilesChange($event, 3)" :label-width="50">
             <input  type="file" multiple />
           </FormItem>
           <FormItem     label="日程內容2:" prop="max">
                <Input v-model="data[Memindex].itinerary_day[3]" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
           <FormItem     label="日程標題3:" prop="max">
-            <Input v-model="data[Memindex].itinerary_day[4]" placeholder="aa" ></Input>          
+            <Input v-model="data[Memindex].itinerary_day[4]"  ></Input>          
           </FormItem>
-          <FormItem label="照片3" prop="img1" :label-width="50">
+          <FormItem label="照片3" prop="img1"  @change=" FilesChange($event, 6)" :label-width="50">
             <input  type="file" multiple />
           </FormItem>
-          <FormItem     label="日程內容3:" prop="max">
+          <FormItem     label="日程內容3:"  prop="max">
                <Input v-model="data[Memindex].itinerary_day[5]" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
-          <FormItem     label="日程標題4、5:" prop="max">
-            <Input v-model="data[Memindex].itinerary_day[6]" placeholder="aa" ></Input>          
+          <FormItem   :label-width="100"  label="日程標題4、5:" prop="max">
+            <Input v-model="data[Memindex].itinerary_day[6]"  ></Input>          
           </FormItem>
-          <FormItem label="照片4、5" prop="img4" :label-width="40">
+          <FormItem label="照片4、5" prop="img4"  @change="FilesChange($event, 9)" :label-width="70">
             <input  type="file" multiple />
           </FormItem>
-          <FormItem     label="日程內容4、5:" prop="max">
+          <FormItem    :label-width="100"  label="日程內容4、5:" prop="max">
                <Input v-model="data[Memindex].itinerary_day[7]" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
           <FormItem     label="日程標題6:" prop="max">
-            <Input v-model="data[Memindex].itinerary_day[8]" placeholder="aa" ></Input>          
+            <Input v-model="data[Memindex].itinerary_day[8]"  ></Input>          
           </FormItem>
-          <FormItem label="照片6" prop="img5" :label-width="50">
+          <FormItem label="照片6" prop="img6"   @change=" FilesChange($event, 12)" :label-width="50">
             <input  type="file" multiple />
           </FormItem>
           <FormItem     label="日程內容6:" prop="max">
                <Input v-model="data[Memindex].itinerary_day[9]" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
           <FormItem     label="日程標題7:" prop="max">
-            <Input v-model="data[Memindex].itinerary_day[10]" placeholder="aa" ></Input>          
+            <Input v-model="data[Memindex].itinerary_day[10]"  ></Input>          
           </FormItem>
-          <FormItem label="照片7" prop="img6" :label-width="50">
+          <FormItem label="照片7" prop="img6"  @change=" FilesChange($event, 15)" :label-width="50">
             <input  type="file" multiple />
           </FormItem>
           <FormItem     label="日程內容7:" prop="max">
                <Input v-model="data[Memindex].itinerary_day[11]" type="textarea" :autosize="{minRows: 4,maxRows: 8}" ></Input>
           </FormItem>
           <!-- <FormItem     label="日程標題7:" prop="max">
-            <Input v-model="moreDetail.day7Title" placeholder="aa" ></Input>          
+            <Input v-model="moreDetail.day7Title"  ></Input>          
           </FormItem>
           <FormItem label="照片7" prop="img7" :label-width="40">
             <input  type="file" multiple />
@@ -207,15 +207,11 @@
       
         <FormItem v-width="700">
             <Button  size="small" style="margin-right: 5px; float: right;" @click="reTable()">返回</Button>
-            <Button  size="small" style="margin-right: 5px;  float: right;" @click="reTable()">確定</Button>
+            <Button  size="small" style="margin-right: 5px;  float: right;" @click="ProcessEditPhp(Memindex)">確定</Button>
         </FormItem>
         </Form>
       </div>
     </Layout>
-
-
-
-
 
 
   </div>
@@ -237,7 +233,7 @@ export default {
 
       data() {
         return {
-          Memindex:0,
+          Memindex:null,
           showMore:1,
           modalProcess: false,
           columns:[
@@ -267,7 +263,6 @@ export default {
                                 label: '金星',
                                 value: 4
                             },
-                         
                         ],
                         filterMultiple: false,
                         filterMethod (value, row) {
@@ -294,69 +289,31 @@ export default {
                 },           
             ],
             data:[
-                // {
-                //   number: 1,
-                //   location: '月球',
-                //   title: '月球背面探索之旅1',
-                 
-                
-                // },
-                // {
-                //   number: 2,
-                //   location: '火星',
-                //   title: '火星背面探索之旅1',
-                 
-                
-                // },
-                // {
-                //   number: 3,
-                //   location: '月球',
-                //   title: '月球背面探索之旅2',
-                // },
-                // {
-                //   number: 4,
-                //   location: '火星',
-                //   title: '火星背面探索之旅2',                
-                // },
-                // {
-                //   number: 5,
-                //   location: '金星',
-                //   title: '金星背面探索之旅1',                
-                // },
-                // {
-                //   number: 6,
-                //   location: '金星',
-                //   title: '金星背面探索之旅2',                
-                // },
-                // {
-                //   number: 7,
-                //   location: '繞行',
-                //   title: '繞行探索之旅1',                
-                // },
+            
             ],
-            moreDetail:{
-                number:'1',  
-                location: '月球',
-                title: '月球背面探索之旅2',
-                smTitle:'',
-                summary :'11111111111111',
-                min:"5",
-                max:'10',
-                precautions:'2222222222222222',
-                day1Title:'',
-                day2Title:'',
-                day3Title:'',
-                day4Title:'',
-                day5Title:'',
-                day6Title:'',
-                day7Title:'',
-                day1Text:'',
-                day2Text:'',
-                day3Text:'',
-                day4Text:'',
-                day5Text:'',
-                day6Text:'',
-                day7Text:'',
+            filesArray: Array(18).fill(null),
+            addProcess:{
+             
+        // itinerary_no: "1",
+            planet_name : "",
+            planet_subtitle : "",
+            content_title : "",
+            introduction : "",
+            itinerary_day : [ ],
+            // "",
+            // "",
+            // "",
+            // "",
+            // "Day3 金星秘景探索",
+            // "藉由蟲洞跳躍，我們前往金星，探索這個炎熱的星球。在金星空中的飛航期間，您將發現更多奇異的景色和未知生物，使我們的旅程更加驚喜。",
+            // "Day4、5 火星遺跡巡航",
+            // "再次飛入蟲洞，前往火星。在這顆紅色星球上，於空中觀看遠古遺跡、麥田圈等等，尋訪生命的起源和消亡，為您的旅程添上色彩。",
+            // "Day 6 台日共構月球基地--蒂芬妮丘",
+            // "蒂芬妮丘是深太空探索的跳板，有助於實現我們登陸更遠的星系。月球基地的太陽能發電站將為未來太空任務提供可再生能源，強化星際探索空持續性。旅客在此休息養足精神，隔日再行返家。",
+            // "Day 7 返回家鄉--地球",
+            // "星際旅遊的壯闊冒險完美收尾！在無重力中飄浮的日子即將結束，我們即將返回地球。帶著難以置信的回憶和深刻的體驗，我們準備迎接重力的擁抱。也請各位珍惜回程最後飽覽太空的絕美景觀的機會。如果捨不得，我們期待著下次再與您共度星際旅遊的美好時光，感謝您的參與！",
+            // ""
+       
               },
               ruleValidate: {
                 number: [
@@ -379,44 +336,143 @@ export default {
         Side
         },
         methods:{
+     
+          FilesChange(event, offset) {
+    let inputElement = event.target;
+    let selectedFiles = inputElement.files;
+
+    // 確定只有三個文件被選中
+    if (selectedFiles.length > 3) {
+        alert("不能超過三張圖片");
+        inputElement.value = '';  // 清空選擇的文件
+        return;
+    }
+
+    // 更新 filesArray
+    for (let i = 0; i < selectedFiles.length; i++) {
+      this.filesArray[offset + i] = selectedFiles[i];
+;
+        }
+    },
+
+          
+        
         More(){
             this.showMore=2;
-          
         },
         reTable(){
             this.showMore=1;
             
         },
         remove (index) {
-                this.data.splice(index, 1);
-    },
-        // handleSubmit (name) {
-        //         this.$refs[name].validate((valid) => {
-        //             if (valid) {
-        //                 this.$Message.success('Success!');
-        //             } else {
-        //                 this.$Message.error('Fail!');
-        //             }
-        //         })
-        //     },
-        //     handleReset (name) {
-        //         this.$refs[name].resetFields();
-        //     }
-        },
-         created() {
-        axios.get('http://localhost/PV/PVBackend/public/php/Process.php')
+           let itinerary_no = this.data[index].itinerary_no;
+            console.log(itinerary_no);
+            axios.post('http://localhost/PV/PVBackend/public/php/ProcessDelete.php', {
+              itinerary_no: itinerary_no,
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+                
+            }
+          })
+          .then(response => {
+            console.log(response.data);
+            this.data.splice(index, 1);  // 從前端數據中移除該筆訂單
+          })
+          .catch(error => {
+            console.log(error);
+            console.log(error.response);
+          });
+      },
+        getProcess(){
+          axios.get('http://localhost/PV/PVBackend/public/php/Process.php')
             .then(response => {
-              // this.data = response.data.map(item => {
-              //   item.itinerary_day = item.itinerary_day.split("\r\n");
-              //   return item;
-              // });
+         
                 this.data = response.data;
-                // this.datac = [...this.myData];
-
             })
             .catch(error => {
                 console.error(error);
             });
+        },
+        ProcessAddPhp(){
+          const fd = new FormData()
+          
+          let itinerary_dayString=this.addProcess.itinerary_day.join('\r\n');
+          itinerary_dayString=[itinerary_dayString+'\r\n'];
+          
+          fd.append('planet_name', this.addProcess.planet_name);
+          fd.append('planet_subtitle', this.addProcess.planet_subtitle);
+          fd.append('content_title', this.addProcess.content_title);
+          fd.append('introduction', this.addProcess.introduction);
+          fd.append('itinerary_day', itinerary_dayString);
+
+          if (!this.addProcess.planet_name ||
+            !this.addProcess.planet_subtitle ||
+            !this.addProcess.content_title ||
+            !this.addProcess.introduction ||
+            !itinerary_dayString) {
+              // this.addProcess.planet_name = null;
+              // this.addProcess.planet_subtitle = null;
+              // this.addProcess.content_title = null;
+              // this.addProcess.introduction = null;
+              // this.addProcess.itinerary_day = null;
+            //   window.alert('全部都要填');
+            // return;  // 退出函數，不執行後續的axios請求
+            }
+          axios.post('http://localhost/PV/PVBackend/public/php/ProcessAdd.php', fd, {
+            // headers: {
+            //     'Content-Type': 'multipart/form-data'
+            // }
+        })
+        .then(response => {
+          console.log(response);
+          this.getProcess()
+        })
+        .catch(error => {
+          console.log(error);
+        });
+        },
+        ProcessEditPhp(Memindex){ 
+          this.showMore=1;   
+          // if (!this.addProcess.planet_name ||
+          //   !this.addProcess.planet_subtitle ||
+          //   !this.addProcess.content_title ||
+          //   !this.addProcess.introduction ||
+          //   !itinerary_dayString) {
+          //   window.alert('全部欄位都要填');
+          //   return;  // 退出函數，不執行後續的axios請求
+          //   }
+          const fd = new FormData()
+          
+          let itinerary_dayString=this.data[Memindex].itinerary_day.join('\r\n');
+          itinerary_dayString=[itinerary_dayString];
+          fd.append('itinerary_no', this.data[Memindex].itinerary_no);
+          fd.append('planet_name', this.data[Memindex].planet_name);
+          fd.append('planet_subtitle', this.data[Memindex].planet_subtitle);
+          fd.append('content_title', this.data[Memindex].content_title);
+          fd.append('introduction ', this.data[Memindex].introduction);
+          fd.append('ProcessimageFile', this.filesArray);
+          fd.append('itinerary_day', itinerary_dayString);
+       
+        
+          axios.post('http://localhost/PV/PVBackend/public/php/ProcessEdit.php', fd, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then(response => {
+          console.log(response);
+          getProcess()
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+        
+     
+        },
+      },
+      created() {
+      this.getProcess()
     }
   }
 
