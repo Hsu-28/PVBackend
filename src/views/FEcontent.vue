@@ -13,34 +13,54 @@
           </div>
         </div>
       </div>
+      <!-- 首頁輪播 -->
       <div v-if="changePage == 0">
-        <div class="demo-upload-list" v-for="item in uploadList">
-          <template class="upimg" v-if="item.status === 'finished'">
-            <Image :src="item.url" fit="cover" width="100%" height="100%" />
-            <div class="demo-upload-list-cover">
-              <Icon type="ios-eye" @click="handleView(item.name)"></Icon>
-              <Icon type="ios-trash-outline" @click="handleRemove(item)"></Icon>
-            </div>
-          </template>
-          <template v-else>
-            <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-          </template>
-        </div>
+        <Button @click="modalCarouse = true" class="add ivu-mb">新增 +</Button>
+        <!-- 新增的彈窗 -->
+        <Modal title="新增輪播照片" v-model="modalCarouse" width="700px" :closable="true">
+          <Form :model="addCarouse" :label-width="80" enctype="multipart/form-data" method="post">
 
-        <Upload ref="upload" :show-upload-list="false" :default-file-list="defaultList" :on-success="handleSuccess"
-          :format="['jpg', 'svg', 'png']" :max-size="4096" :on-format-error="handleFormatError"
-          :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload" multiple type="drag"
-          action="//jsonplaceholder.typicode.com/posts/" style="display: inline-block;width:58px;">
-          <Button icon="md-camera" style="width: 58px;height:58px;line-height: 58px;">
-            <!-- <Icon icon="md-camera" size="20"/> -->
-          </Button>
+            <FormItem label="照片標題:" prop="precautions" :label-width="120" class="ivu-mb" v-width="300">
+              <Input v-model="addCarouse.carouse_title" placeholder="aa"></Input>
+            </FormItem>
+            <FormItem label="輪播照片:" prop="img" :label-width="120">
+              <input type="file" multiple />
+            </FormItem>
+          </Form>
+        </Modal>
 
-        </Upload>
-        <Button style="width: 58px;height:58px;line-height: 58px; margin-bottom: 52px; margin-left: 20px;">
-          確認
-        </Button>
-        <ImagePreview class="wwww" v-model="visible" :preview-list="['https://file.iviewui.com/images/' + imgName]" />
+        <!-- 輪播欄位抬頭 -->
+        <Table class="Table" border :columns="columnsCarouse" :data="dataCarouse">
+          <template #action="{ row, index }">
+            <Button size="small" style="margin-right: 5px" @click="clickCarouseEdit(index)">編輯</Button>
+            <!-- 編輯的程式@on-ok="newseditok" -->
+            <Modal title="輪播照片資訊" ok-text="確認修改" cancel-text="取消" v-model="CarouseEdit[index]" width="700px"
+              :closable="true" @on-ok="carouseeditok" @on-cancel="cancel">
+
+              <Form @submit.prevent :model="addCarouse" :label-width="80">
+                <FormItem label="照片編號" :label-width="73">
+                  <text>{{ addCarouse.carouse_no }}</text>
+                </FormItem>
+                <FormItem label="照片標題:" prop="title_carouse" :label-width="73" class="ivu-mb" v-width="300">
+                  <Input name="carouse_title" v-model="addCarouse.carouse_title" type="textarea" placeholder="內容"></Input>
+                  <!-- 編輯的程式 name="news_title"-->
+                </FormItem>
+
+                <FormItem label="輪播照片" prop="carouse_img" :label-width="73">
+                  <input type="file" id="theFile" class="theFile"
+                    @change="addCarouse.CarouseImageFile = $event.target.files[0]" />
+                  <img class="img1" src="" :alt="addCarouse.carouse_image" width="100">
+                  <textarea name="carouse_image" class="photoname" cols="70"
+                    rows="5">{{ addCarouse.carouse_image }}</textarea>
+                </FormItem>
+              </Form>
+            </Modal>
+            <Button size="small" @click="remove(index, 'Carouse')">刪除</Button>
+
+          </template>
+        </Table>
       </div>
+
       <!-- 團隊介紹 -->
       <div v-if="changePage == 1">
         <!-- <Button @click="modalTeam = true" class="add ivu-mb">新增 +</Button> -->
@@ -143,14 +163,11 @@
                   <!-- 編輯的程式 name="news_title"-->
                 </FormItem>
 
-                <FormItem label="消息照片" prop="img" :label-width="73">
-                  <!-- <input name="news_image" @change="tempImageFile = $event.target.files[0]" type="file"
-                    style="width: 150px; height: 40px;"> -->
-                    <input type="file" id="theFile" class="theFile" @change="tempImageFile" />
-<img class="img1" src="" :alt="addNews.news_image" width="100">
-<textarea name="news_image" class="photoname" cols="70" rows="5">{{ addNews.news_image }}</textarea>
-
-                
+                <FormItem label="消息照片" prop="news_img" :label-width="73">
+                  <input type="file" id="theFile" class="theFile"
+                    @change="addNews.NewsImageFile = $event.target.files[0]" />
+                  <img class="img1" src="" :alt="addNews.news_image" width="100">
+                  <textarea name="news_image" class="photoname" cols="70" rows="5">{{ addNews.news_image }}</textarea>
                 </FormItem>
                 <Space size="large" wrap class="ivu-mb">
                   <div style="font-size: 14px;color: #515a6e; padding: 8px 0; margin-left: 2px;">日期:</div>
@@ -231,20 +248,49 @@ export default {
       changePage: 0,
       banner: [],
       changePageText: [
-        { text: '首頁照片' },
+        { text: '首頁輪播' },
         { text: '團隊介紹' },
         { text: '最新消息' },
         { text: 'Q&A' },
       ],
-      defaultList: [
+
+      CarouseEdit: [],
+      modalCarouse: false, //彈窗
+      columnsCarouse: [
         {
-          'name': 'image-demo-1.jpg',
-          'url': 'https://file.iviewui.com/images/image-demo-1.jpg'
+          title: '消息編號',
+          key: 'carouse_no',
+          width: 100,
+        },
+        {
+          title: '消息標題',
+          key: 'carouse_title',
+          width: 250,
+        },
+        {
+          title: '消息照片路徑',
+          key: 'carouse_image',
+          width: 250,
+        },
+        {
+          title: '編輯',
+          slot: 'action',
+ 
         },
       ],
+      dataCarouse: [],
+
+      addCarouse: [
+        {
+          news_no: null,
+          CarouseImageFile: null,
+          carouse_title: '',
+          Carouse_image: '',
+        },
+      ],
+
       imgName: '',
       visible: false,
-      uploadList: [],
       modalTeam: false,//彈窗
       TeamEdit: [],
       columnsMem: [
@@ -279,15 +325,15 @@ export default {
       // 彈窗資料
       addTeamItem:
       {
-        team_memimage:'',
-        TeamImageFile:null,
+        team_memimage: '',
+        TeamImageFile: null,
         team_memno: null,
         team_memname: '',
         team_memjob: '',
         team_memexperience: '',
       },
-
       dataMem: [],
+
       NewsEdit: [],
       modalNews: false, //彈窗
       columnsNews: [
@@ -322,18 +368,11 @@ export default {
         },
       ],
       dataNews: [],
-      // dataNews: [
-      //   {
-      //     number_News: 1,
-      //     title_news: 'aaaa',
-      //     img: '../assets/image/more.svg',
-      //     date: `1111/11/1`,
-      //     content: `111111`,
-      //   },
-      // ],
+
       addNews: [
         {
           news_no: null,
+          NewsImageFile: null,
           news_title: '',
           news_image: '',
           news_date: ``,
@@ -378,24 +417,23 @@ export default {
 
   methods: {
 
-    tempImageFile(event) {
-    let fileInput = event.target;  
-    if (fileInput.files.length > 0) {
-        let photo = fileInput.files[0];
+    //  addNews(event) {
+    //     let fileInput = event.target;
+    //     if (fileInput.files.length > 0) {
+    //       let photo = fileInput.files[0];
 
-        let img = fileInput.nextElementSibling;  
-        let textarea = img.nextElementSibling;   
+    //       let img = fileInput.nextElementSibling;
+    //       let textarea = img.nextElementSibling;
 
-        textarea.value = photo.name;
+    //       textarea.value = photo.name;
 
-        let reader = new FileReader();
-        reader.onload = function(e) {
-            img.src = e.target.result;
-        }
-        reader.readAsDataURL(photo);
-    }
-},
-
+    //       let reader = new FileReader();
+    //       reader.onload = function (e) {
+    //         img.src = e.target.result;
+    //       }
+    //       reader.readAsDataURL(photo);
+    //     }
+    //   },
 
     //編輯的程式
     newseditok() {
@@ -405,9 +443,10 @@ export default {
       fd.append('news_no', this.addNews.news_no);
       fd.append('news_title', this.addNews.news_title);
       fd.append('news_content', this.addNews.news_content);
-      //fd.append('news_image', this.addNews.news_image);
-      let theFile = document.getElementById('theFile').files[0];
-      fd.append('news_image', theFile);
+      fd.append('news_image', this.addNews.news_image);
+      fd.append('news_imageFile', this.addNews.NewsImageFile);
+      // let theFile = document.getElementById('theFile').files[0];
+      // fd.append('news_image', theFile);
       fd.append('news_date', `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
 
       axios.post('http://localhost/PV/PVBackend/public/php/newsUpdateToDb.php', fd)
@@ -473,49 +512,16 @@ export default {
         });
     },
     cancel() { },
-    handleView(name) {
-      this.imgName = name;
-      this.visible = true;
-    },
-    handleRemove(file) {
-      const fileList = this.$refs.upload.fileList;
-      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-    },
-    handleSuccess(res, file) {
 
-      //   // this.uploadList = [];
 
-      //   file.url = 'https://file.iviewui.com/images/image-demo-3.jpg';
-      //   file.name = 'image-demo-3.jpg';
-      //   // this.uploadList.push(file);
-      //   this.uploadList = [file];
-
-    },
-    handleFormatError(file) {
-      this.$Notice.warning({
-        title: 'The file format is incorrect',
-        desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
-      });
-    },
-    handleMaxSize(file) {
-      this.$Notice.warning({
-        title: 'Exceeding file size limit',
-        desc: 'File  ' + file.name + ' is too large, no more than 2M.'
-      });
-    },
-    handleBeforeUpload() {
-      const check = this.uploadList.length < 5;
-      if (!check) {
-        this.$Notice.warning({
-          title: 'Up to five pictures can be uploaded.'
-        });
-      }
-      return check;
-    },
     changeButton(index) {
 
       this.changePage = index;
       console.log(this.changePage);
+    },
+    clickTeamEdit(index) {
+      this.TeamEdit[index] = true;
+      this.addTeamItem = { ...this.dataCarouse[index] };
     },
     clickTeamEdit(index) {
       this.TeamEdit[index] = true;
@@ -532,9 +538,12 @@ export default {
     remove(index, type) {
       if (type === 'Mem') {
         this.dataMem.splice(index, 1);
+      } else if (type === 'Carouse') {
+
+        this.dataMen.splice(index, 1);
       } else if (type === 'News') {
 
-        this.dataNews.splice(index, 1);
+        this.dataMen.splice(index, 1);
       } else if (type === 'QA') {
         // this.dataQA.splice(index, 1);
         let faq_no = this.dataQA[index].faq_no;
@@ -587,12 +596,12 @@ export default {
       fd.append('team_memimage', this.addTeamItem.team_memimage);
       fd.append('team_memjob', this.addTeamItem.team_memjob);
       fd.append('team_memexperience', this.addTeamItem.team_memexperience);
-    
+
       axios.post('http://localhost/PV/PVBackend/public/php/TeamMemEdit.php', fd, {
         headers: {
-            'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data'
         }
-    })
+      })
         .then(response => {
           console.log(response);
           // this.dataMem = response.data; 
@@ -649,11 +658,10 @@ export default {
 
 
   created() {
-    axios.get('http://localhost/PV/PVBackend/public/php/banner.php')
+    axios.get('http://localhost/PV/PVBackend/public/php/carouse.php')
       .then(response => {
-        this.banner = response.data;
-        console.log(this.banner);
-        // this.defaultList[0].url =this.banner.banner_pic; 
+        this.dataCarouse = response.data;
+        console.log(this.dataCarouse);
       })
       .catch(error => {
         console.error(error);
