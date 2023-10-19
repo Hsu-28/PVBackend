@@ -2,9 +2,9 @@
 <template>
     <div class=" layout">
         <Side :activePage='2' />
-        <button class="out" style="width: 42px;height:32px;line-height: 35px; ">
+        <Button to="/" class="out" style="width: 42px;height:32px;line-height: 35px; ">
             登出
-        </button>
+        </Button>
 
 
         <Layout v-width="700" :style="{ marginLeft: '300px' }">
