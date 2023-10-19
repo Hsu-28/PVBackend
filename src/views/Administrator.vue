@@ -129,7 +129,7 @@ export default {
         formData.append("admin_status", this.data[index].admin_status);
         console.log(this.data);
         formData.append("admin_account",this.data[index].admin_account);
-        fetch(`http://localhost/PV/PVBackend/public/php/adminupdate.php`, {
+        fetch(`${this.$store.state.phpPublicPath}adminupdate.php`, {
             method: "post",
             body: formData,
         })
