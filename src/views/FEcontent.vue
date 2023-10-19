@@ -725,12 +725,12 @@ export default {
 
   },
 
-  mounted() {
-    this.getTeamMem();
-    if (this.$refs.upload) {
-      this.uploadList = this.$refs.upload.fileList;
-    }
-  },
+  // mounted() {
+  //   this.getTeamMem();
+  //   if (this.$refs.upload) {
+  //     this.uploadList = this.$refs.upload.fileList;
+  //   }
+  // },
 
   cancelEdit() {
     this.addItem = { ...this.resetItem };
