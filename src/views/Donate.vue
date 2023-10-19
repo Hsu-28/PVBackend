@@ -120,18 +120,32 @@ export default {
     //    });
     //   },
     search(data1, argumentObj) {
-      return data1.filter(d => {
+    //   return data1.filter(d => {
+    //     console.log("Searching with:", argumentObj);
+
+    //     for (let argu in argumentObj) {
+    //       if (argumentObj[argu]) {
+    //         return `${d[argu]}`.includes(`${argumentObj[argu]}`)
+
+    //       }
+    //     }
+    //     return true;
+    //   });
+    // },
+    return data1.filter(d => {
         console.log("Searching with:", argumentObj);
 
         for (let argu in argumentObj) {
           if (argumentObj[argu]) {
             return `${d[argu]}`.includes(`${argumentObj[argu]}`)
-
+            
           }
         }
         return true;
       });
     },
+
+   
     handleSearch1() {
       if (this.dateSeah) {
         this.dateSeahC = this.dateSeah.toLocaleDateString()

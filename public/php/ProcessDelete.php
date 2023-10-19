@@ -11,8 +11,12 @@ try {
     if (isset($_POST['itinerary_no'])) {  
         $itinerary_no = $_POST['itinerary_no'];
 
-        //  //如果要刪除表格有被引用成外來鍵要先刪除引用他的表格的
+        // $sql = "DELETE FROM orders WHERE itinerary_no = :itinerary_no";
+        // $stmt = $pdo->prepare($sql);
+        // $stmt->bindParam(':itinerary_no', $itinerary_no);
 
+        // $stmt->execute();
+        
         $sql = "DELETE FROM itinerary_photos WHERE itinerary_no = :itinerary_no";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':itinerary_no', $itinerary_no);
