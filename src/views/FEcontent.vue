@@ -17,14 +17,17 @@
       <div v-if="changePage == 0">
         <Button @click="modalCarouse = true" class="add ivu-mb">新增 +</Button>
         <!-- 新增的彈窗 -->
-        <Modal title="新增輪播照片" v-model="modalCarouse" width="700px" :closable="true">
+        <Modal title="新增輪播照片" v-model="modalCarouse" width="700px" :closable="true" @on-ok="Carouseaddok"
+          @on-cancel="cancel">
           <Form :model="addCarouse" :label-width="80" enctype="multipart/form-data" method="post">
 
             <FormItem label="照片標題:" prop="precautions" :label-width="120" class="ivu-mb" v-width="300">
               <Input v-model="addCarouse.carouse_title" placeholder="aa"></Input>
             </FormItem>
+
             <FormItem label="輪播照片:" prop="img" :label-width="120">
-              <input type="file" multiple />
+              <input type="file" id="theFile" class="theFile"
+                @change="addCarouse.CarouseImageFile = $event.target.files[0]" />
             </FormItem>
           </Form>
         </Modal>
@@ -32,26 +35,22 @@
         <!-- 輪播欄位抬頭 -->
         <Table class="Table" border :columns="columnsCarouse" :data="dataCarouse">
           <template #action="{ row, index }">
+
             <Button size="small" style="margin-right: 5px" @click="clickCarouseEdit(index)">編輯</Button>
             <!-- 編輯的程式@on-ok="newseditok" -->
             <Modal title="輪播照片資訊" ok-text="確認修改" cancel-text="取消" v-model="CarouseEdit[index]" width="700px"
               :closable="true" @on-ok="carouseeditok" @on-cancel="cancel">
-
               <Form @submit.prevent :model="addCarouse" :label-width="80">
                 <FormItem label="照片編號" :label-width="73">
                   <text>{{ addCarouse.carouse_no }}</text>
                 </FormItem>
-                <FormItem label="照片標題:" prop="title_carouse" :label-width="73" class="ivu-mb" v-width="300">
+                <FormItem label="照片標題:" prop="carouse_title" :label-width="73" class="ivu-mb" v-width="300">
                   <Input name="carouse_title" v-model="addCarouse.carouse_title" type="textarea" placeholder="內容"></Input>
                   <!-- 編輯的程式 name="news_title"-->
                 </FormItem>
-
                 <FormItem label="輪播照片" prop="carouse_img" :label-width="73">
                   <input type="file" id="theFile" class="theFile"
                     @change="addCarouse.CarouseImageFile = $event.target.files[0]" />
-                  <img class="img1" src="" :alt="addCarouse.carouse_image" width="100">
-                  <textarea name="carouse_image" class="photoname" cols="70"
-                    rows="5">{{ addCarouse.carouse_image }}</textarea>
                 </FormItem>
               </Form>
             </Modal>
@@ -124,14 +123,14 @@
       <div v-if="changePage == 2">
         <Button @click="modalNews = true" class="add ivu-mb">新增 +</Button>
         <!-- 新增的彈窗 -->
-        <Modal title="新增最新消息" v-model="modalNews" width="700px" :closable="true">
+        <Modal title="新增最新消息" v-model="modalNews" width="700px" :closable="true" @on-ok="Newsaddok" @on-cancel="cancel">
           <Form :model="addNews" :label-width="80" enctype="multipart/form-data" method="post">
 
             <FormItem label="最新消息標題:" prop="precautions" :label-width="120" class="ivu-mb" v-width="300">
               <Input v-model="addNews.news_title" placeholder="aa"></Input>
             </FormItem>
             <FormItem label="最新消息照片:" prop="img" :label-width="120">
-              <input type="file" multiple />
+              <input type="file" class="theFile" @change="addNews.NewsImageFile = $event.target.files[0]" />
             </FormItem>
             <Space size="large" wrap class="ivu-mb">
               <div style="font-size: 14px;color: #515a6e; padding: 8px 0; margin-left: 20px;">日期:</div>
@@ -275,19 +274,18 @@ export default {
         {
           title: '編輯',
           slot: 'action',
- 
+
         },
       ],
       dataCarouse: [],
 
-      addCarouse: [
-        {
-          news_no: null,
-          CarouseImageFile: null,
-          carouse_title: '',
-          Carouse_image: '',
-        },
-      ],
+      addCarouse:
+      {
+        carouse_no: null,
+        CarouseImageFile: null,
+        carouse_title: '',
+        carouse_image: '',
+      },
 
       imgName: '',
       visible: false,
@@ -295,25 +293,29 @@ export default {
       TeamEdit: [],
       columnsMem: [
         {
-          title: '團隊成員編號',
-          key: 'team_memno'
+          title: '成員編號',
+          key: 'team_memno',
+          width: 70,
+
         },
         {
           title: '成員名稱',
-          key: 'team_memname'
+          key: 'team_memname',
+          width: 180,
         },
         {
           title: '成員照片路徑',
-          key: 'team_memimage'
+          key: 'team_memimage',
+          width: 165,
         },
         {
           title: '成員職稱',
-          key: 'team_memjob'
+          key: 'team_memjob',
+          width: 165,
         },
         {
           title: '成員經歷',
-          key: 'team_memexperience',
-          width: 160
+          key: 'team_memexperience'
 
         },
         {
@@ -369,16 +371,16 @@ export default {
       ],
       dataNews: [],
 
-      addNews: [
-        {
-          news_no: null,
-          NewsImageFile: null,
-          news_title: '',
-          news_image: '',
-          news_date: ``,
-          news_content: ``,
-        },
-      ],
+      addNews:
+      {
+        news_no: null,
+        NewsImageFile: null,
+        news_title: '',
+        news_image: '',
+        news_date: ``,
+        news_content: ``,
+      },
+
       // newQA: false, //彈窗
       dataQA: [], //新增資料
       QAEdit: [],
@@ -436,6 +438,52 @@ export default {
     //   },
 
     //編輯的程式
+    carouseeditok() {
+      console.log(this.addCarouse)
+      const fd = new FormData()
+      fd.append('carouse_no', this.addCarouse.carouse_no);
+      fd.append('carouse_title', this.addCarouse.carouse_title);
+      fd.append('carouse_image', this.addCarouse.carouse_image);
+      fd.append('carouse_imageFile', this.addCarouse.CarouseImageFile);
+
+      axios.post('http://localhost/PV/PVBackend/public/php/carouseUpdateToDb.php', fd)
+        .then(response => {
+          console.log(response)
+          axios.get('http://localhost/PV/PVBackend/public/php/carouse.php')
+            .then(response => {
+              this.dataCarouse = response.data;
+              console.log(this.dataCarouse);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    Carouseaddok() {
+      const fd = new FormData()
+      fd.append('carouse_title', this.addCarouse.carouse_title);
+      fd.append('carouse_image', this.addCarouse.CarouseImageFile);
+
+      axios.post('http://localhost/PV/PVBackend/public/php/addCarouse.php', fd)
+        .then(response => {
+          axios.get('http://localhost/PV/PVBackend/public/php/carouse.php')
+            .then(response => {
+              this.dataCarouse = response.data;
+              console.log(this.dataCarouse);
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        })
+        .catch(error => {
+          console.log(error)
+        });
+    },
+    cancel() { },
+
     newseditok() {
       console.log(this.addNews)
       const fd = new FormData()
@@ -466,6 +514,31 @@ export default {
           console.error(error);
         });
     },
+    Newsaddok() {
+      // 傳送
+      const fd = new FormData()
+      const date = new Date(this.addNews.news_date)
+      fd.append('news_title', this.addNews.news_title);
+      fd.append('news_content', this.addNews.news_content);
+      fd.append('news_image', this.addNews.NewsImageFile);
+      fd.append('news_date', `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
+
+      axios.post('http://localhost/PV/PVBackend/public/php/addNews.php', fd)
+        .then(response => {
+          axios.get('http://localhost/PV/PVBackend/public/php/news.php')
+            .then(response => {
+              this.dataNews = response.data;
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        })
+        .catch(error => {
+          console.log(error)
+        });
+    },
+    cancel() { },
+
     QAeditok() {
       console.log(this.editQA)
       const fd = new FormData()
@@ -479,7 +552,14 @@ export default {
           axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
             .then(response => {
               this.dataQA = response.data;
-              console.log(this.dataQA);
+              axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
+                .then(response => {
+                  this.dataQA = response.data;
+                  console.log(this.dataQA)
+                })
+                .catch(error => {
+                  console.error(error);
+                });
             })
             .catch(error => {
               console.error(error);
@@ -505,7 +585,14 @@ export default {
         }
       })
         .then(response => {
-          console.log(response)
+          axios.get('http://localhost/PV/PVBackend/public/php/faq.php')
+            .then(response => {
+              this.dataQA = response.data;
+              console.log(this.dataQA)
+            })
+            .catch(error => {
+              console.error(error);
+            });
         })
         .catch(error => {
           console.log(error)
@@ -519,9 +606,9 @@ export default {
       this.changePage = index;
       console.log(this.changePage);
     },
-    clickTeamEdit(index) {
-      this.TeamEdit[index] = true;
-      this.addTeamItem = { ...this.dataCarouse[index] };
+    clickCarouseEdit(index) {
+      this.CarouseEdit[index] = true;
+      this.addCarouse = { ...this.dataCarouse[index] };
     },
     clickTeamEdit(index) {
       this.TeamEdit[index] = true;
@@ -539,11 +626,34 @@ export default {
       if (type === 'Mem') {
         this.dataMem.splice(index, 1);
       } else if (type === 'Carouse') {
-
-        this.dataMen.splice(index, 1);
+        let carouse_no = this.dataCarouse[index].carouse_no;
+        console.log(carouse_no);
+        axios.post('http://localhost/PV/PVBackend/public/php/carouseDelete.php', {
+          carouse_no: carouse_no
+        })
+          .then(response => {
+            console.log(response.dataCarouse);
+            this.dataCarouse.splice(index, 1);  // 從前端數據中移除該筆訂單
+          })
+          .catch(error => {
+            console.log(error);
+            console.log(error.response);
+          });
       } else if (type === 'News') {
+        let news_no = this.dataNews[index].news_no;
+        console.log(news_no);
+        axios.post('http://localhost/PV/PVBackend/public/php/newsDelete.php', {
+          news_no: news_no
+        })
+          .then(response => {
+            console.log(response.dataNews);
+            this.dataNews.splice(index, 1);  // 從前端數據中移除該筆訂單
+          })
+          .catch(error => {
+            console.log(error);
+            console.log(error.response);
+          });
 
-        this.dataMen.splice(index, 1);
       } else if (type === 'QA') {
         // this.dataQA.splice(index, 1);
         let faq_no = this.dataQA[index].faq_no;
