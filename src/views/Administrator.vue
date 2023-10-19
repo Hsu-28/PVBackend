@@ -8,12 +8,13 @@
 
         <Layout v-width="700" :style="{ marginLeft: '300px' }">
             <h1>管理員管理</h1>
-            <Table class="Table" height="200" border :columns="columns" :data="data">
+            <Table class="Table" height="400" border :columns="columns" :data="data">
                 <template #action="{ row, index }">
-                    <Button v-if="show(index)" size="small" style="margin-right: 5px" @click="stop(index)"
-                        @on-change="onChange(index)">
+                    <Button v-if="show(index)" size="small" style="margin-right: 5px"
+                        @click="stop(index), updateStatus(index)" @on-change="onChange(index)">
                         {{ this.data[index].admin_status }}
-                </Button>
+
+                    </Button>
                 </template>
             </Table>
 
@@ -103,7 +104,7 @@ export default {
             }
         },
         show(index) {
-
+            console.log
             if (this.data[index].admin_allow == 'FullAccess') {
                 return false;
             } else {
@@ -113,48 +114,49 @@ export default {
         },
 
 
-        onChange(index) {
-            if (this.data[index].admin_status === "啟用") {
-                this.$Message.info("管理員狀態： 正常");
-            } else if (this.data[index].admin_status === "停權") {
-                this.$Message.info("管理員狀態： 停權");
-            }
+        // onChange(index) {
+        //    console.log(this.$Message.info);
+        //     if (this.data[index].admin_status === "啟用") {
+        //         this.$Message.info("管理員狀態： 正常");
+        //     } else if (this.data[index].admin_status === "停權") {
+        //         this.$Message.info("管理員狀態： 停權");
+        //     }
 
-        },
-    },
-    watch: {
-
-        updateStatus(row) {
-            console.log(this.data[row]);
-            const formData = new FormData();
-            formData.append("admin_status", this.data[row].admin_status);
-            formData.append("admin_account", this.data[row].admin_account);
-
-            fetch(`http://localhost/PV/PVBackend/public/php/adminupdate.php`, {
-                method: "POST",
-                body: formData,
-            })
-                .then((res) => res.json())
-                .then((res) => {
-                    const result = res;
-                });
-        },
     },
 
-    //     // return this.data.map(index => index.permissions !== '最高');
+    updateStatus(index) {
+        console.log(this.data[index]);
+        const formData = new FormData();
+        formData.append("admin_status", this.data[index].admin_status);
+        console.log(formData.admin_status);
+        formData.append("admin_account", this.data[index].admin_account);
 
-    // },
-    created() {
-        axios.get('http://localhost/PV/PVBackend/public/php/admin.php')
+        fetch(`http://localhost/PV/PVBackend/public/php/adminupdate.php`, {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => res.json())
             .then((res) => {
-                this.data = res.data;
-                console.log(this.data);
-            }).catch(error => {
-                console.error(error);
+                console.log(res);
+                // const result = res;
+
             });
+    },
 
-    }
 
+//     // return this.data.map(index => index.permissions !== '最高');
+
+// },
+created() {
+    axios.get('http://localhost/PV/PVBackend/public/php/admin.php')
+        .then((res) => {
+            this.data = res.data;
+            console.log(this.data);
+        }).catch(error => {
+            console.error(error);
+        });
+
+}
 }
 //登入狀態驗證
 // fetch('http://localhost/PV/PVBackend/public/php/verifyLogin.php')
