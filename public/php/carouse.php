@@ -1,11 +1,12 @@
 <?php
 
+
 header("Access-Control-Allow-Origin:*");
 header("Content-Type: application/json");
 
 try {
     require_once("../../../connect_chd103g3.php");
-    $sql = "SELECT * FROM `banner`";
+    $sql = "SELECT * FROM `index_carouse`";
     $query = $pdo->query($sql);
     $orders = $query->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($orders); //將資料轉成JSON格式並輸出
