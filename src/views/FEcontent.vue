@@ -146,11 +146,11 @@
                 <FormItem label="消息照片" prop="img" :label-width="73">
                   <!-- <input name="news_image" @change="tempImageFile = $event.target.files[0]" type="file"
                     style="width: 150px; height: 40px;"> -->
-                  <input type="file" id="theFile" @change="tempImageFile" />
-                  <img :src="addNews.news_image" :alt="addNews.news_image" id="img1" width="100">
-                  <textarea name="news_image" id="photoname" cols="70" rows="5">{{ addNews.news_image }}</textarea>
+                    <input type="file" id="theFile" class="theFile" @change="tempImageFile" />
+<img class="img1" src="" :alt="addNews.news_image" width="100">
+<textarea name="news_image" class="photoname" cols="70" rows="5">{{ addNews.news_image }}</textarea>
 
-                  <!-- <img width="200" height="200" v-show="!tempImageFile" :src="`/${addNews.news_image}`" alt=""> -->
+                
                 </FormItem>
                 <Space size="large" wrap class="ivu-mb">
                   <div style="font-size: 14px;color: #515a6e; padding: 8px 0; margin-left: 2px;">日期:</div>
@@ -225,7 +225,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      tempImageFile: null,
+      // tempImageFile: null,
       clickEditBtnT: false,
       memore: 0,
       changePage: 0,
@@ -373,14 +373,25 @@ export default {
 
 
   methods: {
-    tempImageFile() {
-      const fileInput = document.getElementById('theFile');
-      if (fileInput.files.length > 0) {
-        this.addNews.news_image = fileInput.files[0].name;
-      } else {
-        this.addNews.news_image = ''; // 如果未選擇檔案，清空資料
-      }
-    },
+
+    tempImageFile(event) {
+    let fileInput = event.target;  
+    if (fileInput.files.length > 0) {
+        let photo = fileInput.files[0];
+
+        let img = fileInput.nextElementSibling;  
+        let textarea = img.nextElementSibling;   
+
+        textarea.value = photo.name;
+
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+        }
+        reader.readAsDataURL(photo);
+    }
+},
+
 
     //編輯的程式
     newseditok() {
