@@ -6,7 +6,116 @@
 // minix
 @import "mixin/mixin";
 
-:deep(tr.ivu-table-row-hover td){
+:deep(tr.ivu-table-row-hover td) {
     background-color: rgba(17, 17, 17, .2);
 }
 
+.allMenuItem {
+    margin-top: 38%;
+}
+
+.SideNavigator[data-v-5b9dec4c] {
+    background: #282727;
+    top: 0;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 40px;
+        left: 60px;
+        background-image: url('~@/assets/image/logo.png');
+        background-size: cover;
+        display: inline-block;
+        width: 100px;
+        height: 38px;
+    }
+}
+
+.SideNavigator .allMenuItem>.Page[data-v-5b9dec4c] {
+    background-color: transparent;
+    border: 0;
+    padding: 8% 55px;
+    color: rgb(211, 211, 211)
+}
+
+.SideNavigator .allMenuItem>*[data-v-5b9dec4c] {
+    padding: 8% 25px;
+    border: 0;
+    vertical-align: top;
+
+
+}
+
+.thisPage[data-v-5b9dec4c] {
+    &::before {
+        content: "";
+        position: relative;
+        top: 2.5px;
+        background-image: url('~@/assets/image/icon-planets.svg');
+        background-size: cover;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+}
+
+#layoutFE{
+    background-image: linear-gradient(rgba(246, 247, 248, 0.85), rgba(246, 247, 248, 0.9)), url('~@/assets/image/background.png')!important; 
+    background-size: 70% !important;
+}
+
+.layout {
+    background-image: linear-gradient(rgba(246, 247, 248, 0.85), rgba(246, 247, 248, 0.9)), url('~@/assets/image/background.png')!important; 
+    background-size: 80% !important;
+}
+.ivu-layout{
+    background-image: linear-gradient(rgba(246, 247, 248, 0.85), rgba(246, 247, 248, 0.9)), url('~@/assets/image/background.png')!important; 
+    background-size: 100% !important;
+}
+.layout[data-v-654c7f58] {
+    width: 98vw;
+}
+
+.ivu-layout {
+    padding-top: 5%;
+    padding-left: 5%;
+}
+
+.ivu-table-wrapper {
+    width: 800px !important;
+    box-sizing: border-box;
+    margin-top: 3%;
+    border-top: 1px solid rgba(200, 196, 196, 0.647);
+    border-left: 1px solid rgba(200, 196, 196, 0.647);
+}
+
+h1 {
+    font-weight: bolder;
+}
+
+.out {
+    border: 0 !important;
+    width: 100px !important;
+    padding: 20px 40px 0 0 !important;
+    background-color: transparent;
+
+    &::after {
+        content: "";
+        position: relative;
+        top: 3px;
+        right: -5px;
+        background-image: url('~@/assets/image/out.svg');
+        background-size: cover;
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+    }
+}
+
+@media screen and (min-width: 1800px) {
+    .ivu-table-wrapper {
+        width: 1200px !important;
+    }
+}

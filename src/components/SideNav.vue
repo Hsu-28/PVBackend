@@ -1,7 +1,7 @@
 
 <template>
     <div class="SideNavigator" v-width="240" :style="{position: 'fixed', height: '100vh', left: 0, }">
-            
+  
         <div   v-width="240" class="allMenuItem"  :level="1" >
             <!-- <router-link :class="[activePage == 1 ? 'thisPage' : 'Page' ]"  :to="[activePage == 1 ? '#' : '/Administrator' ]">管理員管理</router-link>
             <router-link :class="[activePage == 2 ? 'thisPage' : 'Page' ]"  :to="[activePage == 2 ? '#' : '/Member' ]">會員管理</router-link>
@@ -50,8 +50,6 @@ export default {
     background: #4e4d4d ;
     // background : rgba(0, 0, 0, .9); 
   
-
- 
 
          
  .allMenuItem{

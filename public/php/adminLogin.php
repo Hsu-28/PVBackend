@@ -27,8 +27,17 @@ try{
 
     //自資料庫中取回資料
     $adminRow = $admin->fetch(PDO::FETCH_ASSOC);
+    session_start();
+    $_SESSION["adminid"] = $adminRow["admin_account"];
+    $_SESSION["adminpsw"] = $adminRow["admin_psw"];
     //送出登入者的姓名資料
-    $result = ["adminid"=>$adminRow["admin_account"], "adminpsw"=>$adminRow["admin_psw"],"error" => false];
+    $result = [
+      "adminid"=>$adminRow["admin_account"], 
+      "adminpsw"=>$adminRow["admin_psw"],
+      "admin_status"=>$adminRow["admin_status"],
+      "error" => false, 
+      "adminInfo"=>$_SESSION,
+      "session_id"=>session_id()];
     echo json_encode($result);
   }
 } catch (PDOException $e) {

@@ -1,9 +1,9 @@
 <template>
   <div class=" layout" >
     <Side :activePage='6'/> 
-    <button  class="out" style="width: 42px;height:32px;line-height: 35px;">
+    <Button to="/" class="out" style="width: 42px;height:32px;line-height: 35px;">
      登出
-    </button>
+    </Button>
     <Layout v-width="900" :style="{marginLeft: '300px'} ">
       <div v-if="showMore==1" >
       <h1>旅行團</h1>
@@ -63,7 +63,7 @@
           <Table class="Table" border :columns="columns" :data="myData">
               <template #action="{ row, index }">
                 <Button  size="small" style="margin-right: 5px" @click=" tabIndex = index; More(tabIndex)">編輯</Button>
-                <Button  size="small" @click="remove()">刪除</Button>
+                <Button  size="small" @click=" tabIndex = index;remove(tabIndex)">刪除</Button>
               </template>
           </Table>  
           <!-- <Page  class="nextPage" :total="40" size="" /> -->
@@ -221,9 +221,6 @@ export default {
         this.showMore=1;
         
     }, 
-     remove (index) {
-                this.data.splice(index, 1);
-    },
     ok () {
           this.$Message.info('新增成功');
           const newItem = {
@@ -270,27 +267,6 @@ export default {
     editgroup(tabIndex) {
         this.showMore=1;
         const editjourney = new FormData()
-        // const tdate = new Date(this.addItem.trianing_date)
-        // const gdate = new Date(this.addItem.date)
-        // const pass = myData[tabIndex].pass
-        // const waiting_people = myData[tabIndex].wait
-        // const signup_num = myData[tabIndex].applicants
-        // const max_num = myData[tabIndex].max_num
-        // const tripno = myData[tabIndex].title
-
-
-        // this.editjourney
-        // this.tdate
-        // this.gdate
-        // this.pass
-        // this.waiting_people
-        // this.signup_num
-        // this.max_num
-        // this.tripno
-
-
-
-
         editjourney.append('trip_no',this.myData[tabIndex].trip_no);
         editjourney.append('itinerary_no',this.myData[tabIndex].itinerary_no);
         editjourney.append('training_date', this.myData[tabIndex].training_date);
@@ -311,7 +287,22 @@ export default {
           .catch(error => {
             console.error(error);
           });
-},
+    },
+    remove(tabIndex) {
+      // this.data.splice(index, 1);
+      let trip_no = this.myData[tabIndex].trip_no;
+      axios.post('http://localhost/PV/PVBackend/public/php/GroupDelete.php', {
+          trip_no : trip_no
+      })
+        .then(response => {
+          console.log(response.data);
+          this.data.splice(index, 1);  // 從前端數據中移除該筆訂單
+        })
+        .catch(error => {
+          console.log(error);
+          console.log(error.response);
+        });
+    },
 
 },
 created() {
