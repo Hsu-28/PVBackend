@@ -24,9 +24,11 @@ try {
     $update_stmt->bindValue(":admin_account", $admin_account);
     $update_stmt->execute();
     
-    $msg = "修改成功";
+    echo "修改成功";
 } catch (PDOException $e) {
-    echo "系統暫時不能正常運行，請稍後再試<br>";
+    
+    echo "錯誤行號 : " , $e->getLine(), "<br>";
+	echo "錯誤原因 : " , $e->getMessage(), "<br>";
 }
 
 $pdo = null;

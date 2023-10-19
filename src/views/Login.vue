@@ -155,7 +155,7 @@ export default {
                 info.append("adminid", this.adminid);
                 info.append("adminpsw", this.adminpsw);
 
-                fetch(`${this.$store.state.phpPublicPath}adminLogin.php`, {
+                fetch(`http://localhost/PV/PVBackend/public/php/adminLogin.php`, {
                     method: 'POST',
                     body: info,
                 })
