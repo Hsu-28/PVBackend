@@ -155,15 +155,15 @@ export default {
                 info.append("adminid", this.adminid);
                 info.append("adminpsw", this.adminpsw);
 
-                fetch('http://localhost/PV/PVBackend/public/php/adminLogin.php', {
+                fetch(`${this.$store.state.phpPublicPath}adminLogin.php`, {
                     method: 'POST',
                     body: info,
                 })
                     .then(res => res.json())
                     .then((result) => {
-                        if (result.adminid == this.adminid && result.adminpsw == this.adminpsw && !result.admin_status === "停權") {
+                        if (result.adminid == this.adminid && result.adminpsw == this.adminpsw && result.admin_status !== "停權") {
                             alert("登入成功！");
-                            this.$router.push('/Administrator')
+                            this.$router.push('/Member')
                          } else if(result.admin_status === "停權"){
                             alert("沒有權限");
                         }else{
