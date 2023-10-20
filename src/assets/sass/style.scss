@@ -14,8 +14,8 @@
     margin-top: 38%;
 }
 
-.SideNavigator[data-v-5b9dec4c] {
-    background: #282727;
+.SideNavigator {
+    background: #282727 !important;
     top: 0;
 
     &::before {
@@ -31,14 +31,14 @@
     }
 }
 
-.SideNavigator .allMenuItem>.Page[data-v-5b9dec4c] {
+.SideNavigator .allMenuItem>.Page {
     background-color: transparent !important;
     border: 0 !important;
     padding: 8% 55px !important;
     color: rgb(211, 211, 211) !important;
 }
 
-.SideNavigator .allMenuItem>*[data-v-5b9dec4c] {
+.SideNavigator .allMenuItem>* {
     padding: 8% 25px !important;
     border: 0 !important;
     vertical-align: top !important;
@@ -46,17 +46,17 @@
 
 }
 
-.thisPage[data-v-5b9dec4c] {
+.thisPage {
     &::before {
-        content: "" !important;
-        position: relative !important;
+        content: "" ;
+        position: relative ;
         top: 2.5px;
-        background-image: url('~@/assets/image/icon-planets.svg')!important;
-        background-size: cover !important;
-        display: inline-block !important;
-        width: 20px !important;
-        height: 20px !important;
-        margin-right: 10px !important;
+        background-image: url('~@/assets/image/icon-planets.svg');
+        background-size: cover ;
+        display: inline-block ;
+        width: 20px ;
+        height: 20px ;
+        margin-right: 10px ;
     }
 }
 
