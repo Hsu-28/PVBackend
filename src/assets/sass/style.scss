@@ -48,15 +48,15 @@
 
 .thisPage {
     &::before {
-        content: "" !important;
-        position: relative !important;
+        content: "" ;
+        position: relative ;
         top: 2.5px;
-        background-image: url('~@/assets/image/icon-planets.svg')!important;
-        background-size: cover !important;
-        display: inline-block !important;
-        width: 20px !important;
-        height: 20px !important;
-        margin-right: 10px !important;
+        background-image: url('~@/assets/image/icon-planets.svg');
+        background-size: cover ;
+        display: inline-block ;
+        width: 20px ;
+        height: 20px ;
+        margin-right: 10px ;
     }
 }
 
