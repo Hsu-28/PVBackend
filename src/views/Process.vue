@@ -289,7 +289,7 @@ export default {
             data:[
             
             ],
-            filesArray: new Array(18).fill(null),
+            filesArray: Array(18).fill(null),
             itinerary_photo_noData :[],
             addProcess:{
              
@@ -328,7 +328,7 @@ export default {
     let selectedFiles = inputElement.files;
 
     // 確定只有三個文件被選中
-    if (selectedFiles.length > 3) {
+    if (selectedFiles.length >3) {
         alert("不能超過三張圖片");
         inputElement.value = '';  
         return;
@@ -393,7 +393,6 @@ export default {
           this.showMore=1;   
          
           const fd = new FormData()
-          let files;
           let dayString=this.data[Memindex].itinerary_day.join('\r\n');
           console.log(dayString);
           let itinerary_dayString;
@@ -417,9 +416,11 @@ export default {
           console.log(this.filesArray);
        
         
-          axios.post(`${this.$store.state.phpPublicPath}ProcessEdit.php`, fd, {
-         headers: { "Content-Type": "multipart/form-data" }
-         })
+          axios.post(`${this.$store.state.phpPublicPath}ProcessEdit.php`, fd
+        //   , {
+        //  headers: { "Content-Type": "multipart/form-data" }
+        //  }
+         )
         .then(response => {
           console.log(response);
           this.getProcess()

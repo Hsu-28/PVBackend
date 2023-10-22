@@ -1,4 +1,6 @@
 <?php
+     //在php.ini 改upload_max_filesize = 10M 跟 post_max_size = 80M 更改上傳檔案的限制
+
     header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
     header("Access-Control-Allow-Credentials: true");
     header("Access-Control-Allow-Origin:*");
@@ -10,13 +12,31 @@
     try {
         // require_once("../../../connect_chd103g3.php");
         require_once("../../connect_chd103g3.php");
+        $itinerary_no = isset($_POST["itinerary_no"]) ? $_POST["itinerary_no"] : null;
+        $photo_noData = isset($_POST["photo_noData"]) ? $_POST["photo_noData"] : null;
+        $itinerary_pic = isset($_POST["itinerary_pic"]) ? $_POST["itinerary_pic"] : null;
+        $planet_name = isset($_POST["planet_name"]) ? $_POST["planet_name"] : null;
+        $planet_subtitle = isset($_POST["planet_subtitle"]) ? $_POST["planet_subtitle"] : null;
+        $content_title = isset($_POST["content_title"]) ? $_POST["content_title"] : null;
+        $introduction = isset($_POST["introduction"]) ? $_POST["introduction"] : null;
+        $itinerary_day = isset($_POST["itinerary_day"]) ? $_POST["itinerary_day"] : null;
+ 
+        // echo $itinerary_no . "\n", 
+        //     $photo_noData . "\n", 
+        //     $itinerary_pic . "\n", 
+        //     $planet_name . "\n", 
+        //     $planet_subtitle . "\n",  
+        //     $content_title . "\n", 
+        //     $introduction . "\n", 
+        //     $itinerary_day . "\n";
+        //     exit();
 
         // 更新資料庫
         // $fileCount = count($_FILES['ProcessimageFile']['tmp_name']);
 
         // if (isset($_FILES['ProcessimageFile']) && $_FILES['ProcessimageFile']['error'] === UPLOAD_ERR_OK) 
         // {
-            if($_POST["itinerary_no"]== 1){
+            if($_POST["itinerary_no"] == 1){
                 $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_combo/';
             }else if($_POST["itinerary_no"] == 2){
                 $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_moon/';
@@ -43,6 +63,7 @@
                     $targetFilePath = $uploadDir . $fileName;
                 
                     move_uploaded_file($_FILES[$temp]['tmp_name'], $targetFilePath);
+                    echo $targetFilePath;
                     echo $_FILES[$temp]['tmp_name'] ,"-->";
                     echo $fileName, "@@";
             

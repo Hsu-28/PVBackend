@@ -60,7 +60,7 @@
             <Input v-model="value" placeholder="訓練日期" style="width: 150px" />
       </template>  -->
 
-          <Table class="Table" border :columns="columns" :data="myData">
+          <Table style="width: 900px;" class="Table" border :columns="columns" :data="myData">
               <template #action="{ row, index }">
                 <Button  size="small" style="margin-right: 5px" @click=" tabIndex = index; More(tabIndex)">編輯</Button>
                 <Button  size="small" @click=" tabIndex = index;remove(tabIndex)">刪除</Button>
