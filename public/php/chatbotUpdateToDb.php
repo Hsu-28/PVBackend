@@ -6,7 +6,7 @@ header("Content-Type: application/json");
 
 try {
 	// require_once("../../../connect_chd103g3.php");
-	require_once("../connect_chd103g3.php");
+	require_once("../../connect_chd103g3.php");
 
 
 	//執行sql指令

@@ -14,8 +14,8 @@
     margin-top: 38%;
 }
 
-.SideNavigator[data-v-5b9dec4c] {
-    background: #282727;
+.SideNavigator {
+    background: #282727 !important;
     top: 0;
 
     &::before {
@@ -31,32 +31,32 @@
     }
 }
 
-.SideNavigator .allMenuItem>.Page[data-v-5b9dec4c] {
-    background-color: transparent;
-    border: 0;
-    padding: 8% 55px;
-    color: rgb(211, 211, 211)
+.SideNavigator .allMenuItem>.Page {
+    background-color: transparent !important;
+    border: 0 !important;
+    padding: 8% 55px !important;
+    color: rgb(211, 211, 211) !important;
 }
 
-.SideNavigator .allMenuItem>*[data-v-5b9dec4c] {
-    padding: 8% 25px;
-    border: 0;
-    vertical-align: top;
+.SideNavigator .allMenuItem>* {
+    padding: 8% 25px !important;
+    border: 0 !important;
+    vertical-align: top !important;
 
 
 }
 
-.thisPage[data-v-5b9dec4c] {
+.thisPage {
     &::before {
-        content: "";
-        position: relative;
+        content: "" ;
+        position: relative ;
         top: 2.5px;
         background-image: url('~@/assets/image/icon-planets.svg');
-        background-size: cover;
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
+        background-size: cover ;
+        display: inline-block ;
+        width: 20px ;
+        height: 20px ;
+        margin-right: 10px ;
     }
 }
 
@@ -74,12 +74,12 @@
     background-size: 100% !important;
 }
 .layout[data-v-654c7f58] {
-    width: 98vw;
+    width: 98vw !important ;
 }
 
 .ivu-layout {
-    padding-top: 5%;
-    padding-left: 5%;
+    padding-top: 5% ;
+    padding-left: 1%;
 }
 
 .ivu-table-wrapper {
@@ -88,6 +88,7 @@
     margin-top: 3%;
     border-top: 1px solid rgba(200, 196, 196, 0.647);
     border-left: 1px solid rgba(200, 196, 196, 0.647);
+    margin-bottom: 20%;
 }
 
 h1 {
