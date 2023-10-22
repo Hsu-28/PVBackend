@@ -28,11 +28,11 @@ try {
 
 		if (isset($_FILES['news_imageFile']) && $_FILES['news_imageFile']['error'] === UPLOAD_ERR_OK) {
 			// $uploadDir = "../../../PlanetVoyager/src/assets/image/index/"; //指定文件存储位置
-			if ($_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "127.0.0.1") {
-				$uploadDir = '../../../PlanetVoyager/src/assets/image/index/';
-			} else {
+			// if ($_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "127.0.0.1") {
+			// 	$uploadDir = '../../../PlanetVoyager/src/assets/image/index/';
+			// } else {
 				$uploadDir = '../../PlanetVoyager/img/';
-			}
+			// }
 			
 			$fileName = $_POST["news_image"];
 			$targetFilePath = $uploadDir . $fileName;

@@ -50,26 +50,26 @@
             // }else if($_POST["itinerary_no"] == 7){
             //     $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_venus1/';
             // }
-            if ($_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "127.0.0.1") {
+            // if ($_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "127.0.0.1") {
 
-                if($_POST["itinerary_no"] == 1){
-                    $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_combo/';
-                }else if($_POST["itinerary_no"] == 2){
-                    $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_moon/';
-                }else if($_POST["itinerary_no"] == 3){
-                    $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_moon2/';
-                }else if($_POST["itinerary_no"] == 4){
-                    $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_mars1/';
-                }else if($_POST["itinerary_no"] == 5){
-                    $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_mars2/';
-                }else if($_POST["itinerary_no"] == 6){
-                    $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_venus/';
-                }else if($_POST["itinerary_no"] == 7){
-                    $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_venus1/';
-                }
-            } else {
+            //     if($_POST["itinerary_no"] == 1){
+            //         $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_combo/';
+            //     }else if($_POST["itinerary_no"] == 2){
+            //         $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_moon/';
+            //     }else if($_POST["itinerary_no"] == 3){
+            //         $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_moon2/';
+            //     }else if($_POST["itinerary_no"] == 4){
+            //         $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_mars1/';
+            //     }else if($_POST["itinerary_no"] == 5){
+            //         $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_mars2/';
+            //     }else if($_POST["itinerary_no"] == 6){
+            //         $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_venus/';
+            //     }else if($_POST["itinerary_no"] == 7){
+            //         $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_venus1/';
+            //     }
+            // } else {
                 $uploadDir = '../../PlanetVoyager/img/';
-            }
+            // }
           
             $arr = json_decode($_POST['photo_noData'], true); //$arr[0]["itinerary_pic"]
             // $arr = json_decode($_POST['photo_noData']); //$arr[0]->itinerary_pic

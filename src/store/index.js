@@ -12,8 +12,6 @@ const publicURL = process.env.NODE_ENV === 'development' ? '' : 'https://tibamef
 const phpPublicPath = process.env.NODE_ENV === 'development' ? 'http://localhost/PV/PVBackend/public/php/' : 'https://tibamef2e.com/chd103/g3/back/php/'
 const publicPath = process.env.NODE_ENV === 'development' ? process.env.BASE_URL : ''
 
-const Picupload = process.env.NODE_ENV === 'development' ? '../../../PlanetVoyager/src/assets/image/teamMembers/memberSvg/' : '../../PlanetVoyager/img/'
-
 
 export default createStore({
   state: {
@@ -22,7 +20,6 @@ export default createStore({
     publicURL: publicURL,
     phpPublicPath: phpPublicPath,
     publicPath: publicPath,
-    Picupload :Picupload,
   },
   getters: {
   },
