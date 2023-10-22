@@ -20,7 +20,13 @@ try {
 
     if (isset($_FILES['team_memimageFile']) && $_FILES['team_memimageFile']['error'] === UPLOAD_ERR_OK) {
         // $uploadDir = '../../../PlanetVoyager/src/assets/image/teamMembers/memberSvg/'; //指定文件存储位置
-        $uploadDir = '../../PlanetVoyager/img/'; //指定文件存储位置
+              
+        // $uploadDir = '../../PlanetVoyager/img/'; //指定文件存储位置
+        if ($_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "127.0.0.1") {
+            $uploadDir = '../../../PlanetVoyager/src/assets/image/teamMembers/memberSvg/';
+        } else {
+            $uploadDir = '../../PlanetVoyager/img/';
+        }
         $fileName = $_POST["team_memimage"];
         $targetFilePath = $uploadDir . $fileName;
 
