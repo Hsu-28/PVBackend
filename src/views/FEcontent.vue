@@ -97,7 +97,8 @@
                 </FormItem>
                 <!-- 照片上傳 -->
                 <FormItem label="照片" prop="mem_img" :label-width="40">
-                  <input type="file" @change="addTeamItem.TeamImageFile = $event.target.files[0]" id="TeamImageFile"
+                  <!-- addTeamItem.TeamImageFile = $event.target.files[0] -->
+                  <input type="file" @change="MemFileChange" id="TeamImageFile"
                     name="TeamImageFile" />
 
                 </FormItem>
@@ -327,6 +328,7 @@ export default {
       // 彈窗資料
       addTeamItem:
       {
+        TeamImageFileName:'',
         team_memimage: '',
         TeamImageFile: null,
         team_memno: null,
@@ -697,12 +699,19 @@ export default {
           console.error("There was an error fetching the TeamMem:", error);
         });
     },
+    MemFileChange(event) {
+      this.addTeamItem.TeamImageFile = event.target.files[0];
+      this.addTeamItem.TeamImageFileName = event.target.files[0].name; // 獲取檔名
+    },
+
     TeamEditPhp() {
       const fd = new FormData()
       fd.append('team_memno', this.addTeamItem.team_memno);
       fd.append('team_memname', this.addTeamItem.team_memname);
       fd.append('team_memimageFile', this.addTeamItem.TeamImageFile);
-      fd.append('team_memimage', this.addTeamItem.team_memimage);
+      // fd.append('team_memimage', this.addTeamItem.team_memimage);
+      fd.append('team_memimage', this.addTeamItem.TeamImageFileName);
+     
       fd.append('team_memjob', this.addTeamItem.team_memjob);
       fd.append('team_memexperience', this.addTeamItem.team_memexperience);
 

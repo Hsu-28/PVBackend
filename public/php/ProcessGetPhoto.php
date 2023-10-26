@@ -10,8 +10,9 @@ try {
 
 
     $itinerary_no = $_POST["itinerary_no"];
-    $sql = "SELECT itinerary_pic FROM itinerary_photos WHERE itinerary_no = :itinerary_no ";
-    $stmt1 = $pdo->prepare($sql);
+    // $sql = "SELECT itinerary_pic FROM itinerary_photos WHERE itinerary_no = :itinerary_no ";
+    $sql = "SELECT itinerary_photo_no FROM itinerary_photos WHERE itinerary_no = :itinerary_no ";
+    $stmt1 = $pdo->prepare($sql);   
     $stmt1->bindParam(":itinerary_no", $itinerary_no);      
     $stmt1->execute();
     $result = $stmt1->fetchAll(PDO::FETCH_ASSOC);

@@ -19,8 +19,8 @@ try {
     // 更新資料庫
 
     if (isset($_FILES['team_memimageFile']) && $_FILES['team_memimageFile']['error'] === UPLOAD_ERR_OK) {
-        // $uploadDir = '../../../PlanetVoyager/src/assets/image/teamMembers/memberSvg/'; //指定文件存储位置
-        $uploadDir = '../../PlanetVoyager/img/'; //指定文件存储位置
+        $uploadDir = '../../../PlanetVoyager/src/assets/image/teamMembers/memberSvg/'; //指定文件存储位置
+        // $uploadDir = '../../PlanetVoyager/img/'; 
         $fileName = $_POST["team_memimage"];
         $targetFilePath = $uploadDir . $fileName;
 

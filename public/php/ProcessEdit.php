@@ -50,6 +50,7 @@
             // }else if($_POST["itinerary_no"] == 7){
             //     $uploadDir = '../../../PlanetVoyager/src/assets/image/itinerary_venus1/';
             // }
+
             // if ($_SERVER['HTTP_HOST'] == "localhost" || $_SERVER['HTTP_HOST'] == "127.0.0.1") {
 
             //     if($_POST["itinerary_no"] == 1){
@@ -69,7 +70,7 @@
             //     }
             // } else {
                 $uploadDir = '../../PlanetVoyager/img/';
-            // }
+            }
           
             $arr = json_decode($_POST['photo_noData'], true); //$arr[0]["itinerary_pic"]
             // $arr = json_decode($_POST['photo_noData']); //$arr[0]->itinerary_pic
@@ -79,10 +80,21 @@
 
                 if(isset($_FILES[$temp])) {
 
-                    $fileName = $arr[$i]['itinerary_pic'];
+                    $fileName = $_POST["ProcessimageFileName$i"];
+                    $databaseName= $fileName;
+                    // $itinerary_photo_no = $arr[$i]['itinerary_photo_no'];
+                    $itinerary_photo_no = intval($arr[$i]['itinerary_photo_no']);
+
+                    $sql="UPDATE itinerary_photos SET itinerary_pic = :databaseName WHERE itinerary_no = :itinerary_no AND itinerary_photo_no= :itinerary_photo_no";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindValue(":databaseName", $databaseName);
+                    $stmt->bindValue(":itinerary_no", $_POST["itinerary_no"]);
+                    $stmt->bindValue(":itinerary_photo_no", $itinerary_photo_no);
                     $targetFilePath = $uploadDir . $fileName;
-                
                     move_uploaded_file($_FILES[$temp]['tmp_name'], $targetFilePath);
+                    $stmt->execute();
+
+                    echo  $sql;
                     echo $targetFilePath;
                     echo $_FILES[$temp]['tmp_name'] ,"-->";
                     echo $fileName, "@@";

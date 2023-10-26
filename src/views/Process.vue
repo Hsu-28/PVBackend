@@ -290,6 +290,8 @@ export default {
             
             ],
             filesArray: Array(18).fill(null),
+            fileNames: Array(18).fill(null),
+
             itinerary_photo_noData :[],
             addProcess:{
              
@@ -337,6 +339,8 @@ export default {
     // 更新 filesArray
     for (let i = 0; i < selectedFiles.length; i++) {
       this.filesArray[offset + i] = selectedFiles[i];
+      this.fileNames[offset + i] = selectedFiles[i].name;  // 儲存檔案名稱
+
         
         }
     },
@@ -350,6 +354,7 @@ export default {
             fd.append('itinerary_no',itinerary_no);
             axios.post(`${this.$store.state.phpPublicPath}ProcessGetPhoto.php`, fd)
           .then(response => {
+            
             this.itinerary_photo_noData= response.data;
             console.log(this.itinerary_photo_noData);
           })
@@ -409,6 +414,7 @@ export default {
           fd.append('introduction', this.data[Memindex].introduction);
           for(let i=0; i<this.filesArray.length; i++){
             fd.append(`ProcessimageFile${i}`, this.filesArray[i]);
+            fd.append(`ProcessimageFileName${i}`, this.fileNames[i]);
           }
           fd.append('itinerary_day', itinerary_dayString);
           fd.append('photo_noData' ,JSON.stringify(this.itinerary_photo_noData));
