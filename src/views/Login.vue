@@ -47,7 +47,6 @@
         z-index: -1;
         top: 0;
         left: -5%;
-        ;
         width: 110%;
         height: 100%;
         background: $black;
@@ -164,9 +163,9 @@ export default {
                         if (result.adminid == this.adminid && result.adminpsw == this.adminpsw && result.admin_status !== "停權") {
                             alert("登入成功！");
                             this.$router.push('/Member')
-                         } else if(result.admin_status === "停權"){
+                        } else if (result.admin_status === "停權") {
                             alert("沒有權限");
-                        }else{
+                        } else {
                             alert("帳號或密碼錯誤");
                         }
                     })
